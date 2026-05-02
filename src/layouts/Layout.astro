@@ -1,16 +1,114 @@
+---
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl: string;
+  noIndex: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const { title, description, canonicalUrl, noIndex, jsonLd = [] } = Astro.props;
+
+const businessJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Bakery",
+  "@id": "http://perlettecakes.com/#business",
+  name: "Perlete Cakes",
+  url: "http://perlettecakes.com/",
+  telephone: "+60196505050",
+  email: "Amiralorr@gmail.com",
+  description:
+    "Home-based cake bakery in Kuala Lumpur specialising in custom cakes, pastries, and cookies. Order via WhatsApp for delivery across KL and Selangor.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Kuala Lumpur",
+    addressRegion: "Kuala Lumpur",
+    addressCountry: "MY",
+  },
+  areaServed: [
+    {
+      "@type": "City",
+      name: "Kuala Lumpur",
+    },
+    {
+      "@type": "State",
+      name: "Selangor",
+    },
+  ],
+  openingHoursSpecification: [
+    {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+      opens: "09:00",
+      closes: "18:00",
+    },
+  ],
+  sameAs: [
+    "https://www.instagram.com/perlettecakes",
+  ],
+  priceRange: "$$",
+  currenciesAccepted: "MYR",
+  paymentAccepted: "Bank Transfer, Online Payment",
+  potentialAction: {
+    "@type": "OrderAction",
+    target: {
+      "@type": "EntryPoint",
+      urlTemplate: "https://wa.me/60196505050",
+      actionPlatform: "https://schema.org/DesktopWebPlatform",
+      inLanguage: "en",
+    },
+    deliveryMethod: {
+      "@type": "DeliveryMethod",
+      name: "Third-party delivery (Lalamove)",
+    },
+  },
+};
+ 
+// Merge business schema with any page-specific schemas
+const allJsonLd = [
+  businessJsonLd,
+  ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []),
+];
+
+---
+
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+		<meta name="description" content={description}>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="language" content="English" />
+		<meta name="geo.region" content="MY-14" />
+		<meta name="geo.placename" content="Kuala Lumpur" />
+		<link rel="canonical" href={canonicalUrl} />
+		{noIndex ? 
+			(<meta name="robots" content="noindex, nofollow" />) : 
+			(<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />)
+		}
+
+		{allJsonLd.map((schema) => (
+			<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+		))}
 	</head>
 	<body>
 		<slot />
 	</body>
+	<footer>
+		<div>
+			<p>Baking is my passion and the mission is to share that passion with everyone. One cake at a time.</p>
+		</div>
+	</footer>
 </html>
 
 <style>
