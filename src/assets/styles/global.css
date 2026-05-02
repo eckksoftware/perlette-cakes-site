@@ -1,3 +1,7 @@
+:root {
+  --title-font: 
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
 }

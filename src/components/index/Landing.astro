@@ -1,14 +1,21 @@
 ---
 
-import '../../assets/styles/reset.css'
+import '../../assets/styles/global.css'
 import flowerCake from '../../assets/images/index/flowery-styled-cake.png';
 import lemonCake from '../../assets/images/index/lemon-raspberry-cake.png';
 ---
 
-<div id="container">
+<section>
+	<h1>Perlette Cakes</h1>
+	<p>Be patient. More cakes are on the way!</p>
 	<img id="background" src={flowerCake.src} alt="One of the best selling flowery cake made at home" fetchpriority="high" />
 	<img id="background" src={lemonCake.src} alt="Lemon raspberry cake made with real lemon and raspberry fruit" fetchpriority="high" />
-</div>
+</section>
 
 <style>
+
+h1 {
+	font-family: var(--font-pencerio);
+}
+
 </style>

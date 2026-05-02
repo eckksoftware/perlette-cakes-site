@@ -1,4 +1,6 @@
 ---
+import { Font } from 'astro:assets';
+
 
 interface Props {
   title: string;
@@ -100,6 +102,8 @@ const allJsonLd = [
 		{allJsonLd.map((schema) => (
 			<script type="application/ld+json" set:html={JSON.stringify(schema)} />
 		))}
+
+		<Font cssVariable="--font-pencerio" />
 	</head>
 	<body>
 		<slot />
@@ -112,10 +116,13 @@ const allJsonLd = [
 </html>
 
 <style>
-	html,
-	body {
+	html, body {
 		margin: 0;
 		width: 100%;
 		height: 100%;
+	}
+
+	h1 {
+		font-family: var(--font-pencerio);
 	}
 </style>
