@@ -103,7 +103,7 @@ const allJsonLd = [
 			<script type="application/ld+json" set:html={JSON.stringify(schema)} />
 		))}
 
-		<Font cssVariable="--font-pencerio" />
+		<Font cssVariable="--font-title-pencerio" />
 	</head>
 	<body>
 		<slot />
@@ -122,7 +122,7 @@ const allJsonLd = [
 		height: 100%;
 	}
 
-	h1 {
-		font-family: var(--font-pencerio);
+	:global(h1) {
+		font-family: var(--font-title-pencerio);
 	}
 </style>

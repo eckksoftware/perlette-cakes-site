@@ -6,7 +6,7 @@ export default defineConfig({
   fonts: [{
     provider: fontProviders.local(),
     name: "Pencerio",
-    cssVariable: "--font-pencerio",
+    cssVariable: "--font-title-pencerio",
     options: {
       variants: [{
         src: 
