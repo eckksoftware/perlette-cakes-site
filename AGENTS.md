@@ -10,8 +10,8 @@ Perlette Cakes is a **homemade baker** in the Klang Valley, Malaysia. There is *
 
 The site exists to:
 
-1. **Tell the brand story** — who the baker is, how the bakes are made, build trust.
-2. **Funnel visitors into a WhatsApp order** — the primary conversion action.
+1. **Tell the brand story** — who the baker is, how the bakes are made, build trust, allow customers to scroll through products and easily place an order for owner.
+2. **Funnel visitors into a WhatsApp order** — the primary conversion action where a standardized message is created based on the products chosen by customers.
 
 There is no backend, no database, and no user accounts. Keep it that way unless explicitly told otherwise.
 
@@ -36,8 +36,8 @@ B and C are not afterthoughts bolted on at the end. Because there is no storefro
 | Styling | **Vanilla CSS** | One global `src/styles/global.css` with design tokens; split into scoped/component styles only when it gets unwieldy (see §6). **No Tailwind, no CSS frameworks.** |
 | Images | **`astro:assets`** (`<Image />`) | Mandatory for all content images (see §8). |
 | Fonts | **`@fontsource` (self-hosted)** | No external Google Fonts CDN — better perf/SEO. |
-| Client JS | **Avoid** | Ship zero JS by default. Use Astro islands only where interactivity is unavoidable (the order page; see §9). |
-| Hosting | Static host (Cloudflare Pages / Netlify) | Swappable. Build output is `./dist`. |
+| Client JS | **Minimal** | Use JS when needed. Use Astro islands only where interactivity is unavoidable (the order page; see §9). |
+| Hosting | Static host (Cloudflare Pages) | Build output is `./dist`. |
 | Node | **20 LTS+** | |
 | Package manager | **npm** | (pnpm is fine — match the lockfile present.) |
 
