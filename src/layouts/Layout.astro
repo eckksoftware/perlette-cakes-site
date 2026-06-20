@@ -1,4 +1,6 @@
 ---
+import '../assets/styles/global.css';
+
 interface Props {
   title: string;
   description: string;
@@ -97,24 +99,18 @@ const allJsonLd = [
 		}
 
 		{allJsonLd.map((schema) => (
-			<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+			<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
 		))}
 
 	</head>
 	<body>
 		<slot />
 	</body>
-	<footer>
-		<div>
-			<p>Baking is my passion and the mission is to share that passion with everyone. One cake at a time.</p>
-		</div>
-	</footer>
 </html>
 
 <style>
 	html, body {
 		margin: 0;
 		width: 100%;
-		height: 100%;
 	}
 </style>

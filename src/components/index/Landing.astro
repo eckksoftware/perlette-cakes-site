@@ -1,9 +1,165 @@
 ---
+import { Image } from 'astro:assets';
+import strawberryCake from '../../assets/images/index/strawberry-cake.JPG';
 
-import '../../assets/styles/global.css'
+const whatsappHref = `https://wa.me/60196505050?text=${encodeURIComponent("Hi Perlette Cakes! I'd like to enquire about a custom cake order.")}`;
 ---
 
-<section>
-	<h1>Perlette Cakes</h1>
-	<p>Be patient. More cakes are on the way!</p>
-</section>
+<main>
+	<section class="hero section">
+		<div class="container hero__grid">
+			<div class="hero__content stack-lg">
+				<div class="stack-sm">
+					<p class="eyebrow">Home-based baker in Klang Valley, Malaysia</p>
+					<p class="wordmark">perlette cakes</p>
+				</div>
+
+				<div class="stack-md">
+					<h1 class="hero__title">Custom cakes and pastries made with love, made with care.</h1>
+					<p class="hero__lede">
+						We make homemade custom cakes, cupcakes, pastries, and cookies for birthdays, gatherings,
+						and everyday celebrations across Klang Valley, Malaysia.
+					</p>
+				</div>
+
+				<ul class="hero__facts" aria-label="Ordering highlights">
+					<li>Custom cakes, cupcakes, pastries, and cookies</li>
+					<li>Most orders need 3 to 5 days' notice</li>
+					<li>Delivery across Klang Valley via Lalamove</li>
+				</ul>
+
+				<div class="hero__actions">
+					<a class="button button--primary" href={whatsappHref} target="_blank" rel="noreferrer">
+						Start on WhatsApp
+					</a>
+					<a
+						class="button button--ghost"
+						href="https://www.instagram.com/perlettecakes"
+						target="_blank"
+						rel="noreferrer"
+					>
+						View Instagram
+					</a>
+				</div>
+			</div>
+
+			<div class="hero__media">
+				<div>
+					<Image
+						class="hero__image"
+						src={strawberryCake}
+						alt="Strawberry celebration cake with piped cream, fresh strawberries, and pink ribbon detail."
+						loading="eager"
+						sizes="(min-width: 64rem) 38rem, (min-width: 48rem) 50vw, 100vw"
+					/>
+				</div>
+				<p class="hero__caption">
+					Made for celebrations that should taste as good as they look.
+				</p>
+			</div>
+		</div>
+	</section>
+</main>
+
+<style>
+	.hero {
+		position: relative;
+		overflow: clip;
+	}
+
+	.hero__grid {
+		display: grid;
+		gap: var(--space-2xl);
+		align-items: center;
+	}
+
+	.hero__content {
+		max-width: 38rem;
+	}
+
+	.hero__title {
+		font-size: var(--step-4);
+		max-width: 12ch;
+	}
+
+	.hero__lede {
+		max-width: 34rem;
+		font-size: var(--step-1);
+	}
+
+	.hero__facts {
+		display: grid;
+		gap: var(--space-sm);
+		padding: 0;
+		list-style: none;
+	}
+
+	.hero__facts li {
+		padding: var(--space-sm) var(--space-md);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		background: rgba(255, 255, 255, 0.75);
+		box-shadow: var(--shadow-sm);
+		color: var(--color-text);
+		font-size: var(--step--1);
+		font-weight: 600;
+	}
+
+	.hero__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-sm);
+	}
+
+	.hero__media {
+		position: relative;
+	}
+
+	.hero__frame {
+		position: relative;
+		padding: clamp(0.75rem, 2vw, 1rem);
+		border-radius: var(--radius-xl);
+		background: var(--color-surface);
+		box-shadow: var(--shadow-md);
+	}
+
+	.hero__image {
+		width: 100%;
+		height: 50%;
+		border-radius: calc(var(--radius-xl) - 0.5rem);
+		object-fit: cover;
+	}
+
+	.hero__caption {
+		max-width: 24rem;
+		margin-top: var(--space-md);
+		margin-left: auto;
+		padding-left: var(--space-lg);
+		color: var(--color-primary-ink);
+		font-size: var(--step--1);
+		font-weight: 700;
+		text-align: right;
+	}
+
+	@media (min-width: 48rem) {
+		.hero__facts {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.hero__grid {
+			grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+			gap: clamp(3rem, 5vw, 5rem);
+		}
+
+		.hero__content {
+			padding-top: var(--space-xl);
+		}
+
+		.hero__media {
+			justify-self: end;
+			width: min(100%, 38rem);
+		}
+	}
+</style>
