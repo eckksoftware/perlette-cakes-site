@@ -24,6 +24,11 @@ The site exists to do three things equally well:
 
 Stage one is a single-page website focused on clarity, trust, and qualified WhatsApp inquiries.
 
+Current implementation checkpoint:
+- `src/layouts/Layout.astro` and `src/components/index/Landing.astro` are active
+- The sticky nav and homepage hero are implemented
+- Remaining homepage sections and the modal inquiry flow are still pending
+
 Homepage sections:
 1. Hero with product-led imagery and factual highlights
 2. Owner story
@@ -46,6 +51,9 @@ Stage-one CTA flow:
 3. Visitor chooses one or more categories
 4. Visitor can add an optional note
 5. Site opens WhatsApp with a pre-filled inquiry message
+
+Temporary implementation note:
+- Until the category-selection modal is built, the live CTA links directly to WhatsApp with a pre-filled inquiry message
 
 Stage-one content rules:
 1. No public pricing yet
@@ -97,7 +105,7 @@ Use this checklist to track launch progress across future sessions.
 
 ### Stage-one implementation remaining
 
-- [ ] Replace starter Astro layout and homepage structure
+- [x] Replace starter Astro layout and homepage structure
 - [ ] Build single-page homepage sections
 - [ ] Implement curated featured products section
 - [ ] Draft owner story from approved context notes

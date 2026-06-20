@@ -156,7 +156,7 @@ astro.config.mjs
   --shadow-md: 0 8px 24px rgba(43,38,34,.10);
 
   /* Layout */
-  --content-max: 72rem;   /* max content width */
+  --content-max: 110rem;   /* max content width */
 }
 ```
 

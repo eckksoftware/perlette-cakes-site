@@ -12,6 +12,8 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@fontsource-variable/fraunces": "^5.2.9",
+    "@fontsource/geist-sans": "^5.2.5",
     "astro": "^6.1.9",
     "astro-seo": "^1.1.0"
   },

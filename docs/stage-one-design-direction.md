@@ -1,19 +1,33 @@
 # Stage One Design Direction
 
-This document captures the visual system and layout direction for the first public homepage build.
+This document is the stage-one UI and CSS source of truth for the current Astro implementation.
+
+## Current Build Scope
+
+Stage one remains a single-page marketing site with one homepage route.
+
+Current implementation checkpoint:
+1. `src/layouts/Layout.astro` provides the document shell and sticky navigation
+2. `src/components/index/Landing.astro` currently implements the hero only
+3. Remaining homepage sections are still planned, not yet built
+
+Relevant files for this phase:
+1. `src/layouts/Layout.astro`
+2. `src/components/index/Landing.astro`
+3. `src/assets/styles/global.css`
 
 ## Design Thesis
 
-Perlette Cakes should feel warm, homemade, and assured. The site should not look like a generic pastel bakery template or a luxury patisserie brand that feels distant from everyday celebration orders.
+Perlette Cakes should feel warm, homemade, and assured. The site should not look like a generic pastel bakery template, but it also should not drift into distant luxury branding that feels disconnected from everyday celebrations.
 
-The strongest signal should be the cakes themselves. Layout, typography, and colour should frame the products and support trust, not compete with them.
+The cakes are the strongest asset on the page. Typography, spacing, and colour should support the products, not compete with them.
 
 ## Audience and Homepage Job
 
 Primary audience:
 1. People in Klang Valley browsing on mobile
 2. Visitors arriving from Instagram, direct links, or search
-3. Buyers deciding quickly whether this feels trustworthy, premium, and message-worthy
+3. Buyers deciding quickly whether this feels trustworthy, premium, and worth messaging
 
 Homepage job:
 1. Show what Perlette Cakes sells
@@ -22,7 +36,7 @@ Homepage job:
 
 ## Section Order
 
-Stage-one homepage order is locked as:
+Stage-one homepage order remains:
 1. Hero
 2. Owner story
 3. Featured categories
@@ -37,7 +51,7 @@ The CTA should appear immediately after the ordering steps, while intent is high
 ## Reference Read
 
 Keep from the reference sites:
-1. `levainbakery.com`: strong product-led composition and confidence
+1. `levainbakery.com`: product-led composition and confidence
 2. `eatcabalar.com`: large type paired with imagery
 3. `kalmkitchen.co.uk`: restraint and whitespace
 
@@ -46,7 +60,7 @@ Avoid from the rejected references:
 2. Overly busy colour application
 3. Generic bakery UI patterns that could belong to any brand
 
-## Visual Direction
+## UI Direction
 
 Overall feel:
 1. Warm cream base
@@ -55,57 +69,97 @@ Overall feel:
 4. Small gold highlights used sparingly
 5. Editorial structure with product warmth rather than formal luxury
 
-Signature move:
-1. Use large serif headlines with offset image blocks and small factual labels
-2. Let one product image dominate the hero rather than using a carousel or dense collage
-3. Use framed content cards selectively so the page feels crafted rather than boxy
+Homepage composition rules:
+1. The navigation and hero must share the same content width and left-right padding
+2. The hero should read as an editorial split, not a narrow stacked text column
+3. One product image should dominate the hero rather than a collage or carousel
+4. Every major section should feel like a distinct chapter with clear vertical spacing
+5. Layout changes should come from composition and image treatment, not decorative clutter
 
-## CSS Maintainability Rule
+## Typography Direction
 
-Keep the CSS simple enough that future sections can be edited quickly without needing to mentally reconstruct the whole component.
+Stage-one type pairing is locked to `Fraunces + Geist`.
+
+Roles:
+1. `Fraunces` is the display face for headings and expressive brand moments
+2. `Geist Sans` is the body and UI face for copy, buttons, labels, and supporting information
+3. The wordmark may use `Fraunces` with italic styling, but no third font should be introduced
+
+Hero headline rules:
+1. The desktop hero headline must stay within 2 to 3 lines
+2. Do not force manual line breaks with wrapper spans just to control composition
+3. Use a wider content measure before increasing font size
+4. Supporting copy should stay concise and factual
+
+## CSS Maintainability Rules
+
+Keep the CSS simple enough that future sections can be edited quickly without reconstructing the entire layout in your head.
 
 Rules for future sessions:
-1. Prefer one clear layout primitive per section, usually a stack or a two-column grid, not several overlapping layout systems
-2. Keep wrappers to a minimum and avoid nested utility wrappers unless they remove more complexity than they add
-3. Use tokens and shared global primitives for spacing, buttons, containers, and muted text instead of re-declaring them per section
-4. Do not keep decorative CSS that is not attached to live markup
-5. Let one visual idea carry each section; avoid adding multiple competing accents, cards, captions, or framing devices at once
-6. If a layout can be expressed with a handful of selectors, prefer that over a more clever but harder-to-maintain version
+1. Prefer one layout primitive per section
+2. Use `flex` for one-dimensional stacks and simple action rows
+3. Use `grid` only when a section genuinely needs multiple columns or card placement
+4. Keep wrappers to a minimum and avoid nested layout helpers unless they remove more complexity than they add
+5. Use tokens and shared primitives for spacing, buttons, containers, focus states, and muted text
+6. Do not keep decorative or speculative CSS that is not attached to live markup
+7. Prefer specific values and named tokens over `calc(...)`-heavy layout rules
+8. Keep `clamp(...)` primarily for responsive type, not for avoidable layout math
+9. Let one visual idea carry each section; do not layer multiple competing accents, frames, and flourishes onto the same block
 
-## Initial Token System
+## Style Ownership Boundary
 
-These are the implementation tokens to start with. Adjust only if a real visual conflict appears during the build.
+`src/assets/styles/global.css` owns:
+1. Font imports
+2. Design tokens
+3. Reset and base element styles
+4. Shared layout primitives such as the content container
+5. Shared button styles
+6. Shared text helpers such as muted copy and eyebrows
+7. Focus states
+
+`src/layouts/Layout.astro` owns:
+1. Navigation-specific styling
+2. Layout-shell styling that is not reused by page sections
+
+Section components own:
+1. Their own composition
+2. Their own spacing adjustments
+3. Their own media treatment
+4. Their own local responsive rules
+
+## Token Direction
+
+These are the stage-one implementation tokens to preserve and extend carefully.
 
 ### Colours
 
 ```css
 :root {
-  --color-bg: #FFFDFB;
-  --color-surface: #FFFFFF;
-  --color-surface-soft: #F7F1EB;
-  --color-text: #2B2622;
-  --color-text-muted: #6E655E;
-  --color-primary: #C98B9A;
-  --color-primary-ink: #7A4A57;
-  --color-accent: #C9A24B;
-  --color-border: #ECE5DE;
-  --color-shadow: rgba(43, 38, 34, 0.10);
+  --color-bg: #fffdfb;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f7f1eb;
+  --color-text: #2b2622;
+  --color-text-muted: #6e655e;
+  --color-primary: #c98b9a;
+  --color-primary-ink: #7a4a57;
+  --color-primary-strong: #693f4a;
+  --color-accent: #c9a24b;
+  --color-border: #ece5de;
 }
 ```
 
 Usage:
-1. `--color-primary` for buttons, links, and selected states
-2. `--color-primary-ink` for hover, active, and stronger type accents
-3. `--color-accent` only as garnish for separators, small labels, or highlights
-4. `--color-surface-soft` for alternating section backgrounds
+1. `--color-primary-ink` is the main strong brand colour for CTAs and emphasis
+2. `--color-primary-strong` is reserved for hover and active states
+3. `--color-accent` is garnish only, never the dominant interface colour
+4. Transparent nav or overlay colours should be tokenized if reused
 
 ### Typography
 
 ```css
 :root {
-  --font-wordmark: "Pinyon Script", "Fraunces", serif;
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-body: "Geist Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
   --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
@@ -117,11 +171,11 @@ Usage:
 ```
 
 Usage:
-1. Wordmark only gets the expressive script-like treatment
-2. Headings use `Fraunces` with enough size to feel editorial, not delicate
-3. Body copy stays in `Inter` for readability on mobile
+1. Headings should feel editorial, not dainty
+2. Buttons and labels should stay in `Geist Sans`
+3. Do not mix in a third family for visual interest
 
-### Spacing, Radius, and Layout
+### Spacing and Layout
 
 ```css
 :root {
@@ -131,22 +185,21 @@ Usage:
   --space-lg: 1.5rem;
   --space-xl: 2.5rem;
   --space-2xl: 4rem;
+  --space-3xl: 6rem;
 
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
+  --radius-xl: 32px;
 
-  --shadow-sm: 0 1px 3px rgba(43, 38, 34, 0.08);
-  --shadow-md: 0 8px 24px rgba(43, 38, 34, 0.10);
-
-  --content-max: 72rem;
+  --content-max: 110rem;
 }
 ```
 
 Usage:
 1. Rounded corners should feel soft but not playful
-2. Shadows stay subtle; product photography should create depth more than UI chrome
-3. Mobile-first spacing should feel airy without making the page drag
+2. Shared containers should use the same max width and horizontal padding across nav and sections
+3. Section spacing should use explicit steps, not improvised one-off gaps
 
 ## Section-Level Intent
 
@@ -155,8 +208,8 @@ Usage:
 1. One dominant strawberry cake image
 2. Clear answer-first statement about custom cakes and pastries in Klang Valley
 3. Immediate WhatsApp CTA
-4. Supporting factual points such as lead time, delivery method, and service area
-5. Keep the hero structurally simple: one intro block, one media block, one quiet meta line
+4. Short factual support line covering ordering method, lead time, or delivery
+5. Simple structure: intro block, action block, factual support, media block
 
 ### Owner Story
 
@@ -168,7 +221,7 @@ Usage:
 
 1. Four category cards with strong photography
 2. Short practical descriptors, not long sales copy
-3. Keep this section useful for both browsing and future reuse in stage two
+3. Avoid four identical boring cards; use pacing in the overall section
 
 ### How Ordering Works
 
@@ -179,8 +232,8 @@ Usage:
 ### WhatsApp CTA
 
 1. Strong invitation to start an inquiry
-2. Should feel like a crafted card, not a generic banner
-3. Designed to support the future category-selection modal
+2. Should feel crafted, not like a generic full-width banner
+3. Must stay consistent with the future category-selection modal flow
 
 ### Testimonials Placeholder
 
@@ -195,13 +248,14 @@ Usage:
 ### Footer
 
 1. Repeat the core facts cleanly
-2. Include no storefront and delivery-only language
+2. Include no-storefront and delivery-only language
 3. Keep it factual, not decorative
 
 ## Implementation Notes
 
-1. Use `astro:assets` for content images during the build pass
+1. Use `astro:assets` for content images
 2. Keep the homepage as real HTML, not hidden in JS
-3. Defer full metadata polish until the homepage structure and copy are stable
-4. Build the visual system in `global.css` first so later sections inherit consistency
-5. Default paragraph text should inherit the primary text colour; use a muted helper class intentionally rather than muting all paragraphs globally
+3. Build the visual system in `global.css` first so later sections inherit consistency
+4. Default paragraph text should inherit the primary text colour; use a muted helper class intentionally
+5. Match the public voice choice of `we / our` unless that decision changes explicitly
+6. Keep the canonical location wording aligned with `Klang Valley, Malaysia`
