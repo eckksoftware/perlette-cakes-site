@@ -3,9 +3,9 @@
 Marketing website for Perlette Cakes, a home-based baker serving Klang Valley, Malaysia.
 
 The site exists to do three things equally well:
-1. Present a distinctive, trustworthy brand for a home-based baking business
-2. Be discoverable in search engines
-3. Be discoverable and quotable by AI assistants and answer engines
+- Present a distinctive, trustworthy brand for a home-based baking business
+- Be discoverable in search engines
+- Be discoverable and quotable by AI assistants and answer engines
 
 ## Business Summary
 
@@ -14,6 +14,7 @@ The site exists to do three things equally well:
 - Business type: `Home-based baker`
 - Service area: `Klang Valley, Malaysia`
 - Primary order flow: `WhatsApp order inquiry`
+- Public WhatsApp number: `+60 19-650 5050`
 - Delivery method: `Lalamove`
 - Storefront: `No physical storefront`
 - Pickup: `Not offered`
@@ -28,16 +29,16 @@ Homepage sections:
 2. Owner story
 3. Curated featured products
 4. How ordering works
-5. Contact / WhatsApp CTA
-6. Short FAQ
-7. Testimonials placeholder
+5. Contact / WhatsApp CTA immediately after ordering steps
+6. Testimonials placeholder
+7. Short FAQ
 8. Factual footer
 
 Homepage product categories:
-1. Custom Cakes
-2. Cupcakes
-3. Pastries
-4. Cookies
+- Custom Cakes
+- Cupcakes
+- Pastries
+- Cookies
 
 Stage-one CTA flow:
 1. Visitor clicks the main WhatsApp CTA
@@ -53,6 +54,19 @@ Stage-one content rules:
 4. No claim of halal certification unless verified
 5. No allergen-free claims unless verified
 6. Dietary needs should be discussed directly on WhatsApp
+
+Stage-one launch defaults:
+1. Use `we / our` voice for public launch copy
+2. Public lead time guidance is `3 to 5 days` unless a section requires more nuance
+3. Homepage design direction is `warm / homemade` rather than minimal luxury or playful bakery branding
+
+Initial stage-one image assignments:
+- Hero: `src/assets/images/index/strawberry-cake.JPG`
+- Custom Cakes: `src/assets/images/index/variety-cakes.JPG`
+- Cupcakes: `src/assets/images/index/variety-cupcakes.JPG`
+- Pastries: `src/assets/images/index/variety-pastries.JPG`
+- Cookies: `src/assets/images/index/variety-cookies.JPG`
+- Owner story image: placeholder for now until owner provides one
 
 ## Stage One Checklist
 
@@ -76,6 +90,10 @@ Use this checklist to track launch progress across future sessions.
 - [x] No public pricing in stage one
 - [x] English-first content for stage one
 - [x] Testimonials will use a placeholder until real quotes are approved
+- [x] Stage-one public voice is `we / our` for now
+- [x] Public WhatsApp number is `+60 19-650 5050`
+- [x] Public lead time guidance is `3 to 5 days`
+- [x] Homepage section order keeps CTA after `How ordering works` and FAQ before the factual footer
 
 ### Stage-one implementation remaining
 
@@ -83,7 +101,7 @@ Use this checklist to track launch progress across future sessions.
 - [ ] Build single-page homepage sections
 - [ ] Implement curated featured products section
 - [ ] Draft owner story from approved context notes
-- [ ] Build `How ordering works` section
+- [ ] Build how ordering works section
 - [ ] Build homepage FAQ section
 - [ ] Add factual footer content
 - [ ] Implement WhatsApp category-selection modal
@@ -231,8 +249,10 @@ npm run astro -- check
 - Keep product/category data centralized once the product data model is introduced.
 - Keep analytics vendor-neutral in code; provider wiring can happen later.
 - Cloudflare Pages and GitHub auto-deploy setup will be done in a separate follow-up commit after stage one is complete.
+- Stage-one visual direction and initial token decisions are recorded in `./docs/stage-one-design-direction.md`.
 
 ## Internal References
 
 - Canonical business language: `./CONTEXT.md`
 - Brand/copy reference notes: `./docs/brand-notes.md`
+- Stage-one visual direction: `./docs/stage-one-design-direction.md`

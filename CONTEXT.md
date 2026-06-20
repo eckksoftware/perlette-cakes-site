@@ -56,6 +56,10 @@ _Avoid_: self-pickup, collection
 The primary conversion action where a visitor contacts Perlette Cakes on WhatsApp to discuss or place an order.
 _Avoid_: checkout, cart, online order form
 
+**WhatsApp number**:
+The public customer contact number is +60 19-650 5050, while technical links and schema should use the normalized number 60196505050 where formatting must be numeric only.
+_Avoid_: inconsistent number formatting across copy, schema, and links
+
 **Qualified WhatsApp inquiry**:
 A WhatsApp message from a visitor who understands what Perlette Cakes sells and includes enough intent to start a real order conversation.
 _Avoid_: empty click, vague message, accidental tap
@@ -79,6 +83,10 @@ _Avoid_: full checkout form, server-side order form
 **Lead time**:
 The public ordering guidance that custom celebration cakes should be ordered at least 3 to 5 days in advance, with larger or more customised orders needing more notice.
 _Avoid_: instant order, same-day guarantee
+
+**Stage-one voice**:
+Use we / our in public launch copy for now, while keeping the tone personal enough to reflect a home-based business. This can be revisited later if the owner prefers I / my.
+_Avoid_: switching pronouns back and forth within the same published section
 
 **Instagram**:
 The secondary trust and discovery channel for Perlette Cakes at https://www.instagram.com/perlettecakes.
