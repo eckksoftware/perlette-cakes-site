@@ -1,0 +1,104 @@
+---
+interface Props {
+  whatsappHref: string;
+}
+
+const { whatsappHref } = Astro.props;
+
+const steps = [
+	{
+		title: 'Send your enquiry',
+		body: 'Message us on WhatsApp with what you would like to order, your preferred date, and the delivery area.',
+	},
+	{
+		title: 'Confirm the details',
+		body: 'We will guide the conversation from there, covering flavours, design direction, quantity, and timing based on availability.',
+	},
+	{
+		title: 'Receive your order',
+		body: 'Once everything is confirmed, your bakes are prepared to order and delivered through Lalamove across Klang Valley.',
+	},
+];
+---
+
+<section class="ordering section-space" id="ordering">
+	<div class="ordering__inner content-shell">
+		<div class="ordering__intro">
+			<p class="eyebrow">How Ordering Works</p>
+			<h2 class="ordering__title">Every order starts with a straightforward WhatsApp conversation</h2>
+			<p class="text-muted">
+				We keep the process simple so you can get the right cake or pastry order confirmed without filling out a long form.
+			</p>
+		</div>
+
+		<div class="ordering__grid">
+			{steps.map((step, index) => (
+				<article class="ordering__step">
+					<p class="ordering__count">0{index + 1}</p>
+					<h3>{step.title}</h3>
+					<p class="text-muted">{step.body}</p>
+				</article>
+			))}
+		</div>
+
+		<a class="ordering__cta button button--primary" href={whatsappHref} target="_blank" rel="noreferrer">
+			Start an Order Inquiry
+		</a>
+	</div>
+</section>
+
+<style>
+	.ordering__inner,
+	.ordering__intro {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.ordering__inner {
+		gap: var(--space-xl);
+	}
+
+	.ordering__intro {
+		gap: var(--space-md);
+		max-width: 42rem;
+	}
+
+	.ordering__title {
+		font-size: clamp(2.1rem, 5vw, 3.6rem);
+		text-wrap: balance;
+	}
+
+	.ordering__grid {
+		display: grid;
+		gap: var(--space-lg);
+	}
+
+	.ordering__step {
+		padding: var(--space-lg);
+		border-top: 1px solid var(--color-border);
+		background: var(--color-surface);
+	}
+
+	.ordering__count {
+		margin-bottom: var(--space-sm);
+		color: var(--color-primary-ink);
+		font-size: var(--step--1);
+		font-weight: 700;
+		letter-spacing: 0.14em;
+	}
+
+	.ordering__step h3 {
+		font-size: var(--step-1);
+		margin-bottom: var(--space-xs);
+	}
+
+	.ordering__cta {
+		align-self: flex-start;
+	}
+
+	@media (min-width: 48rem) {
+		.ordering__grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+</style>
