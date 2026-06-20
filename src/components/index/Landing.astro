@@ -3,6 +3,7 @@ import FeaturedCategories from './FeaturedCategories.astro';
 import Hero from './Hero.astro';
 import HowOrderingWorks from './HowOrderingWorks.astro';
 import OwnerStory from './OwnerStory.astro';
+import WhatsAppCta from './WhatsAppCta.astro';
 
 const instagramHref = 'https://www.instagram.com/perlettecakes';
 const whatsappHref = `https://wa.me/60196505050?text=${encodeURIComponent("Hi Perlette Cakes! I'd like to enquire about a custom cake order.")}`;
@@ -13,4 +14,5 @@ const whatsappHref = `https://wa.me/60196505050?text=${encodeURIComponent("Hi Pe
 	<OwnerStory />
 	<FeaturedCategories />
 	<HowOrderingWorks whatsappHref={whatsappHref} />
+	<WhatsAppCta whatsappHref={whatsappHref} />
 </main>

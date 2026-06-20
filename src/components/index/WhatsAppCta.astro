@@ -1,0 +1,73 @@
+---
+interface Props {
+  whatsappHref: string;
+}
+
+const { whatsappHref } = Astro.props;
+---
+
+<section class="whatsapp-cta section-space" id="contact">
+	<div class="whatsapp-cta__inner content-shell">
+		<div class="whatsapp-cta__panel">
+			<div class="whatsapp-cta__copy">
+				<p class="eyebrow">WhatsApp Inquiry</p>
+				<h2 class="whatsapp-cta__title">Ready to ask about a cake, dessert box, or celebration order?</h2>
+				<p>
+					Send us your preferred date, delivery area, and what you would like to order. We will continue the details with you on WhatsApp.
+				</p>
+			</div>
+			<a class="button whatsapp-cta__button" href={whatsappHref} target="_blank" rel="noreferrer">
+				Open WhatsApp
+			</a>
+		</div>
+	</div>
+</section>
+
+<style>
+	.whatsapp-cta__panel,
+	.whatsapp-cta__copy {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.whatsapp-cta__panel {
+		gap: var(--space-xl);
+		padding: var(--space-xl);
+		border-radius: var(--radius-xl);
+		background: var(--color-primary-ink);
+		color: var(--color-surface);
+	}
+
+	.whatsapp-cta__copy {
+		gap: var(--space-md);
+		max-width: 36rem;
+	}
+
+	.whatsapp-cta__title {
+		font-size: clamp(2rem, 5vw, 3.4rem);
+		text-wrap: balance;
+	}
+
+	.whatsapp-cta__panel :global(.eyebrow) {
+		color: rgba(255, 255, 255, 0.78);
+	}
+
+	.whatsapp-cta__button {
+		align-self: flex-start;
+		background: var(--color-surface);
+		color: var(--color-primary-ink);
+		box-shadow: none;
+	}
+
+	.whatsapp-cta__button:hover {
+		background: var(--color-surface-soft);
+	}
+
+	@media (min-width: 64rem) {
+		.whatsapp-cta__panel {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+		}
+	}
+</style>
