@@ -6,34 +6,20 @@ const whatsappHref = `https://wa.me/60196505050?text=${encodeURIComponent("Hi Pe
 ---
 
 <main>
-	<section class="hero section">
-		<div class="container hero__grid">
-			<div class="hero__content stack-lg">
-				<div class="stack-sm">
-					<p class="eyebrow">Home-based baker in Klang Valley, Malaysia</p>
-					<p class="wordmark">perlette cakes</p>
-				</div>
-
-				<div class="stack-md">
-					<h1 class="hero__title">Custom cakes and pastries made with love, made with care.</h1>
-					<p class="hero__lede">
-						We make homemade custom cakes, cupcakes, pastries, and cookies for birthdays, gatherings,
-						and everyday celebrations across Klang Valley, Malaysia.
-					</p>
-				</div>
-
-				<ul class="hero__facts" aria-label="Ordering highlights">
-					<li>Custom cakes, cupcakes, pastries, and cookies</li>
-					<li>Most orders need 3 to 5 days' notice</li>
-					<li>Delivery across Klang Valley via Lalamove</li>
-				</ul>
-
-				<div class="hero__actions">
+	<section class="landing-hero">
+		<div class="landing-hero__inner content-shell">
+			<div class="landing-hero__content">
+				<p class="eyebrow">Home-based baker in Klang Valley, Malaysia</p>
+				<h1 class="landing-hero__title">Where every cake feels like a celebration</h1>
+				<p class="landing-hero__summary text-muted">
+					Perlette Cakes makes custom cakes, cupcakes, cookies, and pastries for Klang Valley delivery, with every order started on WhatsApp.
+				</p>
+				<div class="landing-hero__actions">
 					<a class="button button--primary" href={whatsappHref} target="_blank" rel="noreferrer">
-						Start on WhatsApp
+						Order on WhatsApp
 					</a>
 					<a
-						class="button button--ghost"
+						class="landing-hero__link"
 						href="https://www.instagram.com/perlettecakes"
 						target="_blank"
 						rel="noreferrer"
@@ -43,123 +29,97 @@ const whatsappHref = `https://wa.me/60196505050?text=${encodeURIComponent("Hi Pe
 				</div>
 			</div>
 
-			<div class="hero__media">
-				<div>
-					<Image
-						class="hero__image"
-						src={strawberryCake}
-						alt="Strawberry celebration cake with piped cream, fresh strawberries, and pink ribbon detail."
-						loading="eager"
-						sizes="(min-width: 64rem) 38rem, (min-width: 48rem) 50vw, 100vw"
-					/>
-				</div>
-				<p class="hero__caption">
-					Made for celebrations that should taste as good as they look.
-				</p>
+			<div class="landing-hero__media">
+				<Image
+					class="landing-hero__image"
+					src={strawberryCake}
+					alt="Strawberry celebration cake with piped cream, fresh strawberries, and pink ribbon detail."
+					loading="eager"
+					width="800"
+				/>
 			</div>
 		</div>
 	</section>
 </main>
 
 <style>
-	.hero {
-		position: relative;
-		overflow: clip;
+	.landing-hero {
+		padding-block: var(--space-lg) var(--space-2xl);
 	}
 
-	.hero__grid {
-		display: grid;
-		gap: var(--space-2xl);
-		align-items: center;
+	.landing-hero__inner {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xl);
 	}
 
-	.hero__content {
-		max-width: 38rem;
+	.landing-hero__content {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-lg);
 	}
 
-	.hero__title {
-		font-size: var(--step-4);
-		max-width: 12ch;
+	.landing-hero__title {
+		max-width: 9ch;
+		font-size: clamp(3rem, 9vw, 5.5rem);
+		line-height: 0.9;
+		letter-spacing: -0.05em;
+		text-wrap: balance;
 	}
 
-	.hero__lede {
-		max-width: 34rem;
-		font-size: var(--step-1);
+	.landing-hero__summary {
+		max-width: 30rem;
+		font-size: var(--step-0);
 	}
 
-	.hero__facts {
-		display: grid;
-		gap: var(--space-sm);
-		padding: 0;
-		list-style: none;
-	}
-
-	.hero__facts li {
-		padding: var(--space-sm) var(--space-md);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-md);
-		background: rgba(255, 255, 255, 0.75);
-		box-shadow: var(--shadow-sm);
-		color: var(--color-text);
-		font-size: var(--step--1);
-		font-weight: 600;
-	}
-
-	.hero__actions {
+	.landing-hero__actions {
 		display: flex;
 		flex-wrap: wrap;
 		gap: var(--space-sm);
+		align-items: center;
 	}
 
-	.hero__media {
-		position: relative;
-	}
-
-	.hero__frame {
-		position: relative;
-		padding: clamp(0.75rem, 2vw, 1rem);
-		border-radius: var(--radius-xl);
-		background: var(--color-surface);
-		box-shadow: var(--shadow-md);
-	}
-
-	.hero__image {
-		width: 100%;
-		height: 50%;
-		border-radius: calc(var(--radius-xl) - 0.5rem);
-		object-fit: cover;
-	}
-
-	.hero__caption {
-		max-width: 24rem;
-		margin-top: var(--space-md);
-		margin-left: auto;
-		padding-left: var(--space-lg);
+	.landing-hero__link {
 		color: var(--color-primary-ink);
 		font-size: var(--step--1);
 		font-weight: 700;
-		text-align: right;
+		text-underline-offset: 0.25em;
 	}
 
-	@media (min-width: 48rem) {
-		.hero__facts {
-			grid-template-columns: repeat(3, minmax(0, 1fr));
-		}
+	.landing-hero__media {
+		overflow: hidden;
+		background: var(--color-surface-soft);
+		aspect-ratio: 4 / 5;
+		border-radius: var(--radius-xl);
+	}
+
+	.landing-hero__media :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 
 	@media (min-width: 64rem) {
-		.hero__grid {
-			grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-			gap: clamp(3rem, 5vw, 5rem);
+		.landing-hero {
+			padding-top: var(--space-md);
+			padding-bottom: var(--space-xl);
 		}
 
-		.hero__content {
-			padding-top: var(--space-xl);
+		.landing-hero__inner {
+			display: grid;
+			grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+			gap: var(--space-2xl);
+			align-items: center;
 		}
 
-		.hero__media {
-			justify-self: end;
-			width: min(100%, 38rem);
+		.landing-hero__content {
+			padding-block: var(--space-xl);
+		}
+
+		.landing-hero__media {
+			aspect-ratio: auto;
+			min-height: 34rem;
 		}
 	}
 </style>

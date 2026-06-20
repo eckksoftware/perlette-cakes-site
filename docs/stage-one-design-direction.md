@@ -60,6 +60,18 @@ Signature move:
 2. Let one product image dominate the hero rather than using a carousel or dense collage
 3. Use framed content cards selectively so the page feels crafted rather than boxy
 
+## CSS Maintainability Rule
+
+Keep the CSS simple enough that future sections can be edited quickly without needing to mentally reconstruct the whole component.
+
+Rules for future sessions:
+1. Prefer one clear layout primitive per section, usually a stack or a two-column grid, not several overlapping layout systems
+2. Keep wrappers to a minimum and avoid nested utility wrappers unless they remove more complexity than they add
+3. Use tokens and shared global primitives for spacing, buttons, containers, and muted text instead of re-declaring them per section
+4. Do not keep decorative CSS that is not attached to live markup
+5. Let one visual idea carry each section; avoid adding multiple competing accents, cards, captions, or framing devices at once
+6. If a layout can be expressed with a handful of selectors, prefer that over a more clever but harder-to-maintain version
+
 ## Initial Token System
 
 These are the implementation tokens to start with. Adjust only if a real visual conflict appears during the build.
@@ -144,6 +156,7 @@ Usage:
 2. Clear answer-first statement about custom cakes and pastries in Klang Valley
 3. Immediate WhatsApp CTA
 4. Supporting factual points such as lead time, delivery method, and service area
+5. Keep the hero structurally simple: one intro block, one media block, one quiet meta line
 
 ### Owner Story
 
@@ -191,3 +204,4 @@ Usage:
 2. Keep the homepage as real HTML, not hidden in JS
 3. Defer full metadata polish until the homepage structure and copy are stable
 4. Build the visual system in `global.css` first so later sections inherit consistency
+5. Default paragraph text should inherit the primary text colour; use a muted helper class intentionally rather than muting all paragraphs globally

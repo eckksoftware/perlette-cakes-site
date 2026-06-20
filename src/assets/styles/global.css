@@ -39,7 +39,6 @@
   --shadow-md: 0 8px 24px rgba(43, 38, 34, 0.1);
 
   --content-max: 72rem;
-  --content-gutter: 1rem;
   --focus-ring: 0 0 0 3px rgba(201, 139, 154, 0.35);
   --transition-base: 180ms ease;
 }
@@ -62,9 +61,7 @@ body {
   font-size: var(--step-0);
   line-height: 1.6;
   color: var(--color-text);
-  background:
-    radial-gradient(circle at top left, rgba(201, 139, 154, 0.16), transparent 30%),
-    linear-gradient(180deg, #fffaf6 0%, var(--color-bg) 24rem);
+  background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -80,6 +77,10 @@ img, picture, video, canvas, svg {
 
 input, button, textarea, select {
   font: inherit;
+}
+
+button {
+  cursor: pointer;
 }
 
 a {
@@ -102,7 +103,7 @@ h1, h2, h3 {
 }
 
 p {
-  color: var(--color-text-muted);
+  color: inherit;
 }
 
 :focus-visible {
@@ -110,13 +111,15 @@ p {
   box-shadow: var(--focus-ring);
 }
 
-.container {
-  width: min(calc(100% - (var(--content-gutter) * 2)), var(--content-max));
-  margin-inline: auto;
-}
-
 .section {
   padding-block: clamp(3rem, 8vw, var(--space-3xl));
+}
+
+.content-shell {
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding-inline: var(--space-md);
 }
 
 .stack-xs > * + * {
@@ -151,6 +154,10 @@ p {
   font-size: clamp(2rem, 1.7rem + 1.5vw, 3rem);
   line-height: 1;
   color: var(--color-primary-ink);
+}
+
+.text-muted {
+  color: var(--color-text-muted);
 }
 
 .button {
@@ -211,7 +218,7 @@ p {
 }
 
 @media (min-width: 48rem) {
-  :root {
-    --content-gutter: 1.5rem;
+  .content-shell {
+    padding-inline: var(--space-lg);
   }
 }
