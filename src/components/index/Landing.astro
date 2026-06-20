@@ -1,4 +1,5 @@
 ---
+import FeaturedCategories from './FeaturedCategories.astro';
 import Hero from './Hero.astro';
 import OwnerStory from './OwnerStory.astro';
 
@@ -9,4 +10,5 @@ const whatsappHref = `https://wa.me/60196505050?text=${encodeURIComponent("Hi Pe
 <main>
 	<Hero whatsappHref={whatsappHref} instagramHref={instagramHref} />
 	<OwnerStory />
+	<FeaturedCategories />
 </main>

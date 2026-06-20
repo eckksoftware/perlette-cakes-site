@@ -1,0 +1,125 @@
+---
+import { Image } from 'astro:assets';
+import cakesImage from '../../assets/images/index/variety-cakes.JPG';
+import cupcakesImage from '../../assets/images/index/variety-cupcakes.JPG';
+import pastriesImage from '../../assets/images/index/variety-pastries.JPG';
+import cookiesImage from '../../assets/images/index/variety-cookies.JPG';
+
+const categories = [
+	{
+		title: 'Custom Cakes',
+		description: 'Celebration cakes for birthdays, gifting, and gatherings, with flavours and finishing discussed directly on WhatsApp.',
+		image: cakesImage,
+		alt: 'Assorted custom celebration cakes with different colours, sizes, and piped details.',
+	},
+	{
+		title: 'Cupcakes',
+		description: 'Small-batch cupcakes that work well for dessert tables, office treats, and easy celebration orders.',
+		image: cupcakesImage,
+		alt: 'Assorted cupcakes with piped frosting and decorative toppings arranged together.',
+	},
+	{
+		title: 'Pastries',
+		description: 'Pastry boxes for everyday indulgence, gifting, and add-on orders when you want variety in one box.',
+		image: pastriesImage,
+		alt: 'Mixed pastries grouped together for a pastry box order.',
+	},
+	{
+		title: 'Cookies',
+		description: 'Cookies for festive gifting, snack trays, and easy-to-share orders across different occasions.',
+		image: cookiesImage,
+		alt: 'Assorted cookies displayed together for gifting and sharing.',
+	},
+];
+---
+
+<section class="featured-categories section-space" id="categories">
+	<div class="featured-categories__inner content-shell">
+		<div class="featured-categories__intro">
+			<p class="eyebrow">Featured Categories</p>
+			<h2 class="featured-categories__title">Browse the bakes people usually start with</h2>
+			<p class="text-muted">
+				Start with the category that best fits your occasion, then continue the details with us on WhatsApp.
+			</p>
+		</div>
+
+		<div class="featured-categories__grid">
+			{categories.map((category) => (
+				<article class="featured-categories__card">
+					<div class="featured-categories__media">
+						<Image src={category.image} alt={category.alt} loading="lazy" width="720" />
+					</div>
+					<div class="featured-categories__copy">
+						<h3>{category.title}</h3>
+						<p class="text-muted">{category.description}</p>
+					</div>
+				</article>
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.featured-categories {
+		background: var(--color-surface-soft);
+	}
+
+	.featured-categories__inner,
+	.featured-categories__intro,
+	.featured-categories__copy {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.featured-categories__inner {
+		gap: var(--space-xl);
+	}
+
+	.featured-categories__intro {
+		gap: var(--space-md);
+		max-width: 42rem;
+	}
+
+	.featured-categories__title {
+		font-size: clamp(2.1rem, 5vw, 3.6rem);
+		text-wrap: balance;
+	}
+
+	.featured-categories__grid {
+		display: grid;
+		gap: var(--space-lg);
+	}
+
+	.featured-categories__card {
+		overflow: hidden;
+		border-radius: var(--radius-xl);
+		background: var(--color-surface);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.featured-categories__media {
+		aspect-ratio: 4 / 3;
+		overflow: hidden;
+	}
+
+	.featured-categories__media :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.featured-categories__copy {
+		gap: var(--space-sm);
+		padding: var(--space-lg);
+	}
+
+	.featured-categories__copy h3 {
+		font-size: var(--step-1);
+	}
+
+	@media (min-width: 48rem) {
+		.featured-categories__grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+</style>
