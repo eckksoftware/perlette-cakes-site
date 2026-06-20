@@ -144,6 +144,10 @@ p {
   padding-inline: var(--space-md);
 }
 
+.section-space {
+  padding-block: var(--space-2xl);
+}
+
 .eyebrow {
   display: inline-flex;
   align-items: center;
@@ -198,5 +202,9 @@ p {
 @media (min-width: 48rem) {
   .content-shell {
     padding-inline: 1.25rem;
+  }
+
+  .section-space {
+    padding-block: var(--space-3xl);
   }
 }
