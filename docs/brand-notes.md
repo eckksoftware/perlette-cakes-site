@@ -83,3 +83,20 @@ Some of you may find our prices to be above average, but that is because we don'
 3. Keep the final public copy aligned with a home-based business expectation
 4. Keep price/value language restrained until the owner approves what can appear publicly
 5. Keep testimonials as placeholders until real quotes are supplied
+
+## Approved FAQ Facts
+
+These points are approved for public FAQ copy unless the owner revises them later.
+
+1. Delivery covers Klang Valley and anywhere reachable by Lalamove Car from Mont Kiara
+2. Delivery fees depend on the customer's location and are calculated from Mont Kiara
+3. Standard delivery windows are 12pm to 4pm, 4pm to 8pm, and 8pm to 10pm
+4. Exact arrival times are not guaranteed because delivery depends on traffic, weather, and Lalamove driver availability
+5. Morning delivery requests can be discussed case by case
+6. There is strictly no self pickup
+7. Perlette Cakes is not halal-certified, but uses halal ingredients and maintains careful hygiene and food handling practices in a Muslim household with no pets
+8. Amira has received typhoid vaccination and this can be used as a food-safety trust signal where appropriate
+9. Eggless and vegan cakes are available on request for selected flavours
+10. Confirmed orders are non-refundable because ingredients and production time are reserved specifically for each order
+11. Changes or postponements are handled case by case, usually with at least 10 days notice and a new requested date within 6 months of the original delivery date, subject to availability
+12. Official invoices can be requested via WhatsApp for claims purposes

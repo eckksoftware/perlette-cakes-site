@@ -26,8 +26,8 @@ Stage one is a single-page website focused on clarity, trust, and qualified What
 
 Current implementation checkpoint:
 - `src/layouts/Layout.astro` and `src/components/index/Landing.astro` are active
-- The sticky nav and homepage hero are implemented
-- Remaining homepage sections and the modal inquiry flow are still pending
+- The sticky nav, hero, owner story, featured categories, ordering steps, WhatsApp CTA, and homepage FAQ are implemented
+- The testimonials placeholder, factual footer, and modal inquiry flow are still pending
 
 Homepage sections:
 1. Hero with product-led imagery and factual highlights
@@ -67,6 +67,19 @@ Stage-one launch defaults:
 1. Use `we / our` voice for public launch copy
 2. Public lead time guidance is `3 to 5 days` unless a section requires more nuance
 3. Homepage design direction is `warm / homemade` rather than minimal luxury or playful bakery branding
+
+Approved public FAQ facts:
+1. Delivery covers Klang Valley and anywhere reachable by `Lalamove Car` from `Mont Kiara`
+2. Delivery fees are calculated from `Mont Kiara`
+3. Standard delivery windows are `12pm to 4pm`, `4pm to 8pm`, and `8pm to 10pm`
+4. Exact arrival times are not guaranteed because delivery depends on traffic, weather, and Lalamove driver availability
+5. Morning delivery can be discussed on request, subject to availability
+6. There is strictly no self pickup
+7. Perlette Cakes is not halal-certified, but uses halal ingredients and operates from a Muslim household with no pets
+8. Eggless and vegan cakes are available on request for selected flavours
+9. Confirmed orders are non-refundable
+10. Changes or postponements are handled case by case, usually with at least `10 days` notice and a new date within `6 months`, subject to availability
+11. Official invoices can be requested on WhatsApp
 
 Initial stage-one image assignments:
 - Hero: `src/assets/images/index/strawberry-cake.JPG`
@@ -111,6 +124,7 @@ Use this checklist to track launch progress across future sessions.
 - [ ] Draft owner story from approved context notes
 - [ ] Build how ordering works section
 - [ ] Build homepage FAQ section
+- [x] Build homepage FAQ section
 - [ ] Add factual footer content
 - [ ] Implement WhatsApp category-selection modal
 - [ ] Generate pre-filled WhatsApp inquiry message from modal selections
@@ -124,7 +138,7 @@ Use this checklist to track launch progress across future sessions.
 - [ ] Replace existing layout metadata with project-specific canonical metadata
 - [ ] Add Open Graph and social metadata
 - [ ] Add Bakery / LocalBusiness JSON-LD with corrected business facts
-- [ ] Add FAQ schema if the final homepage FAQ supports it cleanly
+- [x] Add FAQ schema if the final homepage FAQ supports it cleanly
 - [ ] Add `llms.txt`
 - [ ] Correct `robots.txt` naming/content and crawler policy
 - [ ] Add sitemap support
