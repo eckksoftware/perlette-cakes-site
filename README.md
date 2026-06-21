@@ -26,8 +26,8 @@ Stage one is a single-page website focused on clarity, trust, and qualified What
 
 Current implementation checkpoint:
 - `src/layouts/Layout.astro` and `src/components/index/Landing.astro` are active
-- The sticky nav, hero, owner story, featured categories, ordering steps, WhatsApp CTA, and homepage FAQ are implemented
-- The testimonials placeholder, factual footer, and modal inquiry flow are still pending
+- The sticky nav, hero, owner story, featured categories, ordering steps, WhatsApp CTA, homepage FAQ, and factual footer are implemented
+- The testimonials placeholder and modal inquiry flow are still pending
 
 Homepage sections:
 1. Hero with product-led imagery and factual highlights
@@ -119,38 +119,33 @@ Use this checklist to track launch progress across future sessions.
 ### Stage-one implementation remaining
 
 - [x] Replace starter Astro layout and homepage structure
-- [ ] Build single-page homepage sections
-- [ ] Implement curated featured products section
-- [ ] Draft owner story from approved context notes
-- [ ] Build how ordering works section
-- [ ] Build homepage FAQ section
-- [x] Build homepage FAQ section
-- [ ] Add factual footer content
+- [x] Build current homepage sections: hero, owner story, featured categories, ordering steps, WhatsApp CTA, FAQ, and factual footer
+- [ ] Add testimonials placeholder
 - [ ] Implement WhatsApp category-selection modal
 - [ ] Generate pre-filled WhatsApp inquiry message from modal selections
 - [ ] Add vendor-neutral analytics event hooks for CTA and modal actions
-- [ ] Replace raw content images with optimized `astro:assets` usage where needed
-- [ ] Apply the stage-one brand palette and visual system
+- [x] Replace raw content images with optimized `astro:assets` usage where needed
+- [x] Apply the stage-one brand palette and visual system
 
 ### Stage-one discoverability remaining
 
 - [ ] Finalize page title and meta description for launch homepage
-- [ ] Replace existing layout metadata with project-specific canonical metadata
+- [x] Replace existing layout metadata with project-specific canonical metadata
 - [ ] Add Open Graph and social metadata
-- [ ] Add Bakery / LocalBusiness JSON-LD with corrected business facts
+- [x] Add Bakery / LocalBusiness JSON-LD with corrected business facts
 - [x] Add FAQ schema if the final homepage FAQ supports it cleanly
 - [ ] Add `llms.txt`
 - [ ] Correct `robots.txt` naming/content and crawler policy
 - [ ] Add sitemap support
 - [ ] Ensure headings and copy are answer-first and crawlable
-- [ ] Ensure image alt text is descriptive and specific
+- [x] Ensure image alt text is descriptive and specific
 
 ### Stage-one quality and release remaining
 
 - [ ] Verify mobile and desktop layouts
 - [ ] Verify keyboard/focus accessibility
-- [ ] Run `npm run astro -- check`
-- [ ] Run `npm run build`
+- [x] Run `npm run astro -- check`
+- [x] Run `npm run build`
 - [ ] Review launch copy with Amira
 - [ ] Replace testimonial placeholder when real quotes are available
 
@@ -267,7 +262,6 @@ npm run astro -- check
 
 ## Project Notes
 
-- Replace starter files and naming with project-specific structure as implementation progresses.
 - Keep product/category data centralized once the product data model is introduced.
 - Keep analytics vendor-neutral in code; provider wiring can happen later.
 - Cloudflare Pages and GitHub auto-deploy setup will be done in a separate follow-up commit after stage one is complete.

@@ -8,8 +8,8 @@ Stage one remains a single-page marketing site with one homepage route.
 
 Current implementation checkpoint:
 1. `src/layouts/Layout.astro` provides the document shell and sticky navigation
-2. `src/components/index/Landing.astro` now includes the hero, owner story, featured categories, ordering steps, WhatsApp CTA, and homepage FAQ
-3. Testimonials placeholder, factual footer, and the category-selection modal are still pending
+2. `src/components/index/Landing.astro` now includes the hero, owner story, featured categories, ordering steps, WhatsApp CTA, homepage FAQ, and factual footer
+3. Testimonials placeholder and the category-selection modal are still pending
 
 Relevant files for this phase:
 1. `src/layouts/Layout.astro`

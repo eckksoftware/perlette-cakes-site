@@ -1,5 +1,6 @@
 ---
 import Faq from './Faq.astro';
+import FactualFooter from './FactualFooter.astro';
 import FeaturedCategories from './FeaturedCategories.astro';
 import Hero from './Hero.astro';
 import HowOrderingWorks from './HowOrderingWorks.astro';
@@ -18,3 +19,5 @@ const whatsappHref = `https://wa.me/60196505050?text=${encodeURIComponent("Hi Pe
 	<WhatsAppCta whatsappHref={whatsappHref} />
 	<Faq whatsappHref={whatsappHref} />
 </main>
+
+<FactualFooter whatsappHref={whatsappHref} instagramHref={instagramHref} />
