@@ -29,6 +29,7 @@ Current implementation checkpoint:
 - The sticky nav, hero, owner story, featured categories, ordering steps, WhatsApp CTA, homepage FAQ, and factual footer are implemented
 - The WhatsApp inquiry modal is implemented
 - The testimonials placeholder is still pending
+- No dedicated component cleanup pass is assumed before deployment; only targeted fixes should be tracked here
 
 Homepage sections:
 1. Hero with product-led imagery and factual highlights
@@ -147,6 +148,17 @@ Use this checklist to track launch progress across future sessions.
 - [x] Run `npm run build`
 - [ ] Review launch copy with Amira
 - [ ] Replace testimonial placeholder when real quotes are available
+
+### Stage-one deployment prep remaining
+
+- [ ] Finalize whether the testimonials placeholder stays in launch scope or is removed before deployment
+- [ ] Fix `public/robot.txt` to a real `public/robots.txt` with the intended crawler policy
+- [ ] Add `public/llms.txt`
+- [ ] Add sitemap support and set the production site URL in `astro.config.mjs`
+- [ ] Add Open Graph / social metadata for the homepage
+- [ ] Re-check JSON-LD facts against the latest owner-approved wording before deployment
+- [ ] Re-run mobile QA on the WhatsApp inquiry modal and all CTA entry points
+- [ ] Re-run keyboard/focus QA on the modal open, close, trap, and validation states
 
 ### Deferred to separate follow-up commit
 

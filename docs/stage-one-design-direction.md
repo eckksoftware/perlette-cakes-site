@@ -11,6 +11,7 @@ Current implementation checkpoint:
 2. `src/components/index/Landing.astro` now includes the hero, owner story, featured categories, ordering steps, WhatsApp CTA, homepage FAQ, and factual footer
 3. The WhatsApp inquiry modal is implemented
 4. The testimonials placeholder is still pending
+5. No dedicated component cleanup pass is assumed before deployment; track only targeted fixes and deployment blockers
 
 Relevant files for this phase:
 1. `src/layouts/Layout.astro`
