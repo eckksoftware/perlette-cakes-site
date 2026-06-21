@@ -1,9 +1,20 @@
 ---
 import Landing from '../components/index/Landing.astro';
+import { homeFaqs } from '../data/homeFaqs';
 import Layout from '../layouts/Layout.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const faqSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: homeFaqs.map((item) => ({
+		'@type': 'Question',
+		name: item.question,
+		acceptedAnswer: {
+			'@type': 'Answer',
+			text: item.answer,
+		},
+	})),
+};
 
 ---
 
@@ -11,6 +22,7 @@ import Layout from '../layouts/Layout.astro';
 	title="Perlette Cakes | Home-based cakes and pastries in Klang Valley" 
 	description="Perlette Cakes makes homemade custom cakes, cupcakes, pastries, and cookies for delivery across Klang Valley, Malaysia." 
 	canonicalUrl="https://perlettecakes.com/" 
-	noIndex={false} >
+	noIndex={false}
+	jsonLd={faqSchema} >
 	<Landing />
 </Layout>
