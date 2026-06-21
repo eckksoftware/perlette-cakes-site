@@ -13,10 +13,10 @@ const { whatsappHref } = Astro.props;
 				<p class="eyebrow">WhatsApp Inquiry</p>
 				<h2 class="whatsapp-cta__title">Ready to ask about a cake, dessert box, or celebration order?</h2>
 				<p>
-					Send us your preferred date, delivery area, and what you would like to order. We will continue the details with you on WhatsApp.
+					Fill in your delivery details, then we will continue the rest of the order conversation with you on WhatsApp.
 				</p>
 			</div>
-			<a class="button whatsapp-cta__button" href={whatsappHref} target="_blank" rel="noreferrer">
+			<a class="button whatsapp-cta__button" href={whatsappHref} target="_blank" rel="noreferrer" data-order-trigger>
 				Open WhatsApp
 			</a>
 		</div>

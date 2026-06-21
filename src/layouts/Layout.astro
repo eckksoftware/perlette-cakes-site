@@ -1,4 +1,5 @@
 ---
+import OrderInquiryModal from '../components/OrderInquiryModal.astro';
 import '../assets/styles/global.css';
 
 interface Props {
@@ -72,12 +73,13 @@ const allJsonLd = [
 			<header class="site-nav">
 				<div class="site-nav__inner content-shell">
 					<a class="site-nav__brand" href="/">perlette cakes</a>
-					<a class="site-nav__cta button button--primary" href={whatsappHref} target="_blank" rel="noreferrer">
+					<a class="site-nav__cta button button--primary" href={whatsappHref} target="_blank" rel="noreferrer" data-order-trigger>
 						Order on WhatsApp
 					</a>
 				</div>
 			</header>
 			<slot />
+			<OrderInquiryModal />
 		</div>
 	</body>
 </html>

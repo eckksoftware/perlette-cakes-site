@@ -8,7 +8,7 @@ const { whatsappHref } = Astro.props;
 const steps = [
 	{
 		title: 'Send your enquiry',
-		body: 'Message us on WhatsApp with what you would like to order, your preferred date, and the delivery area.',
+		body: 'Open the order form and share your receiver details, what you are interested in, preferred date, and delivery address.',
 	},
 	{
 		title: 'Confirm the details',
@@ -27,7 +27,7 @@ const steps = [
 			<p class="eyebrow">How Ordering Works</p>
 			<h2 class="ordering__title">Every order starts with a straightforward WhatsApp conversation</h2>
 			<p class="text-muted">
-				We keep the process simple so you can get the right cake or pastry order confirmed without filling out a long form.
+				We keep the process simple so you can send your main delivery details first, then continue the order conversation on WhatsApp.
 			</p>
 		</div>
 
@@ -41,7 +41,7 @@ const steps = [
 			))}
 		</div>
 
-		<a class="ordering__cta button button--primary" href={whatsappHref} target="_blank" rel="noreferrer">
+		<a class="ordering__cta button button--primary" href={whatsappHref} target="_blank" rel="noreferrer" data-order-trigger>
 			Start an Order Inquiry
 		</a>
 	</div>

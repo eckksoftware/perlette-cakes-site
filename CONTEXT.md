@@ -92,8 +92,8 @@ _Avoid_: presenting all flavours as automatically eggless or vegan
 Custom orders are accepted subject to availability and design requirements.
 _Avoid_: unconditional custom-order promises
 
-**Category selection modal**:
-The stage-one CTA opens a lightweight modal where visitors can choose one or more product categories and optionally add a short note before continuing to WhatsApp.
+**Order inquiry modal**:
+The stage-one CTA opens a lightweight modal where visitors enter receiver name, contact number, interested products, delivery date, delivery time range, delivery address, and any optional special request before continuing to WhatsApp.
 _Avoid_: full checkout form, server-side order form
 
 **Lead time**:

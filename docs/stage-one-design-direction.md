@@ -9,7 +9,8 @@ Stage one remains a single-page marketing site with one homepage route.
 Current implementation checkpoint:
 1. `src/layouts/Layout.astro` provides the document shell and sticky navigation
 2. `src/components/index/Landing.astro` now includes the hero, owner story, featured categories, ordering steps, WhatsApp CTA, homepage FAQ, and factual footer
-3. Testimonials placeholder and the category-selection modal are still pending
+3. The WhatsApp inquiry modal is implemented
+4. The testimonials placeholder is still pending
 
 Relevant files for this phase:
 1. `src/layouts/Layout.astro`
@@ -233,7 +234,7 @@ Usage:
 
 1. Strong invitation to start an inquiry
 2. Should feel crafted, not like a generic full-width banner
-3. Must stay consistent with the future category-selection modal flow
+3. Must stay consistent with the live order inquiry modal flow
 
 ### Testimonials Placeholder
 

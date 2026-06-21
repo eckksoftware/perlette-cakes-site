@@ -27,7 +27,8 @@ Stage one is a single-page website focused on clarity, trust, and qualified What
 Current implementation checkpoint:
 - `src/layouts/Layout.astro` and `src/components/index/Landing.astro` are active
 - The sticky nav, hero, owner story, featured categories, ordering steps, WhatsApp CTA, homepage FAQ, and factual footer are implemented
-- The testimonials placeholder and modal inquiry flow are still pending
+- The WhatsApp inquiry modal is implemented
+- The testimonials placeholder is still pending
 
 Homepage sections:
 1. Hero with product-led imagery and factual highlights
@@ -48,12 +49,10 @@ Homepage product categories:
 Stage-one CTA flow:
 1. Visitor clicks the main WhatsApp CTA
 2. A lightweight modal opens
-3. Visitor chooses one or more categories
-4. Visitor can add an optional note
-5. Site opens WhatsApp with a pre-filled inquiry message
-
-Temporary implementation note:
-- Until the category-selection modal is built, the live CTA links directly to WhatsApp with a pre-filled inquiry message
+3. Visitor enters receiver name and contact number
+4. Visitor selects one or more interests and enters delivery details
+5. Visitor can add an optional special request
+6. Site opens WhatsApp with a pre-filled inquiry message
 
 Stage-one content rules:
 1. No public pricing yet
@@ -121,8 +120,8 @@ Use this checklist to track launch progress across future sessions.
 - [x] Replace starter Astro layout and homepage structure
 - [x] Build current homepage sections: hero, owner story, featured categories, ordering steps, WhatsApp CTA, FAQ, and factual footer
 - [ ] Add testimonials placeholder
-- [ ] Implement WhatsApp category-selection modal
-- [ ] Generate pre-filled WhatsApp inquiry message from modal selections
+- [x] Implement WhatsApp inquiry modal with delivery details fields
+- [x] Generate pre-filled WhatsApp inquiry message from modal data
 - [ ] Add vendor-neutral analytics event hooks for CTA and modal actions
 - [x] Replace raw content images with optimized `astro:assets` usage where needed
 - [x] Apply the stage-one brand palette and visual system

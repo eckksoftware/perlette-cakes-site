@@ -1,0 +1,541 @@
+---
+const timeRanges = [
+  '12:00 - 4:00 PM',
+  '4:00 - 8:00 PM',
+  '8:00 - 10:00 PM',
+];
+const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
+---
+
+<div class="order-modal" data-order-modal hidden>
+	<div class="order-modal__backdrop" data-order-close></div>
+	<div
+		class="order-modal__dialog"
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="order-modal-title"
+	>
+		<div class="order-modal__header">
+			<div>
+				<p class="eyebrow">WhatsApp Order</p>
+				<h2 class="order-modal__title" id="order-modal-title">Enter your delivery details</h2>
+			</div>
+			<button class="order-modal__close" type="button" aria-label="Close order form" data-order-close>
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+
+		<form class="order-modal__form" data-order-form novalidate>
+			<div class="order-modal__field-grid">
+				<label class="order-modal__field">
+					<span class="order-modal__label">Name</span>
+					<input class="order-modal__input" name="receiverName" type="text" autocomplete="name" required data-order-name />
+				</label>
+
+				<label class="order-modal__field">
+					<span class="order-modal__label">Contact number</span>
+					<input
+						class="order-modal__input"
+						name="contactNumber"
+						type="tel"
+						autocomplete="tel"
+						inputmode="numeric"
+						required
+						data-order-contact
+					/>
+				</label>
+
+				<fieldset class="order-modal__field order-modal__field--full order-modal__interest-group">
+					<legend class="order-modal__label">Interested In</legend>
+					<div class="order-modal__interest-options">
+						{interestOptions.map((option) => (
+							<label class="order-modal__interest-option">
+								<input type="checkbox" name="interestedIn" value={option} data-order-interest />
+								<span>{option}</span>
+							</label>
+						))}
+					</div>
+				</fieldset>
+
+				<label class="order-modal__field">
+					<span class="order-modal__label">Delivery date</span>
+					<input
+						class="order-modal__input"
+						name="deliveryDate"
+						type="text"
+						inputmode="numeric"
+						placeholder="DD-MM-YYYY"
+						maxlength="10"
+						required
+						data-order-date
+					/>
+				</label>
+
+				<label class="order-modal__field">
+					<span class="order-modal__label">Delivery time range</span>
+					<select class="order-modal__input order-modal__select" name="deliveryTimeRange" required data-order-time>
+						<option value="">Select a time range</option>
+						{timeRanges.map((range) => (
+							<option value={range}>{range}</option>
+						))}
+					</select>
+				</label>
+			</div>
+
+			<label class="order-modal__field">
+				<span class="order-modal__label">Delivery address</span>
+				<span class="order-modal__hint">Strictly no self pickups.</span>
+				<textarea
+					class="order-modal__input order-modal__textarea order-modal__textarea--address"
+					name="deliveryAddress"
+					required
+					data-order-address
+				></textarea>
+			</label>
+
+			<label class="order-modal__field">
+				<span class="order-modal__label">Special request</span>
+				<span class="order-modal__hint">Notes &amp; cake toppers cost extra.</span>
+				<textarea
+					class="order-modal__input order-modal__textarea order-modal__textarea--special"
+					name="specialRequest"
+					data-order-request
+				></textarea>
+			</label>
+
+			<p class="order-modal__error" data-order-error role="alert" hidden></p>
+
+			<div class="order-modal__actions">
+				<button class="button button--primary" type="submit">Order</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script is:inline>
+	const modal = document.querySelector('[data-order-modal]');
+	const whatsappBaseUrl = 'https://wa.me/60196505050';
+	if (modal) {
+		const form = modal.querySelector('[data-order-form]');
+		const nameInput = modal.querySelector('[data-order-name]');
+		const contactInput = modal.querySelector('[data-order-contact]');
+		const interestInputs = modal.querySelectorAll('[data-order-interest]');
+		const dateInput = modal.querySelector('[data-order-date]');
+		const timeInput = modal.querySelector('[data-order-time]');
+		const addressInput = modal.querySelector('[data-order-address]');
+		const requestInput = modal.querySelector('[data-order-request]');
+		const errorEl = modal.querySelector('[data-order-error]');
+		const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+		let lastTrigger = null;
+		const getTodayDate = () => {
+			const now = new Date();
+			now.setHours(0, 0, 0, 0);
+			return now;
+		};
+
+		const getEarliestAllowedDate = () => {
+			const earliest = getTodayDate();
+			earliest.setDate(earliest.getDate() + 7);
+			return earliest;
+		};
+
+		const formatDateDigits = (value) => {
+			const digits = value.replace(/\D+/g, '').slice(0, 8);
+			if (digits.length <= 2) return digits;
+			if (digits.length <= 4) return `${digits.slice(0, 2)}-${digits.slice(2)}`;
+			return `${digits.slice(0, 2)}-${digits.slice(2, 4)}-${digits.slice(4)}`;
+		};
+
+		const parseDeliveryDate = (value) => {
+			const match = value.match(/^(\d{2})-(\d{2})-(\d{4})$/);
+			if (!match) return null;
+
+			const [, dayText, monthText, yearText] = match;
+			const day = Number(dayText);
+			const month = Number(monthText);
+			const year = Number(yearText);
+			const parsed = new Date(year, month - 1, day);
+
+			if (
+				parsed.getFullYear() !== year ||
+				parsed.getMonth() !== month - 1 ||
+				parsed.getDate() !== day
+			) {
+				return null;
+			}
+
+			parsed.setHours(0, 0, 0, 0);
+			return parsed;
+		};
+
+		if (dateInput instanceof HTMLInputElement) {
+			dateInput.addEventListener('input', () => {
+				dateInput.value = formatDateDigits(dateInput.value);
+			});
+		}
+
+		if (contactInput instanceof HTMLInputElement) {
+			contactInput.addEventListener('input', () => {
+				contactInput.value = contactInput.value.replace(/\D+/g, '');
+			});
+		}
+
+		const setError = (message) => {
+			if (!errorEl) return;
+			errorEl.textContent = message;
+			errorEl.hidden = !message;
+		};
+
+		const openModal = (trigger) => {
+			lastTrigger = trigger;
+			modal.hidden = false;
+			document.body.classList.add('modal-open');
+			setError('');
+			requestAnimationFrame(() => {
+				if (nameInput instanceof HTMLElement) {
+					nameInput.focus();
+				}
+			});
+		};
+
+		const closeModal = () => {
+			modal.hidden = true;
+			document.body.classList.remove('modal-open');
+			setError('');
+			if (lastTrigger instanceof HTMLElement) {
+				lastTrigger.focus();
+			}
+		};
+
+		document.addEventListener('click', (event) => {
+			const target = event.target;
+			if (!(target instanceof Element)) return;
+
+			const trigger = target.closest('[data-order-trigger]');
+			if (trigger) {
+				event.preventDefault();
+				openModal(trigger);
+				return;
+			}
+
+			if (target.closest('[data-order-close]')) {
+				closeModal();
+			}
+		});
+
+		document.addEventListener('keydown', (event) => {
+			if (modal.hidden) return;
+
+			if (event.key === 'Escape') {
+				event.preventDefault();
+				closeModal();
+				return;
+			}
+
+			if (event.key !== 'Tab') return;
+
+			const focusable = Array.from(modal.querySelectorAll(focusableSelector)).filter((element) => {
+				return element instanceof HTMLElement && !element.hasAttribute('disabled') && !element.hidden;
+			});
+
+			if (!focusable.length) return;
+
+			const first = focusable[0];
+			const last = focusable[focusable.length - 1];
+			const active = document.activeElement;
+
+			if (event.shiftKey && active === first) {
+				event.preventDefault();
+				last.focus();
+			}
+
+			if (!event.shiftKey && active === last) {
+				event.preventDefault();
+				first.focus();
+			}
+		});
+
+		form?.addEventListener('submit', (event) => {
+			event.preventDefault();
+			setError('');
+
+			const name = nameInput instanceof HTMLInputElement ? nameInput.value.trim() : '';
+			const contactNumber = contactInput instanceof HTMLInputElement ? contactInput.value.trim() : '';
+			const interestedIn = Array.from(interestInputs)
+				.filter((input) => input instanceof HTMLInputElement && input.checked)
+				.map((input) => input.value);
+			const deliveryDate = dateInput instanceof HTMLInputElement ? dateInput.value.trim() : '';
+			const deliveryTimeRange = timeInput instanceof HTMLSelectElement ? timeInput.value : '';
+			const deliveryAddress = addressInput instanceof HTMLTextAreaElement ? addressInput.value.trim() : '';
+			const specialRequest = requestInput instanceof HTMLTextAreaElement ? requestInput.value.trim() : '';
+			const parsedDeliveryDate = parseDeliveryDate(deliveryDate);
+
+			if (!name) {
+				setError('Please enter the receiver\'s name.');
+				nameInput?.focus();
+				return;
+			}
+
+			if (/\d/.test(name)) {
+				setError('The receiver\'s name cannot contain numbers.');
+				nameInput?.focus();
+				return;
+			}
+
+			if (!/^\d+$/.test(contactNumber)) {
+				setError('Please enter a contact number using digits only.');
+				contactInput?.focus();
+				return;
+			}
+
+			if (!interestedIn.length) {
+				setError('Please select at least one item under Interested In.');
+				if (interestInputs[0] instanceof HTMLElement) {
+					interestInputs[0].focus();
+				}
+				return;
+			}
+
+			if (!deliveryDate) {
+				setError('Please select a delivery date.');
+				dateInput?.focus();
+				return;
+			}
+
+			if (!parsedDeliveryDate) {
+				setError('Please enter the delivery date in DD-MM-YYYY format.');
+				dateInput?.focus();
+				return;
+			}
+
+			if (parsedDeliveryDate < getEarliestAllowedDate()) {
+				setError('Please enter a delivery date that is at least 7 days from today.');
+				dateInput?.focus();
+				return;
+			}
+
+			if (!deliveryTimeRange) {
+				setError('Please select a delivery time range.');
+				timeInput?.focus();
+				return;
+			}
+
+			if (!deliveryAddress) {
+				setError('Please enter the delivery address.');
+				addressInput?.focus();
+				return;
+			}
+
+			const message = [
+				`Hi! My name is ${name} and I would love to order from Perlette Cakes!`,
+				'',
+				`Receiver's Name: ${name}`,
+				`Receiver's Contact Number: ${contactNumber}`,
+				'',
+				`Interested In: ${interestedIn.join(', ')}`,
+				`Delivery Date: ${deliveryDate}`,
+				`Delivery Time Range: ${deliveryTimeRange}`,
+				`Delivery Address: ${deliveryAddress}`,
+				'',
+				`Special Request: ${specialRequest || 'None'}`,
+				'',
+				'Thank you!',
+			].join('\n');
+
+			const url = `${whatsappBaseUrl}?text=${encodeURIComponent(message)}`;
+			window.open(url, '_blank', 'noopener');
+			form.reset();
+			closeModal();
+		});
+	}
+</script>
+
+<style>
+	:global(body.modal-open) {
+		overflow: hidden;
+	}
+
+	.order-modal[hidden] {
+		display: none;
+	}
+
+	.order-modal {
+		position: fixed;
+		inset: 0;
+		z-index: 40;
+		display: grid;
+		place-items: center;
+		padding: var(--space-md);
+	}
+
+	.order-modal__backdrop {
+		position: absolute;
+		inset: 0;
+		background: rgba(43, 38, 34, 0.58);
+	}
+
+	.order-modal__dialog {
+		position: relative;
+		z-index: 1;
+		width: min(100%, 42rem);
+		max-height: calc(100vh - 2rem);
+		overflow: auto;
+		padding: var(--space-xl);
+		border-radius: var(--radius-xl);
+		background: var(--color-surface);
+		box-shadow: var(--shadow-md);
+	}
+
+	.order-modal__header,
+	.order-modal__form,
+	.order-modal__field,
+	.order-modal__actions {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.order-modal__header {
+		flex-direction: row;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: var(--space-md);
+		margin-bottom: var(--space-lg);
+	}
+
+	.order-modal__title {
+		margin-top: var(--space-xs);
+		font-size: clamp(1.9rem, 5vw, 2.7rem);
+		text-wrap: balance;
+	}
+
+	.order-modal__close {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		padding: 0;
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		background: var(--color-surface);
+		color: var(--color-text);
+	}
+
+	.order-modal__close span {
+		font-size: 1.4rem;
+		line-height: 1;
+	}
+
+	.order-modal__form {
+		gap: var(--space-lg);
+	}
+
+	.order-modal__field-grid {
+		display: grid;
+		gap: var(--space-md);
+	}
+
+	.order-modal__field {
+		gap: var(--space-xs);
+		min-width: 0;
+	}
+
+	.order-modal__field--full {
+		grid-column: 1 / -1;
+	}
+
+	.order-modal__label {
+		font-size: var(--step--1);
+		font-weight: 700;
+	}
+
+	.order-modal__hint {
+		color: var(--color-text-muted);
+		font-size: var(--step--1);
+		line-height: 1.6;
+	}
+
+	.order-modal__input {
+		width: 100%;
+		padding: 0.85rem 1rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		background: var(--color-surface);
+		color: var(--color-text);
+	}
+
+	.order-modal__select {
+		appearance: none;
+	}
+
+	.order-modal__interest-group {
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+
+	.order-modal__interest-options {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--space-sm);
+	}
+
+	.order-modal__interest-option {
+		display: flex;
+		align-items: center;
+		gap: var(--space-sm);
+		padding: 0.85rem 1rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		background: var(--color-surface);
+	}
+
+	.order-modal__interest-option input {
+		margin: 0;
+	}
+
+	@media (min-width: 30rem) {
+		.order-modal__interest-options {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	.order-modal__textarea {
+		resize: vertical;
+	}
+
+	.order-modal__textarea--address {
+		min-height: 8.5rem;
+	}
+
+	.order-modal__textarea--special {
+		min-height: 4.5rem;
+	}
+
+	.order-modal__error {
+		padding: var(--space-sm) var(--space-md);
+		border-radius: var(--radius-md);
+		background: var(--color-surface-soft);
+		color: var(--color-primary-ink);
+		font-size: var(--step--1);
+		font-weight: 700;
+	}
+
+	.order-modal__actions {
+		align-items: flex-start;
+	}
+
+	@media (min-width: 48rem) {
+		.order-modal {
+			padding: var(--space-lg);
+		}
+
+		.order-modal__field-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.order-modal__interest-options {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+</style>
