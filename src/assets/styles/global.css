@@ -6,19 +6,23 @@
 @import "@fontsource/geist-sans/700.css";
 
 :root {
-  --color-bg: #fffdfb;
-  --color-surface: #ffffff;
+  --color-bg: #f6f3ee;
+  --color-surface: rgba(255, 253, 251, 0.92);
   --color-surface-soft: #f7f1eb;
-  --color-text: #2b2622;
-  --color-text-muted: #6e655e;
-  --color-primary: #c98b9a;
-  --color-primary-ink: #7a4a57;
+  --color-text: #050a30;
+  --color-text-muted: #473c38;
+  --color-primary: #e2bec6;
+  --color-primary-ink: #d8a8b3;
   --color-primary-strong: #693f4a;
   --color-accent: #c9a24b;
-  --color-border: #ece5de;
+  --color-border: #050a30;
   --color-shadow: rgba(43, 38, 34, 0.1);
   --color-nav-surface: rgba(255, 253, 251, 0.92);
   --color-nav-border: rgba(122, 74, 87, 0.12);
+
+  /* CSS refactor */
+  --white-text: rgba(255, 253, 251, 0.92);
+  --pink-primary-bg: #e2bec6;
 
   --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
   --font-body: "Geist Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -190,8 +194,8 @@ p {
 }
 
 .button--primary {
-  color: var(--color-surface);
-  background: var(--color-primary-ink);
+  color: var(--white-text);
+  background: var(--pink-primary-bg);
   box-shadow: var(--shadow-md);
 }
 
