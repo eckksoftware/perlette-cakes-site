@@ -1,7 +1,7 @@
 ---
 import '../../assets/styles/global.css'
 import { Image } from 'astro:assets';
-import strawberryCake from '../../assets/images/index/hero-strawberry-cake.JPG';
+import floweryCake from '../../assets/images/index/hero-flowery-cake.JPG';
 import cupcakes from '../../assets/images/index/hero-cupcakes.JPG'
 
 interface Props {
@@ -29,8 +29,8 @@ const { whatsappHref, instagramHref } = Astro.props;
 
 			<div class="landing-hero__media">
 				<Image
-					src={strawberryCake}
-					alt="Strawberry celebration cake with piped cream, fresh strawberries, and pink ribbon detail."
+					src={floweryCake}
+					alt="Flowery celebration cake with piped cream, edible flowers, and white ribbon detail."
 					loading="eager"
 				/>
 			</div>
@@ -42,7 +42,6 @@ const { whatsappHref, instagramHref } = Astro.props;
 	.landing-hero {
 		--hero-copy-max: 32rem;
 		--hero-media-min-height: 35rem;
-		padding-top: var(--space-lg);
 	}
 
 	.landing-hero__inner {

@@ -6,7 +6,6 @@
 @import "@fontsource/geist-sans/700.css";
 
 :root {
-  --color-bg: #f6f3ee;
   --color-surface: rgba(255, 253, 251, 0.92);
   --color-surface-soft: #f7f1eb;
   --color-text: #050a30;
@@ -21,6 +20,7 @@
   --color-nav-border: rgba(122, 74, 87, 0.12);
 
   /* CSS refactor */
+  --white-bg: rgba(255, 253, 251, 0.92);
   --white-text: rgba(255, 253, 251, 0.92);
   --pink-primary-bg: #d6909e;
 
@@ -75,7 +75,7 @@ body {
   line-height: 1.6;
   font-weight: 400;
   color: var(--color-text);
-  background: var(--color-bg);
+  background: var(--white-bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
