@@ -1,4 +1,5 @@
 ---
+import '../../assets/styles/global.css'
 import { Image } from 'astro:assets';
 import strawberryCake from '../../assets/images/index/hero-strawberry-cake.JPG';
 import cupcakes from '../../assets/images/index/hero-cupcakes.JPG'
@@ -13,27 +14,26 @@ const { whatsappHref, instagramHref } = Astro.props;
 
 <section class="landing-hero section-space" id="top">
 	<div class="landing-hero__inner content-shell">
-		<div class="landing-hero__media">
-			<Image
-				src={cupcakes}
-				alt="An assortment of cupcakes made per order and customisable for personal or corporate events."
-				loading="eager"
-				width="800"
-			/>
-		</div>
-
-
 		<div class="landing-hero__content">
-			<h1 class="landing-hero__title">Cakes made by hand for moments you treasure</h1>
+			<h1 class="landing-hero__title">Baked by hand for moments you treasure</h1>
 		</div>
 
-		<div class="landing-hero__media">
-			<Image
-				src={strawberryCake}
-				alt="Strawberry celebration cake with piped cream, fresh strawberries, and pink ribbon detail."
-				loading="eager"
-				width="800"
-			/>
+		<div class="landing-hero__media-layout">
+			<div class="landing-hero__media">
+				<Image
+					src={cupcakes}
+					alt="An assortment of cupcakes made per order and customisable for personal or corporate events."
+					loading="eager"
+				/>
+			</div>
+
+			<div class="landing-hero__media">
+				<Image
+					src={strawberryCake}
+					alt="Strawberry celebration cake with piped cream, fresh strawberries, and pink ribbon detail."
+					loading="eager"
+				/>
+			</div>
 		</div>
 	</div>
 </section>
@@ -47,13 +47,19 @@ const { whatsappHref, instagramHref } = Astro.props;
 
 	.landing-hero__inner {
 		display: flex;
-		flex-direction: row;
-		gap: var(--space-xl);
+		position: relative;
 	}
 
 	.landing-hero__content {
-		display: flex;
+		position: absolute;
 		align-items: center;
+		top: 50%;
+  		left: 50%;
+		transform: translate(-50%, -50%);
+		background-color: var(--pink-primary-bg);
+		color: var(--white-text);
+		padding: 40px 20px;
+		width: 50vw;
 	}
 
 	.landing-hero__title {
@@ -62,27 +68,15 @@ const { whatsappHref, instagramHref } = Astro.props;
 		text-wrap: balance;
 	}
 
-	.landing-hero__actions {
+	.landing-hero__media-layout {
 		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: var(--space-sm);
-	}
-
-	.landing-hero__link {
-		color: var(--color-primary-ink);
-		font-size: var(--step--1);
-		font-weight: 700;
-		text-underline-offset: 0.25em;
-	}
-
-	.landing-hero__facts {
-		font-size: var(--step--1);
-		line-height: 1.7;
+		flex-direction: row;
+		justify-content: space-between;
+		flex-grow: 1;
 	}
 
 	.landing-hero__media {
-		max-width: 80%;
+		width: 35vw;
 	}
 
 	.landing-hero__media :global(img) {
