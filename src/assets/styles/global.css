@@ -143,8 +143,6 @@ p {
 
 .content-shell {
   width: 100%;
-  max-width: var(--content-max);
-  margin: 0 auto;
   padding-inline: var(--space-md);
 }
 

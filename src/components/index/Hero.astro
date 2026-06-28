@@ -12,7 +12,7 @@ interface Props {
 const { whatsappHref, instagramHref } = Astro.props;
 ---
 
-<section class="landing-hero section-space" id="top">
+<section>
 	<div class="landing-hero__inner content-shell">
 		<div class="landing-hero__content">
 			<h1 class="landing-hero__title">Baked by hand for moments you treasure</h1>
@@ -39,11 +39,6 @@ const { whatsappHref, instagramHref } = Astro.props;
 </section>
 
 <style>
-	.landing-hero {
-		--hero-copy-max: 32rem;
-		--hero-media-min-height: 35rem;
-	}
-
 	.landing-hero__inner {
 		display: flex;
 		position: relative;
@@ -78,7 +73,7 @@ const { whatsappHref, instagramHref } = Astro.props;
 		width: 35vw;
 	}
 
-	.landing-hero__media :global(img) {
+	.landing-hero__media img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
