@@ -1,4 +1,6 @@
 ---
+import '../../assets/styles/global.css'
+
 interface Props {
   whatsappHref: string;
   instagramHref: string;
@@ -12,7 +14,7 @@ const { whatsappHref, instagramHref } = Astro.props;
 		<div class="factual-footer__closing">
 			<div class="factual-footer__brand-block">
 				<p class="factual-footer__brand">perlette cakes</p>
-				<p class="text-muted">Home-based cakes and pastries for delivery across Klang Valley, Malaysia.</p>
+				<p>Home-based cakes and pastries for delivery across Klang Valley, Malaysia.</p>
 			</div>
 
 			<div class="factual-footer__actions">
@@ -30,8 +32,8 @@ const { whatsappHref, instagramHref } = Astro.props;
 <style>
 	.factual-footer {
 		padding-block: var(--space-xl);
-		background: var(--color-text);
-		color: var(--color-surface);
+		background: var(--pink-primary-bg);
+		color: var(--white-text);
 	}
 
 	.factual-footer__inner,
@@ -40,22 +42,19 @@ const { whatsappHref, instagramHref } = Astro.props;
 		flex-direction: column;
 	}
 
-	.factual-footer :global(.text-muted) {
-		color: rgba(255, 255, 255, 0.78);
-	}
-
 	.factual-footer__closing {
 		gap: var(--space-lg);
 	}
 
 	.factual-footer__brand-block {
 		max-width: 34rem;
+		color: var(--white-text)
 	}
 
 	.factual-footer__brand {
 		margin-bottom: var(--space-xs);
 		font-family: var(--font-display);
-		font-size: var(--step-2);
+		font-size: var(--brand-font-size);
 		font-style: italic;
 		font-weight: 600;
 		letter-spacing: -0.04em;
@@ -71,7 +70,7 @@ const { whatsappHref, instagramHref } = Astro.props;
 
 	.factual-footer__link {
 		color: var(--color-surface);
-		font-size: var(--step--1);
+		font-size: var(--text-font-size);
 		font-weight: 700;
 		text-underline-offset: 0.25em;
 	}
