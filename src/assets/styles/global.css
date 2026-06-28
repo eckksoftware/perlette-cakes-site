@@ -43,7 +43,7 @@
 
   --bottom-space-text-md: 3px;
 
-  --grid-space-md: 
+  --grid-space-md: 1rem;
   --grid-space-xl: 2.5rem;
   /* end refactor */
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
