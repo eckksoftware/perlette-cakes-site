@@ -21,10 +21,9 @@ const steps = [
 ];
 ---
 
-<section class="ordering section-space" id="ordering">
+<section class="ordering" id="ordering">
 	<div class="ordering__inner content-shell">
 		<div class="ordering__intro">
-			<p class="eyebrow">How Ordering Works</p>
 			<h2 class="ordering__title">Every order starts with a straightforward WhatsApp conversation</h2>
 			<p class="text-muted">
 				We keep the process simple so you can send your main delivery details first, then continue the order conversation on WhatsApp.
@@ -48,6 +47,11 @@ const steps = [
 </section>
 
 <style>
+	.ordering {
+		padding-top: var(--top-space-section-md);
+		padding-bottom: var(--bottom-space-section-md);
+	}
+
 	.ordering__inner,
 	.ordering__intro {
 		display: flex;
@@ -55,12 +59,11 @@ const steps = [
 	}
 
 	.ordering__inner {
-		gap: var(--space-xl);
+		gap: var(--gap-space-xl);
 	}
 
 	.ordering__intro {
-		gap: var(--space-md);
-		max-width: 42rem;
+		gap: var(--gap-space-md);
 	}
 
 	.ordering__title {
@@ -82,13 +85,13 @@ const steps = [
 	.ordering__count {
 		margin-bottom: var(--space-sm);
 		color: var(--color-primary-ink);
-		font-size: var(--step--1);
+		font-size: var(--header-three-font-size);
 		font-weight: 700;
 		letter-spacing: 0.14em;
 	}
 
 	.ordering__step h3 {
-		font-size: var(--step-1);
+		font-size: var(--header-three-font-size);
 		margin-bottom: var(--space-xs);
 	}
 
