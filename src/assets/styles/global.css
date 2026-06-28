@@ -37,6 +37,7 @@
 
   --side-space-section-md: 40px;
 
+  --top-space-section-md: 100px;
   --bottom-space-section-md: 100px;
 
   --bottom-space-header-md: 10px;
@@ -46,6 +47,7 @@
   --grid-space-md: 1rem;
   --grid-space-xl: 2.5rem;
   /* end refactor */
+
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
   --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
   --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
