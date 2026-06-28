@@ -12,7 +12,7 @@ interface Props {
 const { whatsappHref, instagramHref } = Astro.props;
 ---
 
-<section>
+<section class="landing-hero__section" id="hero">
 	<div class="landing-hero__inner content-shell">
 		<div class="landing-hero__content">
 			<h1 class="landing-hero__title">Baked by hand for moments you treasure</h1>
@@ -39,6 +39,10 @@ const { whatsappHref, instagramHref } = Astro.props;
 </section>
 
 <style>
+	.landing-hero__section {
+		padding-bottom: var(--bottom-space-section-md);
+	}
+
 	.landing-hero__inner {
 		display: flex;
 		position: relative;

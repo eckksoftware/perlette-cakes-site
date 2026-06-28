@@ -1,30 +1,46 @@
-<section class="owner-story section-space" id="about">
+---
+import '../../assets/styles/global.css'
+import { Image } from 'astro:assets';
+
+import personalGifts from '../../assets/images/index/owner-personal-handmade-gifts.JPG'
+---
+
+
+<section class="owner-story__section" id="about">
 	<div class="owner-story__inner content-shell">
 		<div class="owner-story__intro">
-			<p class="eyebrow">Made With Love, Made With Care</p>
-			<h2 class="owner-story__title">A home-based baker for celebrations that should taste as good as they look</h2>
-		</div>
-		<div class="owner-story__layout">
-			<div class="owner-story__body">
-				<p>
-					Perlette Cakes was built around a simple idea: celebration bakes should feel personal, generous, and genuinely delicious from the first slice to the last.
-				</p>
-				<p class="text-muted">
-					We bake for birthdays, gatherings, gifting, and everyday milestones across Klang Valley, with the same care we would give to our own family table.
-				</p>
+			<div class="owner-story__intro-content">
+				<h2 class="owner-story__title">A home-based baker for celebrations that should taste as good as they look</h2>
+				<div class="owner-story__body">
+					<p>
+						Perlette Cakes was built around a simple idea: celebration bakes should feel personal, generous, and genuinely delicious from the first slice to the last.
+					</p>
+					<p>
+						We bake for birthdays, gatherings, gifting, and everyday milestones across Klang Valley, with the same care we would give to our own family table.
+					</p>
+				</div>
 			</div>
+			<div class="owner-story__media">
+				<Image
+					src={personalGifts}
+					alt="Personal handmade gifts made by Perlette Cakes as we prioritize quality over anything."
+					loading="eager"
+				/>
+			</div>
+		</div>
+		<div class="owner-story__layout-notes">
 			<div class="owner-story__notes">
 				<div class="owner-story__note">
 					<h3>Homemade, but assured</h3>
-					<p class="text-muted">Each order is made to order, so the site should feel warm and personal without losing polish.</p>
+					<p>Each order is made to order, so the site should feel warm and personal without losing polish.</p>
 				</div>
 				<div class="owner-story__note">
 					<h3>Taste comes first</h3>
-					<p class="text-muted">Beautiful finishing matters, but the cake still needs to be the part guests go back for.</p>
+					<p>Beautiful finishing matters, but the cake still needs to be the part guests go back for.</p>
 				</div>
 				<div class="owner-story__note">
 					<h3>Delivery across Klang Valley</h3>
-					<p class="text-muted">Orders are confirmed on WhatsApp and sent out through Lalamove rather than pickup.</p>
+					<p>Orders are confirmed on WhatsApp and sent out through Lalamove rather than pickup.</p>
 				</div>
 			</div>
 		</div>
@@ -32,22 +48,17 @@
 </section>
 
 <style>
-	.owner-story__inner,
-	.owner-story__body,
-	.owner-story__notes {
-		display: flex;
-		flex-direction: column;
+	.owner-story__section {
+		padding-bottom: var(--bottom-space-section-md);
 	}
 
-	.owner-story__inner {
-		gap: var(--space-xl);
+	.owner-story__inner, .owner-story__intro {
+		display: flex;
 	}
 
 	.owner-story__intro {
+		width: 80%;
 		display: flex;
-		flex-direction: column;
-		gap: var(--space-md);
-		max-width: 46rem;
 	}
 
 	.owner-story__title {
@@ -55,14 +66,46 @@
 		text-wrap: balance;
 	}
 
-	.owner-story__layout {
-		display: grid;
-		gap: var(--space-xl);
+	.owner-story__media {
+		width: 80vw;
+		display: flex;
+		align-items:end;
+		justify-content: center;
 	}
 
-	.owner-story__body {
+	.owner-story__media img {
+		width: 80%;
+		height: 80%;
+	}
+
+	.owner-story__intro-content {
 		gap: var(--space-md);
-		max-width: 38rem;
+		max-width: 50rem;
+		margin-right: var(--side-space-content-md);
+		background-color: var(--pink-primary-bg);
+		color: var(--white-text);
+		padding: 40px 50px;
+		align-self: flex-start;
+	}
+
+	.owner-story__intro-content h2 {
+		padding-bottom: var(--bottom-space-header-md);
+	}
+
+	.owner-story__intro-content p {
+		margin-bottom: var(--bottom-space-text-md);
+	}
+
+	.owner-story__body,
+	.owner-story__notes {
+		display: flex;
+		flex-direction: column;
+		align-self: center;
+	}
+
+	.owner-story__layout-notes {
+		display: grid;
+		gap: var(--grid-space-xl);
 	}
 
 	.owner-story__notes {
@@ -71,21 +114,17 @@
 
 	.owner-story__note {
 		padding: var(--space-lg);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius-lg);
-		background: var(--color-surface);
+		border-radius: var(--border-radius-lg);
+		background: var(--pink-primary-bg);
+		color: var(--white-text);
 	}
 
 	.owner-story__note h3 {
-		font-size: var(--step-1);
-		margin-bottom: var(--space-xs);
+		font-size: var(--header-three-font-size);
+		margin-bottom: var(--bottom-space-header-md);
 	}
 
-	@media (min-width: 64rem) {
-		.owner-story__layout {
-			grid-template-columns: minmax(0, 1fr) minmax(20rem, 24rem);
-			align-items: start;
-			gap: var(--space-2xl);
-		}
+	.owner-story__note p {
+		color: var(--white-text);
 	}
 </style>
