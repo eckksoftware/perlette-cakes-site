@@ -36,7 +36,10 @@
 
   --side-space-content-md: 30px;
 
+  --side-space-section-sm: 10px;
   --side-space-section-md: 40px;
+
+  --top-space-media-md-mobile: 50px;
 
   --top-space-section-md: 100px;
   --bottom-space-section-md: 100px;
@@ -164,11 +167,6 @@ p {
   box-shadow: var(--focus-ring);
 }
 
-.content-shell {
-  width: 100%;
-  padding-inline: var(--side-space-section-md);
-}
-
 .section-space {
   padding-block: var(--space-2xl);
 }
@@ -233,3 +231,14 @@ p {
     padding-block: var(--space-3xl);
   }
 } */
+
+.content-shell {
+  width: 100%;
+  padding-inline: var(--side-space-section-sm);
+}
+
+@media (min-width: 48rem) {
+  .content-shell {
+    padding-inline: var(--side-space-section-md);
+  }
+}

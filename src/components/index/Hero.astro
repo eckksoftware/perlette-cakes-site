@@ -45,41 +45,73 @@ const { whatsappHref, instagramHref } = Astro.props;
 
 	.landing-hero__inner {
 		display: flex;
-		position: relative;
+		flex-direction: column;
 	}
 
 	.landing-hero__content {
-		position: absolute;
 		align-items: center;
-		top: 50%;
-  		left: 50%;
-		transform: translate(-50%, -50%);
 		background-color: var(--pink-primary-bg);
 		color: var(--white-text);
 		padding: 40px 20px;
-		width: 50vw;
+		width: 100%;
 	}
 
 	.landing-hero__title {
-		font-size: 5rem;
+		font-size: 3rem;
 		text-align: center;
 		text-wrap: balance;
 	}
 
 	.landing-hero__media-layout {
 		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		flex-grow: 1;
+		flex-direction: column;
+		align-items: center;
 	}
 
 	.landing-hero__media {
-		width: 35vw;
+		width: 80%;
+		padding: var(--top-space-media-md-mobile) 0;
 	}
 
 	.landing-hero__media img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
+	}
+
+	@media (min-width: 48rem) {
+		.landing-hero__inner {
+			display: flex;
+			position: relative;
+		}
+
+		.landing-hero__media-layout {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			flex-grow: 1;
+		}
+
+		.landing-hero__content {
+			position: absolute;
+			align-items: center;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background-color: var(--pink-primary-bg);
+			color: var(--white-text);
+			padding: 40px 20px;
+			width: 50vw;
+		}
+
+		.landing-hero__title {
+			font-size: 5rem;
+			text-align: center;
+			text-wrap: balance;
+		}
+
+		.landing-hero__media {
+			width: 35vw;
+		}
 	}
 </style>
