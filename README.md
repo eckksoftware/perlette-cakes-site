@@ -27,9 +27,11 @@ Stage one is a single-page website focused on clarity, trust, and qualified What
 Current implementation checkpoint:
 - `src/layouts/Layout.astro` and `src/components/index/Landing.astro` are active
 - The sticky nav, hero, owner story, featured categories, ordering steps, WhatsApp CTA, homepage FAQ, and factual footer are implemented
-- The WhatsApp inquiry modal is implemented
+- The WhatsApp inquiry modal is implemented as a shared site-wide component
+- The inquiry modal uses a native date picker with a minimum 7-day lead-time check in JavaScript
+- The receiver name field strips numeric input and the contact field strips non-digits
 - The testimonials placeholder is still pending
-- No dedicated component cleanup pass is assumed before deployment; only targeted fixes should be tracked here
+- The current CSS refactor in `src/assets/styles/global.css` is the approved baseline and should be cleaned up conservatively
 
 Homepage sections:
 1. Hero with product-led imagery and factual highlights
@@ -51,7 +53,7 @@ Stage-one CTA flow:
 1. Visitor clicks the main WhatsApp CTA
 2. A lightweight modal opens
 3. Visitor enters receiver name and contact number
-4. Visitor selects one or more interests and enters delivery details
+4. Visitor selects one or more interests and enters delivery details, including a native date input
 5. Visitor can add an optional special request
 6. Site opens WhatsApp with a pre-filled inquiry message
 
@@ -67,6 +69,7 @@ Stage-one launch defaults:
 1. Use `we / our` voice for public launch copy
 2. Public lead time guidance is `3 to 5 days` unless a section requires more nuance
 3. Homepage design direction is `warm / homemade` rather than minimal luxury or playful bakery branding
+4. Preserve the current user-approved CSS refactor and remove dead styles before introducing new tokens or utilities
 
 Approved public FAQ facts:
 1. Delivery covers Klang Valley and anywhere reachable by `Lalamove Car` from `Mont Kiara`
@@ -126,6 +129,7 @@ Use this checklist to track launch progress across future sessions.
 - [ ] Add vendor-neutral analytics event hooks for CTA and modal actions
 - [x] Replace raw content images with optimized `astro:assets` usage where needed
 - [x] Apply the stage-one brand palette and visual system
+- [x] Trim unused global CSS tokens and obvious no-op component code after the CSS refactor
 
 ### Stage-one discoverability remaining
 
@@ -144,7 +148,7 @@ Use this checklist to track launch progress across future sessions.
 
 - [ ] Verify mobile and desktop layouts
 - [ ] Verify keyboard/focus accessibility
-- [x] Run `npm run astro -- check`
+- [x] Run `npm run astro check`
 - [x] Run `npm run build`
 - [ ] Review launch copy with Amira
 - [ ] Replace testimonial placeholder when real quotes are available
@@ -268,7 +272,7 @@ npm install
 npm run dev
 npm run build
 npm run preview
-npm run astro -- check
+npm run astro check
 ```
 
 ## Project Notes

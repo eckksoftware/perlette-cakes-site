@@ -1,5 +1,4 @@
 ---
-import '../../assets/styles/global.css'
 import { Image } from 'astro:assets';
 import cakesImage from '../../assets/images/index/variety-cakes.JPG';
 import cookiesImage from '../../assets/images/index/variety-cookies.JPG';
@@ -66,14 +65,7 @@ const categories = [
 	.featured-categories__inner {
 		display: flex;
 		flex-direction: column;
-	}
-
-	.featured-categories__inner {
 		gap: var(--space-xl);
-	}
-
-	.featured-categories__intro {
-		gap: var(--space-md);
 	}
 
 	.featured-categories__title {
@@ -107,7 +99,6 @@ const categories = [
 	}
 
 	.featured-categories__copy {
-		gap: var(--space-sm);
 		padding: var(--space-lg);
 	}
 
@@ -118,19 +109,13 @@ const categories = [
 
 	@media (min-width: 48rem) {
 		.featured-categories__grid {
-			grid-template-columns: repeat(4, minmax(0, 1fr));
-		}
-	}
-
-	@media (48rem <= width <= 100rem) {
-		.featured-categories__grid {
 			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 	}
 
-	@media (max-width: 48rem) {
+	@media (min-width: 100rem) {
 		.featured-categories__grid {
-			grid-template-columns: repeat(1, minmax(0, 1fr));
+			grid-template-columns: repeat(4, minmax(0, 1fr));
 		}
 	}
 </style>

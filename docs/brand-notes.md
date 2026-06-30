@@ -24,6 +24,12 @@ Preferred direction for stage one:
 3. Premium without feeling formal or intimidating
 4. Distinctive typography and image placement rather than a generic one-column bakery layout
 
+Current approved implementation notes:
+1. The current CSS refactor in `src/assets/styles/global.css` has been visually reviewed and is the baseline to preserve
+2. Fraunces is the display face and Geist Sans is the body face in the active build
+3. Soft rose blocks with cream text are part of the current homepage visual language
+4. The order inquiry modal should stay lightweight and use native form controls where possible, including a native delivery-date picker
+
 Reference sites the user likes:
 1. `https://levainbakery.com/` for strong product placement and overall design quality
 2. `https://www.eatcabalar.com/` for large type beside images

@@ -33,7 +33,7 @@ B and C are not afterthoughts bolted on at the end. Because there is no storefro
 |---|---|---|
 | Framework | **Astro** (SSG / `output: 'static'`) | All pages pre-rendered to static HTML. |
 | Language | **TypeScript** | Use `.astro` + `.ts`. Avoid loose `any`. |
-| Styling | **Vanilla CSS** | One global `src/styles/global.css` with design tokens; split into scoped/component styles only when it gets unwieldy (see §6). **No Tailwind, no CSS frameworks.** |
+| Styling | **Vanilla CSS** | One global `src/assets/styles/global.css` with design tokens; split into scoped/component styles only when it gets unwieldy (see §6). **No Tailwind, no CSS frameworks.** |
 | Images | **`astro:assets`** (`<Image />`) | Mandatory for all content images (see §8). |
 | Fonts | **`@fontsource` (self-hosted)** | No external Google Fonts CDN — better perf/SEO. |
 | Client JS | **Minimal** | Use JS when needed. Use Astro islands only where interactivity is unavoidable (the order page; see §9). |
@@ -55,7 +55,7 @@ npm run preview      # preview the built site
 npm run astro check  # type-check (run before committing)
 ```
 
-Recommended integrations: `@astrojs/sitemap`, `sharp` (image compression, default in Astro), `@fontsource-variable/fraunces`, `@fontsource/inter`.
+Recommended integrations: `@astrojs/sitemap`, `sharp` (image compression, default in Astro), `@fontsource-variable/fraunces`, `@fontsource/geist-sans`.
 
 ---
 
@@ -63,35 +63,28 @@ Recommended integrations: `@astrojs/sitemap`, `sharp` (image compression, defaul
 
 ```
 src/
+  assets/
+    styles/
+      global.css            # active design tokens + base styles
   pages/                  # routes — hardcoded .astro pages, one file per URL
     index.astro           # landing (multi-section)
-    about.astro           # /about
-    cake.astro            # /cake (expands to /pastries etc.)
-    delivery.astro        # /delivery — "How we deliver" (Lalamove)
-    order.astro           # /order — product picker → WhatsApp
-    faq.astro             # /faq
-    occasions/
-      index.astro         # /occasions hub (links seasonal pages)
-      hari-raya.astro     # /occasions/hari-raya
-      chinese-new-year.astro
   layouts/
-    BaseLayout.astro      # <head>, meta/SEO, fonts, header, footer
-  components/             # section + UI components (PascalCase.astro)
-  styles/
-    global.css            # tokens + base styles (single source of truth)
+    Layout.astro          # <head>, meta/SEO, fonts, header, modal mount
+  components/
+    OrderInquiryModal.astro
+    index/                # homepage sections
   data/
-    products.ts           # SINGLE SOURCE OF TRUTH for products
-    reviews.ts            # testimonials
-public/                   # static passthrough: favicon, robots.txt, og images
+    homeFaqs.ts
+  public/                   # static passthrough: favicon, robots.txt, og images
 astro.config.mjs
 ```
 
 **Architectural rules**
 
 - **One `.astro` file per route.** No dynamic `[slug]` routing — pages are authored by hand for editorial control and SEO.
-- **`src/data/products.ts` is the single source of truth** for products. Both `/cake` and `/order` read from it. Never hardcode the same product in two places.
-- Landing-page sections are **components** composed in `index.astro` (e.g. `Hero`, `Story`, `Process`, `Reviews`, `Delivery`, `Contact`).
-- All pages render through `BaseLayout.astro` so SEO/meta/fonts are defined once.
+- Stage one is currently a **single-page homepage** composed in `src/components/index/Landing.astro`.
+- The shared inquiry flow lives in `src/components/OrderInquiryModal.astro` and is mounted once from `src/layouts/Layout.astro`.
+- Keep the CSS refactor in `src/assets/styles/global.css` as the baseline; remove dead tokens before adding new ones.
 
 ---
 
@@ -103,7 +96,7 @@ astro.config.mjs
 | `/about` | Full owner story: daily work, why cake, training/background | Builds trust + E-E-A-T. |
 | `/cake` | Cake/pastry types, flavours, customization | Core product/keyword page. |
 | `/delivery` | How Lalamove delivery works, areas served, lead time, packaging | Reduces WhatsApp back-and-forth; local SEO. |
-| `/order` | Pick products → generates a pre-filled WhatsApp message | The conversion engine (see §9). |
+| `/order` | Future dedicated product picker if stage two needs it | The current stage-one conversion flow is the shared homepage modal (see §9). |
 | `/faq` | Lead time, deposits, allergens, customization, delivery zones | Long-tail SEO + fewer repetitive questions. |
 | `/occasions/*` | Seasonal pages (Hari Raya, CNY, weddings, birthdays) | High-intent seasonal SEO — keep one URL per occasion. |
 
@@ -113,7 +106,7 @@ astro.config.mjs
 
 ## 6. Styling rules (vanilla CSS)
 
-- **Start in `src/styles/global.css`.** It holds: design tokens (`:root`), a small reset, base element styles, and shared utility classes. Split a component's CSS into its own `<style>` block (scoped) **only** when global.css becomes hard to scan — not preemptively.
+- **Start in `src/assets/styles/global.css`.** It holds: design tokens (`:root`), a small reset, base element styles, and shared utility classes. Split a component's CSS into its own `<style>` block (scoped) **only** when global.css becomes hard to scan — not preemptively.
 - **Use design tokens, never raw values.** No hardcoded hex colours, px font sizes, or magic spacing in components — reference the CSS custom properties below.
 - **Mobile-first.** Write base styles for small screens; layer `min-width` media queries up.
 - **Class naming:** simple, low-specificity, BEM-lite (`.card`, `.card__title`, `.card--featured`). Avoid deep selector nesting and `!important`.
@@ -136,7 +129,7 @@ astro.config.mjs
 
   /* ===== Typography ===== */
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-body:    "Inter", system-ui, -apple-system, sans-serif;
+  --font-body:    "Geist Sans", system-ui, -apple-system, sans-serif;
 
   /* Modular type scale (1.250 — minor third) */
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
@@ -163,7 +156,7 @@ astro.config.mjs
 ### Fonts — recommended pairing
 
 - **Headings / display: Fraunces** — a soft, characterful old-style serif with optical sizing. Warm and artisanal without losing elegance; widely used by craft/food brands. Suits "Perlette."
-- **Body: Inter** — neutral, highly legible on screen. (Softer alternative: *Nunito Sans*, if a friendlier tone is wanted.)
+- **Body: Geist Sans** — neutral, highly legible on screen.
 - **Accents:** use *Fraunces italic* for accent/quote text rather than adding a third font. If a decorative script is wanted for the wordmark only, *Pinyon Script* — used **once**, never for body or headings.
 - Self-host via `@fontsource`; set `font-display: swap`; subset to Latin. Two families max.
 
@@ -190,7 +183,7 @@ This section is load-bearing. Treat its checklist as acceptance criteria for eve
 - **Never put load-bearing text inside an image** (prices, key claims, descriptions) — it's invisible to crawlers and LLMs. Use real HTML over the image instead.
 
 ### 8b. Traditional SEO (every page)
-- Unique `<title>` and `<meta name="description">` per page via `BaseLayout` props.
+- Unique `<title>` and `<meta name="description">` per page via `Layout` props.
 - Exactly one `<h1>`; logical heading order (no skipped levels). Headings should mirror real search phrasing.
 - Open Graph + Twitter card tags; per-page OG image where it matters.
 - Canonical URL on every page.
@@ -210,10 +203,10 @@ LLMs and AI search (ChatGPT, Claude, Perplexity, Gemini, Google AI Overviews) re
 - **Crawlability for AI bots** (see 8e). If the content isn't fetchable, it can't be recommended.
 
 ### 8d. Structured data (JSON-LD) — required
-Site-wide `Bakery`/`LocalBusiness` in `BaseLayout`, plus page-specific schema: `Product` (+ `Offer`) on `/cake`, `FAQPage` on `/faq`, `Review`/`AggregateRating` for testimonials, `Event`/seasonal `Product` on `/occasions/*`, `BreadcrumbList` where nested. Keep schema values in sync with the visible HTML — mismatches are penalized.
+Site-wide `Bakery`/`LocalBusiness` in `Layout`, plus page-specific schema: `Product` (+ `Offer`) on `/cake`, `FAQPage` on `/faq`, `Review`/`AggregateRating` for testimonials, `Event`/seasonal `Product` on `/occasions/*`, `BreadcrumbList` where nested. Keep schema values in sync with the visible HTML — mismatches are penalized.
 
 ```html
-<!-- Site-wide LocalBusiness JSON-LD — include in BaseLayout, fill real values -->
+<!-- Site-wide LocalBusiness JSON-LD — include in Layout, fill real values -->
 <script type="application/ld+json">
 { "@context":"https://schema.org", "@type":"Bakery",
   "name":"Perlette Cakes",
@@ -235,10 +228,11 @@ Site-wide `Bakery`/`LocalBusiness` in `BaseLayout`, plus page-specific schema: `
 
 ## 9. The order → WhatsApp funnel
 
-The `/order` page lets a visitor select products/options, then opens WhatsApp with a **pre-filled message**. This is the one place client-side JS is expected — keep it as a small, self-contained Astro island.
+The current stage-one inquiry flow is a homepage-triggered modal that opens WhatsApp with a **pre-filled message**. This is the one place client-side JS is expected — keep it small and self-contained.
 
 - Build a `https://wa.me/<number>?text=<encoded>` link. **Always `encodeURIComponent` the message.**
-- Read selectable products from `src/data/products.ts` — do not duplicate the catalogue.
+- Use native form controls where they cover the need cleanly. The delivery-date field should stay `type="date"` unless there is a real product requirement to replace it.
+- Keep the current client-side validation lightweight: strip digits from names, strip non-digits from contact numbers, and require at least 7 days lead time for delivery dates.
 - Standardize the message shape (refine later — treat as iterative):
 
 ```
@@ -265,7 +259,7 @@ Name: <name>
 ## 11. Do / Don't for agents
 
 **Do**
-- Reuse tokens, components, and `products.ts`.
+- Reuse existing tokens, components, and shared data files like `homeFaqs.ts`.
 - Keep pages static and JS-free unless interactivity is required.
 - Match the existing file/structure conventions.
 - Treat §8 (SEO + AI/LLM discoverability) as acceptance criteria — every new page ships with unique title/meta, valid JSON-LD, answer-first crawlable content, and descriptive alt text.
