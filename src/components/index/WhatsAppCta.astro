@@ -1,4 +1,6 @@
 ---
+import '../../assets/styles/global.css'
+
 interface Props {
   whatsappHref: string;
 }
@@ -33,8 +35,8 @@ const { whatsappHref } = Astro.props;
 		gap: var(--space-xl);
 		padding: var(--space-xl);
 		border-radius: var(--radius-xl);
-		background: var(--color-primary-ink);
-		color: var(--color-surface);
+		background: var(--pink-primary-bg);
+		color: var(--white-text);
 	}
 
 	.whatsapp-cta__copy {
@@ -47,19 +49,11 @@ const { whatsappHref } = Astro.props;
 		text-wrap: balance;
 	}
 
-	.whatsapp-cta__panel :global(.eyebrow) {
-		color: rgba(255, 255, 255, 0.78);
-	}
-
 	.whatsapp-cta__button {
 		align-self: flex-start;
-		background: var(--color-surface);
-		color: var(--color-primary-ink);
+		color: var(--pink-primary-bg);
+		background-color: var(--white-text);
 		box-shadow: none;
-	}
-
-	.whatsapp-cta__button:hover {
-		background: var(--color-surface-soft);
 	}
 
 	@media (min-width: 64rem) {
