@@ -99,7 +99,7 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 				></textarea>
 			</label>
 
-			<p class="order-modal__error" data-order-error role="alert" hidden></p>
+			<ul class="order-modal__error" data-order-error role="alert" hidden></ul>
 
 			<div class="order-modal__actions">
 				<button class="button button--primary" type="submit">Order</button>
@@ -185,17 +185,89 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 			});
 		}
 
-		const setError = (message) => {
+		const setErrors = (messages) => {
 			if (!errorEl) return;
-			errorEl.textContent = message;
-			errorEl.hidden = !message;
+
+			errorEl.replaceChildren(
+				...messages.map((message) => {
+					const item = document.createElement('li');
+					item.className = 'order-modal__error-item';
+					item.textContent = message;
+					return item;
+				}),
+			);
+			errorEl.hidden = messages.length === 0;
+		};
+
+		const getFormValues = () => ({
+			name: nameInput instanceof HTMLInputElement ? nameInput.value.trim() : '',
+			contactNumber: contactInput instanceof HTMLInputElement ? contactInput.value.trim() : '',
+			interestedIn: Array.from(interestInputs)
+				.filter((input) => input instanceof HTMLInputElement && input.checked)
+				.map((input) => input.value),
+			deliveryDate: dateInput instanceof HTMLInputElement ? dateInput.value.trim() : '',
+			deliveryTimeRange: timeInput instanceof HTMLSelectElement ? timeInput.value : '',
+			deliveryAddress: addressInput instanceof HTMLTextAreaElement ? addressInput.value.trim() : '',
+			specialRequest: requestInput instanceof HTMLTextAreaElement ? requestInput.value.trim() : '',
+		});
+
+		const validateForm = ({
+			name,
+			contactNumber,
+			interestedIn,
+			deliveryDate,
+			deliveryTimeRange,
+			deliveryAddress,
+		}) => {
+			const errors = [];
+			let firstInvalid = null;
+			const parsedDeliveryDate = parseDeliveryDate(deliveryDate);
+
+			const addError = (message, element) => {
+				errors.push(message);
+				if (!firstInvalid && element instanceof HTMLElement) {
+					firstInvalid = element;
+				}
+			};
+
+			if (!name) {
+				addError('Please enter the receiver\'s name.', nameInput);
+			} else if (/\d/.test(name)) {
+				addError('The receiver\'s name cannot contain numbers.', nameInput);
+			}
+
+			if (!/^\d+$/.test(contactNumber)) {
+				addError('Please enter a contact number using digits only.', contactInput);
+			}
+
+			if (!interestedIn.length) {
+				addError('Please select at least one item under Interested In.', interestInputs[0]);
+			}
+
+			if (!deliveryDate) {
+				addError('Please select a delivery date.', dateInput);
+			} else if (!parsedDeliveryDate) {
+				addError('Please select a valid delivery date.', dateInput);
+			} else if (parsedDeliveryDate < getEarliestAllowedDate()) {
+				addError('Please enter a delivery date that is at least 7 days from today.', dateInput);
+			}
+
+			if (!deliveryTimeRange) {
+				addError('Please select a delivery time range.', timeInput);
+			}
+
+			if (!deliveryAddress) {
+				addError('Please enter the delivery address.', addressInput);
+			}
+
+			return { errors, firstInvalid };
 		};
 
 		const openModal = (trigger) => {
 			lastTrigger = trigger;
 			modal.hidden = false;
 			document.body.classList.add('modal-open');
-			setError('');
+			setErrors([]);
 			requestAnimationFrame(() => {
 				if (nameInput instanceof HTMLElement) {
 					nameInput.focus();
@@ -206,7 +278,7 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 		const closeModal = () => {
 			modal.hidden = true;
 			document.body.classList.remove('modal-open');
-			setError('');
+			setErrors([]);
 			if (lastTrigger instanceof HTMLElement) {
 				lastTrigger.focus();
 			}
@@ -262,87 +334,29 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 
 		form?.addEventListener('submit', (event) => {
 			event.preventDefault();
-			setError('');
+			setErrors([]);
 
-			const name = nameInput instanceof HTMLInputElement ? nameInput.value.trim() : '';
-			const contactNumber = contactInput instanceof HTMLInputElement ? contactInput.value.trim() : '';
-			const interestedIn = Array.from(interestInputs)
-				.filter((input) => input instanceof HTMLInputElement && input.checked)
-				.map((input) => input.value);
-			const deliveryDate = dateInput instanceof HTMLInputElement ? dateInput.value.trim() : '';
-			const deliveryTimeRange = timeInput instanceof HTMLSelectElement ? timeInput.value : '';
-			const deliveryAddress = addressInput instanceof HTMLTextAreaElement ? addressInput.value.trim() : '';
-			const specialRequest = requestInput instanceof HTMLTextAreaElement ? requestInput.value.trim() : '';
-			const parsedDeliveryDate = parseDeliveryDate(deliveryDate);
+			const values = getFormValues();
+			const { errors, firstInvalid } = validateForm(values);
 
-			if (!name) {
-				setError('Please enter the receiver\'s name.');
-				nameInput?.focus();
-				return;
-			}
-
-			if (/\d/.test(name)) {
-				setError('The receiver\'s name cannot contain numbers.');
-				nameInput?.focus();
-				return;
-			}
-
-			if (!/^\d+$/.test(contactNumber)) {
-				setError('Please enter a contact number using digits only.');
-				contactInput?.focus();
-				return;
-			}
-
-			if (!interestedIn.length) {
-				setError('Please select at least one item under Interested In.');
-				if (interestInputs[0] instanceof HTMLElement) {
-					interestInputs[0].focus();
-				}
-				return;
-			}
-
-			if (!deliveryDate) {
-				setError('Please select a delivery date.');
-				dateInput?.focus();
-				return;
-			}
-
-			if (!parsedDeliveryDate) {
-				setError('Please select a valid delivery date.');
-				dateInput?.focus();
-				return;
-			}
-
-			if (parsedDeliveryDate < getEarliestAllowedDate()) {
-				setError('Please enter a delivery date that is at least 7 days from today.');
-				dateInput?.focus();
-				return;
-			}
-
-			if (!deliveryTimeRange) {
-				setError('Please select a delivery time range.');
-				timeInput?.focus();
-				return;
-			}
-
-			if (!deliveryAddress) {
-				setError('Please enter the delivery address.');
-				addressInput?.focus();
+			if (errors.length) {
+				setErrors(errors);
+				firstInvalid?.focus();
 				return;
 			}
 
 			const message = [
-				`Hi! My name is ${name} and I would love to order from Perlette Cakes!`,
+				`Hi! My name is ${values.name} and I would love to order from Perlette Cakes!`,
 				'',
-				`Receiver's Name: ${name}`,
-				`Receiver's Contact Number: ${contactNumber}`,
+				`Receiver's Name: ${values.name}`,
+				`Receiver's Contact Number: ${values.contactNumber}`,
 				'',
-				`Interested In: ${interestedIn.join(', ')}`,
-				`Delivery Date: ${formatDateForMessage(deliveryDate)}`,
-				`Delivery Time Range: ${deliveryTimeRange}`,
-				`Delivery Address: ${deliveryAddress}`,
+				`Interested In: ${values.interestedIn.join(', ')}`,
+				`Delivery Date: ${formatDateForMessage(values.deliveryDate)}`,
+				`Delivery Time Range: ${values.deliveryTimeRange}`,
+				`Delivery Address: ${values.deliveryAddress}`,
 				'',
-				`Special Request: ${specialRequest || 'None'}`,
+				`Special Request: ${values.specialRequest || 'None'}`,
 				'',
 				'Thank you!',
 			].join('\n');
@@ -420,10 +434,10 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 		width: 2.75rem;
 		height: 2.75rem;
 		padding: 0;
-		border: 1px solid var(--color-border);
+		border: 1px solid var(--white-bg);
 		border-radius: 999px;
-		background: var(--color-surface);
-		color: var(--color-text);
+		background: var(--pink-primary-bg);
+		color: var(--white-bg);
 	}
 
 	.order-modal__close span {
@@ -518,11 +532,20 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 	}
 
 	.order-modal__error {
+		display: grid;
+		gap: var(--space-xs);
+		margin: 0;
+		padding: var(--space-sm);
+		list-style: none;
+		border-radius: var(--radius-md);
+	}
+
+	.order-modal__error-item {
 		padding: var(--space-sm) var(--space-md);
 		border-radius: var(--radius-md);
-		background: var(--color-surface-soft);
-		color: var(--color-primary-ink);
-		font-size: var(--step--1);
+		background: var(--pink-primary-bg);
+		color: var(--white-text);
+		font-size: var(--text-font-size);
 		font-weight: 700;
 	}
 
