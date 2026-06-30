@@ -58,13 +58,18 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 
 				<label class="order-modal__field">
 					<span class="order-modal__label">Delivery date</span>
-					<input
-						class="order-modal__input"
-						name="deliveryDate"
-						type="date"
-						required
-						data-order-date
-					/>
+					<div class="order-modal__date-field" data-order-date-field>
+						<span class="order-modal__date-display order-modal__date-display--placeholder" data-order-date-display>
+							DD/MM/YYYY
+						</span>
+						<input
+							class="order-modal__input order-modal__date-input"
+							name="deliveryDate"
+							type="date"
+							required
+							data-order-date
+						/>
+					</div>
 				</label>
 
 				<label class="order-modal__field">
@@ -116,6 +121,8 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 		const nameInput = modal.querySelector('[data-order-name]');
 		const contactInput = modal.querySelector('[data-order-contact]');
 		const interestInputs = modal.querySelectorAll('[data-order-interest]');
+		const dateField = modal.querySelector('[data-order-date-field]');
+		const dateDisplay = modal.querySelector('[data-order-date-display]');
 		const dateInput = modal.querySelector('[data-order-date]');
 		const timeInput = modal.querySelector('[data-order-time]');
 		const addressInput = modal.querySelector('[data-order-address]');
@@ -142,9 +149,17 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 			return `${year}-${month}-${day}`;
 		};
 
-		const formatDateForMessage = (value) => {
+		const formatDateValue = (value, separator) => {
 			const [year, month, day] = value.split('-');
-			return year && month && day ? `${day}-${month}-${year}` : value;
+			return year && month && day ? `${day}${separator}${month}${separator}${year}` : value;
+		};
+
+		const updateDateDisplay = (value) => {
+			if (!(dateDisplay instanceof HTMLElement)) return;
+
+			const hasValue = Boolean(value);
+			dateDisplay.textContent = hasValue ? formatDateValue(value, '/') : 'DD/MM/YYYY';
+			dateDisplay.classList.toggle('order-modal__date-display--placeholder', !hasValue);
 		};
 
 		const parseDeliveryDate = (value) => {
@@ -171,6 +186,17 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 
 		if (dateInput instanceof HTMLInputElement) {
 			dateInput.min = formatDateForInput(getEarliestAllowedDate());
+			updateDateDisplay(dateInput.value);
+			dateInput.addEventListener('input', () => {
+				updateDateDisplay(dateInput.value);
+			});
+		}
+
+		if (dateField instanceof HTMLElement && dateInput instanceof HTMLInputElement) {
+			dateField.addEventListener('click', () => {
+				dateInput.focus();
+				dateInput.showPicker?.();
+			});
 		}
 
 		if (nameInput instanceof HTMLInputElement) {
@@ -352,7 +378,7 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 				`Receiver's Contact Number: ${values.contactNumber}`,
 				'',
 				`Interested In: ${values.interestedIn.join(', ')}`,
-				`Delivery Date: ${formatDateForMessage(values.deliveryDate)}`,
+				`Delivery Date: ${formatDateValue(values.deliveryDate, '-')}`,
 				`Delivery Time Range: ${values.deliveryTimeRange}`,
 				`Delivery Address: ${values.deliveryAddress}`,
 				'',
@@ -364,6 +390,7 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 			const url = `${whatsappBaseUrl}?text=${encodeURIComponent(message)}`;
 			window.open(url, '_blank', 'noopener');
 			form.reset();
+			updateDateDisplay('');
 			closeModal();
 		});
 	}
@@ -483,6 +510,38 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 		color: var(--color-text);
 	}
 
+	.order-modal__date-field {
+		position: relative;
+		cursor: pointer;
+	}
+
+	.order-modal__date-display {
+		display: block;
+		width: 100%;
+		padding: 0.85rem 1rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-md);
+		background: var(--color-surface);
+		color: var(--color-text);
+		pointer-events: none;
+	}
+
+	.order-modal__date-display--placeholder {
+		color: var(--color-text-muted);
+	}
+
+	.order-modal__date-field:focus-within .order-modal__date-display {
+		outline: none;
+		box-shadow: var(--focus-ring);
+	}
+
+	.order-modal__date-input {
+		position: absolute;
+		inset: 0;
+		opacity: 0;
+		cursor: pointer;
+	}
+
 	.order-modal__select {
 		appearance: none;
 	}
@@ -538,13 +597,14 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 		padding: var(--space-sm);
 		list-style: none;
 		border-radius: var(--radius-md);
+		background: var(--white-bg);
 	}
 
 	.order-modal__error-item {
 		padding: var(--space-sm) var(--space-md);
 		border-radius: var(--radius-md);
-		background: var(--pink-primary-bg);
-		color: var(--white-text);
+		background: var(--white-text);
+		color: var(--color-text);
 		font-size: var(--text-font-size);
 		font-weight: 700;
 	}
