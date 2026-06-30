@@ -17,7 +17,6 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 	>
 		<div class="order-modal__header">
 			<div>
-				<p class="eyebrow">WhatsApp Order</p>
 				<h2 class="order-modal__title" id="order-modal-title">Enter your delivery details</h2>
 			</div>
 			<button class="order-modal__close" type="button" aria-label="Close order form" data-order-close>
@@ -432,7 +431,7 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 
 	.order-modal__field-grid {
 		display: grid;
-		gap: var(--space-md);
+		gap: var(--space-lg );
 	}
 
 	.order-modal__field {
@@ -505,11 +504,11 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 	}
 
 	.order-modal__textarea--address {
-		min-height: 8.5rem;
+		min-height: 11rem;
 	}
 
 	.order-modal__textarea--special {
-		min-height: 4.5rem;
+		min-height: 6rem;
 	}
 
 	.order-modal__error {
@@ -528,10 +527,6 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 	@media (min-width: 48rem) {
 		.order-modal {
 			padding: var(--space-lg);
-		}
-
-		.order-modal__field-grid {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 
 		.order-modal__interest-options {

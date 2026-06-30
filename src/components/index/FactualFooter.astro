@@ -61,13 +61,6 @@ const { whatsappHref, instagramHref } = Astro.props;
 		text-transform: lowercase;
 	}
 
-	.factual-footer__actions {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: var(--space-sm);
-	}
-
 	.factual-footer__link {
 		color: var(--color-surface);
 		font-size: var(--text-font-size);
@@ -75,14 +68,11 @@ const { whatsappHref, instagramHref } = Astro.props;
 		text-underline-offset: 0.25em;
 	}
 
-	.factual-footer__actions :global(.button--primary) {
+	.factual-footer__actions .button--primary {
 		background: var(--color-surface);
 		color: var(--color-primary-ink);
 		box-shadow: none;
-	}
-
-	.factual-footer__actions :global(.button--primary:hover) {
-		background: var(--color-surface-soft);
+		margin-right: var(--space-xs);
 	}
 
 	@media (min-width: 64rem) {

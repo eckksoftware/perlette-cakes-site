@@ -8,7 +8,6 @@
 :root {
   --color-surface: rgba(255, 253, 251, 0.92);
   --color-surface-soft: #f7f1eb;
-  --color-text: #050a30;
   --color-text-muted: #473c38;
   --color-primary: #e2bec6;
   --color-primary-ink: #d8a8b3;
@@ -22,6 +21,7 @@
   /* CSS refactor */
   --white-bg: rgba(255, 253, 251, 0.92);
   --white-text: rgba(255, 253, 251, 0.92);
+  --color-text: #050a30;
   --pink-primary-bg: #d6909e;
 
   --border-radius-lg: 20px;
@@ -171,17 +171,6 @@ p {
   padding-block: var(--space-2xl);
 }
 
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
-  color: var(--color-primary-ink);
-  font-size: var(--step--1);
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
 .text-muted {
   color: var(--color-text-muted);
 }
@@ -221,16 +210,6 @@ p {
 .button--primary:hover {
   background: var(--color-primary-strong);
 }
-
-/* @media (min-width: 48rem) {
-  .content-shell {
-    padding-inline: 1.25rem;
-  }
-
-  .section-space {
-    padding-block: var(--space-3xl);
-  }
-} */
 
 .content-shell {
   width: 100%;
