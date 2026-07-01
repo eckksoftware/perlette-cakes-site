@@ -232,7 +232,7 @@ The current stage-one inquiry flow is a homepage-triggered modal that opens What
 
 - Build a `https://wa.me/<number>?text=<encoded>` link. **Always `encodeURIComponent` the message.**
 - Use native form controls where they cover the need cleanly. The delivery-date field should stay `type="date"` unless there is a real product requirement to replace it.
-- Keep the current client-side validation lightweight: strip digits from names, strip non-digits from contact numbers, and require at least 7 days lead time for delivery dates.
+- Keep the current client-side validation lightweight: strip digits from names, strip non-digits from contact numbers, and require at least 3 days lead time for delivery dates.
 - Standardize the message shape (refine later — treat as iterative):
 
 ```

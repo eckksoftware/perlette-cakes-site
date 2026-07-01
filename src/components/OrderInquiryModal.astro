@@ -116,6 +116,7 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 <script is:inline>
 	const modal = document.querySelector('[data-order-modal]');
 	const whatsappBaseUrl = 'https://wa.me/60196505050';
+	const minimumLeadDays = 3;
 	if (modal) {
 		const form = modal.querySelector('[data-order-form]');
 		const nameInput = modal.querySelector('[data-order-name]');
@@ -138,7 +139,7 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 
 		const getEarliestAllowedDate = () => {
 			const earliest = getTodayDate();
-			earliest.setDate(earliest.getDate() + 7);
+			earliest.setDate(earliest.getDate() + minimumLeadDays);
 			return earliest;
 		};
 
@@ -282,7 +283,7 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 			} else if (!parsedDeliveryDate) {
 				addError('Please select a valid delivery date.', dateInput);
 			} else if (parsedDeliveryDate < getEarliestAllowedDate()) {
-				addError('Please enter a delivery date that is at least 7 days from today.', dateInput);
+				addError(`Please enter a delivery date that is at least ${minimumLeadDays} days from today.`, dateInput);
 			}
 
 			if (!deliveryTimeRange) {

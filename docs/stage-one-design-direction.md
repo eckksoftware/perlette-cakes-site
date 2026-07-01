@@ -70,7 +70,5 @@ Rules:
 
 ## Current Gaps
 
-- Social metadata is still missing
-- `robots.txt`, `llms.txt`, and sitemap support are still missing
 - Analytics hooks are still missing
-- The public lead-time copy and modal validation do not match
+- A dedicated social share image is still missing

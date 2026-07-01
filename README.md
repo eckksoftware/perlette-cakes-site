@@ -27,16 +27,15 @@ Implemented:
 - Homepage sections: hero, owner story, featured categories, ordering steps, CTA, FAQ, footer
 - Shared WhatsApp inquiry modal
 - FAQ JSON-LD and Bakery JSON-LD
+- `robots.txt`, `llms.txt`, and sitemap support
+- Open Graph and Twitter metadata
 - Optimized content images via `astro:assets`
 
 Not done yet:
 
-- `robots.txt` is misnamed as `public/robot.txt`
-- No `llms.txt`
-- No sitemap integration
-- No Open Graph or Twitter metadata
 - No analytics wiring or inquiry-intent tracking
 - No Cloudflare Pages GitHub Actions workflow
+- No dedicated social share image yet
 
 ## Project Structure
 
@@ -67,13 +66,9 @@ npm run astro check
 
 Resolve these before production:
 
-1. Rename `public/robot.txt` to `public/robots.txt` and set the intended crawler policy.
-2. Add `public/llms.txt`.
-3. Add `@astrojs/sitemap` and set `site` in `astro.config.mjs`.
-4. Add Open Graph and Twitter metadata in `src/layouts/Layout.astro`.
-5. Reconcile the public `3 to 5 days` lead-time copy with the modal's `7 days` validation.
-6. Add analytics events for CTA click, modal open, modal submit success, and validation failure.
-7. Add deployment workflow and Cloudflare Pages secrets.
+1. Add analytics events for CTA click, modal open, modal submit success, and validation failure.
+2. Add deployment workflow and Cloudflare Pages secrets.
+3. Add a proper social share image instead of the favicon fallback.
 
 ## Deployment Next
 
@@ -104,3 +99,4 @@ Future homelab capture path:
 - Business language: `./CONTEXT.md`
 - Brand notes: `./docs/brand-notes.md`
 - Design direction: `./docs/stage-one-design-direction.md`
+- Stage 2 planning: `./docs/stage-two-readme.md`
