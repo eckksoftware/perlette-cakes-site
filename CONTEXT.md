@@ -73,7 +73,7 @@ A WhatsApp message from a visitor who understands what Perlette Cakes sells and 
 _Avoid_: empty click, vague message, accidental tap
 
 **Vendor-neutral event hooks**:
-The site defines meaningful analytics events in the UI flow without hard-coding a specific analytics provider into the stage-one implementation.
+The site should define meaningful analytics events in the UI flow without hard-coding a specific analytics provider into the core implementation. These hooks are planned, not implemented yet.
 _Avoid_: provider-specific tracking baked into core UI
 
 **Dietary claim policy**:
