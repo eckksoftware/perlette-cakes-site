@@ -222,7 +222,14 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 					return item;
 				}),
 			);
-			errorEl.hidden = messages.length === 0;
+
+			const noErrors = messages.length === 0;
+
+			if (!noErrors) {
+				errorEl.style.display = "grid"
+			}
+			
+			errorEl.hidden = noErrors;
 		};
 
 		const getFormValues = () => ({
@@ -591,7 +598,7 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 	}
 
 	.order-modal__error {
-		display: grid;
+		display: none;
 		gap: var(--space-xs);
 		margin: 0;
 		padding: var(--space-sm);
