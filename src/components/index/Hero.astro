@@ -8,6 +8,9 @@ import floweryCake from '../../assets/images/index/hero-flowery-cake.JPG';
 	<div class="landing-hero__inner content-shell">
 		<div class="landing-hero__content">
 			<h1 class="landing-hero__title">Baked by hand for moments you treasure</h1>
+			<p class="landing-hero__summary">
+				At Perlette Cakes we bake with love and care. Get cakes, cupcakes, pastries & cookies with a click of a button - WhatsApp.
+			</p>
 		</div>
 
 		<div class="landing-hero__media-layout">
@@ -45,12 +48,23 @@ import floweryCake from '../../assets/images/index/hero-flowery-cake.JPG';
 		color: var(--white-text);
 		padding: 40px 20px;
 		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
 	}
 
 	.landing-hero__title {
 		font-size: 3rem;
 		text-align: center;
 		text-wrap: balance;
+	}
+
+	.landing-hero__summary {
+		color: var(--white-text);
+		text-align: left;
+		border-top: 1px solid var(--white-bg);
+		margin-top: var(--gap-space-md);
+		padding-top: var(--gap-space-md);
 	}
 
 	.landing-hero__media-layout {
