@@ -67,7 +67,7 @@ npm run astro check
 Resolve these before production:
 
 1. Add analytics events for CTA click, modal open, modal submit success, and validation failure.
-2. Add deployment workflow and Cloudflare Pages secrets.
+2. Add the repository variable `CLOUDFLARE_PAGES_PROJECT_NAME`.
 3. Add a proper social share image instead of the favicon fallback.
 
 ## Deployment Next
@@ -77,8 +77,9 @@ Cloudflare Pages via GitHub Actions needs:
 1. A Cloudflare Pages project connected to this repo.
 2. A Pages API token with deployment permission.
 3. GitHub secrets for `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
-4. A workflow that installs dependencies, runs `npm run astro check`, builds with `npm run build`, and deploys `dist/`.
-5. Production domain setup for `perlettecakes.com` and DNS in Cloudflare.
+4. A repository variable named `CLOUDFLARE_PAGES_PROJECT_NAME`.
+5. The workflow at `.github/workflows/deploy-cloudflare-pages.yml` installs dependencies, runs `npm run astro check`, builds with `npm run build`, and deploys `dist/` with `wrangler` on `ubuntu-24.04`.
+6. Production domain setup for `perlettecakes.com` and DNS in Cloudflare.
 
 ## Analytics Next
 
