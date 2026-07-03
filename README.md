@@ -78,7 +78,7 @@ Cloudflare Pages via GitHub Actions needs:
 2. A Pages API token with deployment permission.
 3. GitHub secrets for `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
 4. A repository variable named `CLOUDFLARE_PAGES_PROJECT_NAME`.
-5. The workflow at `.github/workflows/deploy-cloudflare-pages.yml` installs dependencies, runs `npm run astro check`, builds with `npm run build`, and deploys `dist/` with `wrangler` on `ubuntu-24.04`.
+5. The workflow at `.github/workflows/deploy-cloudflare-pages.yml` installs dependencies, runs `npm run astro check`, builds with `npm run build`, validates `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, and `CLOUDFLARE_PAGES_PROJECT_NAME`, then deploys `dist/` with `wrangler` on `ubuntu-24.04`.
 6. Production domain setup for `perlettecakes.com` and DNS in Cloudflare.
 
 ## Analytics Next
