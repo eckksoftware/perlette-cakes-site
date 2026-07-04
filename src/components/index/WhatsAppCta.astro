@@ -6,7 +6,7 @@ interface Props {
 const { whatsappHref } = Astro.props;
 ---
 
-<section class="whatsapp-cta section-space" id="contact">
+<section class="whatsapp-cta" id="contact">
 	<div class="whatsapp-cta__inner content-shell">
 		<div class="whatsapp-cta__panel">
 			<div class="whatsapp-cta__copy">
@@ -23,6 +23,11 @@ const { whatsappHref } = Astro.props;
 </section>
 
 <style>
+	.whatsapp-cta {
+		padding-top: var(--top-space-section-md);
+		padding-bottom: var(--bottom-space-section-md);
+	}
+
 	.whatsapp-cta__panel,
 	.whatsapp-cta__copy {
 		display: flex;

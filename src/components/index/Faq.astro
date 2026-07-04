@@ -8,7 +8,7 @@ interface Props {
 const { whatsappHref } = Astro.props;
 ---
 
-<section class="faq section-space" id="faq">
+<section class="faq" id="faq">
 	<div class="faq__inner content-shell">
 		<div class="faq__intro">
 			<h2 class="faq__title">Common questions before you place a WhatsApp order</h2>
@@ -36,6 +36,8 @@ const { whatsappHref } = Astro.props;
 <style>
 	.faq {
 		background: linear-gradient(180deg, transparent 0%, var(--color-surface-soft) 100%);
+		padding-top: var(--top-space-section-md);
+		padding-bottom: var(--bottom-space-section-s);
 	}
 
 	.faq__inner,
