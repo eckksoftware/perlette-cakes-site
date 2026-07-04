@@ -57,13 +57,19 @@ astro.config.mjs
 ## Commands
 
 ```bash
-npm install
-npm run dev
-npm run build
-npm run preview
-npm run astro check
-npm run check:images
+npm install            # once after cloning or when dependencies change
+npm run dev            # normal day-to-day local work
+npm run astro check    # before commit or when changing Astro/types
+npm run check:images   # after adding or replacing source images
+npm run build          # only when verifying a production build or before deploy
+npm run preview        # optional; only after build if you need to inspect the built output locally
 ```
+
+Notes:
+
+- `npm run build` is not required for every edit. Use it when you need to verify the production output, image transforms, or deployment build.
+- `npm run preview` is never required for routine work. It only helps when you specifically want to inspect the built site instead of the dev server.
+- The GitHub Actions deployment workflow does not run `npm run check:images`; that script is a local repo hygiene check.
 
 ## Launch Blockers
 
@@ -81,7 +87,7 @@ Cloudflare Pages via GitHub Actions needs:
 2. A Pages API token with deployment permission.
 3. GitHub secrets for `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID`.
 4. A repository variable named `CLOUDFLARE_PAGES_PROJECT_NAME`.
-5. The workflow at `.github/workflows/deploy-cloudflare-pages.yml` installs dependencies, runs `npm run astro check`, builds with `npm run build`, validates `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, and `CLOUDFLARE_PAGES_PROJECT_NAME`, then deploys `dist/` with `wrangler` on `ubuntu-24.04`.
+5. The workflow at `.github/workflows/deploy-cloudflare-pages.yml` installs dependencies, runs `npm run astro check`, builds with `npm run build`, validates `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, and `CLOUDFLARE_PAGES_PROJECT_NAME`, then deploys `dist/` with `wrangler` on `ubuntu-24.04`. It intentionally does not run `npm run check:images`.
 6. Production domain setup for `perlettecakes.com` and DNS in Cloudflare.
 
 ## Analytics Next
