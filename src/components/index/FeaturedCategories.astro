@@ -43,7 +43,14 @@ const categories = [
 			{categories.map((category) => (
 				<article class="featured-categories__card">
 					<div class="featured-categories__media">
-						<Image src={category.image} alt={category.alt} loading="lazy" width="720" />
+						<Image
+							src={category.image}
+							alt={category.alt}
+							loading="lazy"
+							widths={[360, 540, 720]}
+							sizes="(min-width: 100rem) 25vw, (min-width: 48rem) 50vw, 100vw"
+							quality={65}
+						/>
 					</div>
 					<div class="featured-categories__copy">
 						<h3>{category.title}</h3>

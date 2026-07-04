@@ -44,3 +44,11 @@ This is the working checklist for SEO and AI or LLM discoverability.
 - Each category page must say what it is, who it is for, where it is delivered, how to order, and what lead time usually applies.
 - Product variation grids should remain HTML-first and indexable.
 - New routes must update internal linking, metadata, schema, and eventually `llms.txt`.
+
+## Image Rule
+
+- Keep active source images under `1 MB` each. Treat `800 KB` as the target, not the ceiling.
+- Preserve untouched originals only inside an `originals/` subfolder when you need them for review or later re-export.
+- Use `npm run check:images` before deployment or after adding new photography.
+- For content images, keep using Astro `<Image />` with explicit `widths`, `sizes`, and sensible `quality` values so the browser downloads the smallest useful asset.
+- Above the fold: only the true LCP image should be eager and high priority. Other images should be lazy unless there is a clear reason not to.
