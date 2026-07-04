@@ -7,9 +7,10 @@ import floweryCake from '../../assets/images/index/hero-flowery-cake.JPG';
 <section class="landing-hero__section" id="hero">
 	<div class="landing-hero__inner content-shell">
 		<div class="landing-hero__content">
-			<h1 class="landing-hero__title">Baked by hand for moments you treasure</h1>
+			<p class="landing-hero__eyebrow">Home-based baker in Klang Valley, Malaysia</p>
+			<h1 class="landing-hero__title">Custom cakes and pastries delivered across Klang Valley</h1>
 			<p class="landing-hero__summary">
-				At Perlette Cakes we bake with love and care. Get cakes, cupcakes, pastries & cookies with a click of a button - WhatsApp.
+				Perlette Cakes makes custom celebration cakes, cupcakes, pastries, and cookies to order. Start on WhatsApp and we will confirm flavours, design details, and Lalamove delivery from there.
 			</p>
 		</div>
 
@@ -48,14 +49,22 @@ import floweryCake from '../../assets/images/index/hero-flowery-cake.JPG';
 		color: var(--white-text);
 		padding: 40px 20px;
 		width: 100%;
+		max-width: 48rem;
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-md);
+		gap: var(--space-sm);
+	}
+
+	.landing-hero__eyebrow {
+		font-size: var(--step--1);
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
 	}
 
 	.landing-hero__title {
-		font-size: 3rem;
-		text-align: center;
+		font-size: var(--header-one-font-size);
+		text-align: left;
 		text-wrap: balance;
 	}
 
@@ -65,6 +74,7 @@ import floweryCake from '../../assets/images/index/hero-flowery-cake.JPG';
 		border-top: 1px solid var(--white-bg);
 		margin-top: var(--gap-space-md);
 		padding-top: var(--gap-space-md);
+		max-width: 32rem;
 	}
 
 	.landing-hero__media-layout {
@@ -102,11 +112,7 @@ import floweryCake from '../../assets/images/index/hero-flowery-cake.JPG';
 			left: 50%;
 			transform: translate(-50%, -50%);
 			padding: 40px 20px;
-			width: 50vw;
-		}
-
-		.landing-hero__title {
-			font-size: 5rem;
+			width: min(50vw, 48rem);
 		}
 
 		.landing-hero__media {

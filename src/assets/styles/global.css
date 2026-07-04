@@ -21,7 +21,7 @@
   --color-text: #050a30;
   --pink-primary-bg: #d6909e;
 
-  --text-font-size: 1.35rem;
+  --text-font-size: clamp(1.05rem, 0.98rem + 0.45vw, 1.35rem);
   --brand-font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.7rem);
   --header-one-font-size: clamp(2.5rem, 5.25vw, 4.25rem);
   --header-two-font-size: clamp(2rem, 4.75vw, 3.75rem);
@@ -144,8 +144,22 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  line-height: 0.94;
   letter-spacing: -0.04em;
+}
+
+h1 {
+  font-size: var(--header-one-font-size);
+  line-height: 0.92;
+}
+
+h2 {
+  font-size: var(--header-two-font-size);
+  line-height: 0.95;
+}
+
+h3 {
+  font-size: var(--header-three-font-size);
+  line-height: 1;
 }
 
 p {
