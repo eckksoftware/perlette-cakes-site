@@ -1,4 +1,5 @@
 ---
+import { SEO } from 'astro-seo';
 import OrderInquiryModal from '../components/OrderInquiryModal.astro';
 import '../assets/styles/global.css';
 
@@ -8,11 +9,20 @@ interface Props {
   canonicalUrl: string;
   noIndex: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  socialImageUrl?: string;
+  socialImageAlt?: string;
 }
 
-const { title, description, canonicalUrl, noIndex, jsonLd = [] } = Astro.props;
+const {
+  title,
+  description,
+  canonicalUrl,
+  noIndex,
+  jsonLd = [],
+  socialImageUrl = 'https://perlettecakes.com/favicon.svg',
+  socialImageAlt = 'Perlette Cakes homepage featuring custom cakes, cupcakes, pastries, and cookies in Klang Valley.',
+} = Astro.props;
 const whatsappHref = `https://wa.me/60196505050?text=${encodeURIComponent("Hi Perlette Cakes! I'd like to enquire about a custom cake order.")}`;
-const socialImageAlt = 'Perlette Cakes homepage featuring custom cakes, cupcakes, pastries, and cookies in Klang Valley.';
 
 const businessJsonLd = {
   "@context": "https://schema.org",
@@ -53,29 +63,46 @@ const allJsonLd = [
 <!doctype html>
 <html lang="en">
 	<head>
-		<title>{title}</title>
-		<meta name="description" content={description}>
-		<meta charset="UTF-8">
+		<SEO
+			title={title}
+			description={description}
+			charset="UTF-8"
+			canonical={canonicalUrl}
+			noindex={noIndex}
+			nofollow={noIndex}
+			robotsExtras="max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+			openGraph={{
+				basic: {
+					title,
+					type: 'website',
+					image: socialImageUrl,
+					url: canonicalUrl,
+				},
+				optional: {
+					description,
+					locale: 'en_MY',
+					siteName: 'Perlette Cakes',
+				},
+				image: {
+					alt: socialImageAlt,
+				},
+			}}
+			twitter={{
+				card: 'summary',
+				title,
+				description,
+				image: socialImageUrl,
+				imageAlt: socialImageAlt,
+			}}
+			extend={{
+				link: [
+					{ rel: 'icon', href: '/favicon.ico' },
+					{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+				],
+			}}
+		/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="language" content="English" />
-		<link rel="canonical" href={canonicalUrl} />
-		<meta property="og:type" content="website" />
-		<meta property="og:site_name" content="Perlette Cakes" />
-		<meta property="og:locale" content="en_MY" />
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:url" content={canonicalUrl} />
-		<meta property="og:image" content="https://perlettecakes.com/favicon.svg" />
-		<meta property="og:image:alt" content={socialImageAlt} />
-		<meta name="twitter:card" content="summary" />
-		<meta name="twitter:title" content={title} />
-		<meta name="twitter:description" content={description} />
-		<meta name="twitter:image" content="https://perlettecakes.com/favicon.svg" />
-		<meta name="twitter:image:alt" content={socialImageAlt} />
-		{noIndex ? 
-			(<meta name="robots" content="noindex, nofollow" />) : 
-			(<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />)
-		}
 
 		{allJsonLd.map((schema) => (
 			<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
@@ -129,7 +156,7 @@ const allJsonLd = [
 	.site-nav__brand {
 		color: var(--color-primary-ink);
 		font-family: var(--font-display);
-		font-size: var(--step-1);
+		font-size: var(--brand-font-size);
 		font-style: italic;
 		font-weight: 600;
 		letter-spacing: -0.04em;

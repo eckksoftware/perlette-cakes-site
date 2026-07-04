@@ -2,6 +2,13 @@
 
 Stage 2 expands the site from a single homepage into dedicated browsing pages.
 
+See also:
+
+- `./roadmap.md`
+- `./routes.md`
+- `./discoverability.md`
+- `./funnel.md`
+
 ## Planned Pages
 
 - `/products`
@@ -16,6 +23,7 @@ Stage 2 expands the site from a single homepage into dedicated browsing pages.
 - Add dedicated category pages for cakes, pastries, cookies, and cupcakes
 - Improve product-specific SEO and internal linking
 - Make the WhatsApp inquiry flow more product-aware
+- Keep variation grids on category pages before creating product-detail routes
 
 ## Analytics Plan
 

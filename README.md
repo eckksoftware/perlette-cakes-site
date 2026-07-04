@@ -26,15 +26,16 @@ Implemented:
 - Sticky nav with WhatsApp CTA
 - Homepage sections: hero, owner story, featured categories, ordering steps, CTA, FAQ, footer
 - Shared WhatsApp inquiry modal
+- FAQ accordion with the first item open by default
 - FAQ JSON-LD and Bakery JSON-LD
 - `robots.txt`, `llms.txt`, and sitemap support
 - Open Graph and Twitter metadata
+- `astro-seo` layout integration for shared SEO tags
 - Optimized content images via `astro:assets`
 
 Not done yet:
 
 - No analytics wiring or inquiry-intent tracking
-- No Cloudflare Pages GitHub Actions workflow
 - No dedicated social share image yet
 
 ## Project Structure
@@ -49,6 +50,7 @@ src/
   layouts/Layout.astro
   pages/index.astro
 public/
+docs/
 astro.config.mjs
 ```
 
@@ -98,6 +100,10 @@ Future homelab capture path:
 ## References
 
 - Business language: `./CONTEXT.md`
+- Roadmap and cleanup checklist: `./docs/roadmap.md`
+- Canonical routes: `./docs/routes.md`
+- Discoverability rules: `./docs/discoverability.md`
+- Order funnel decisions: `./docs/funnel.md`
 - Brand notes: `./docs/brand-notes.md`
 - Design direction: `./docs/stage-one-design-direction.md`
 - Stage 2 planning: `./docs/stage-two-readme.md`
