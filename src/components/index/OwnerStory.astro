@@ -23,7 +23,10 @@ import personalGifts from '../../assets/images/index/owner-personal-handmade-gif
 				<Image
 					src={personalGifts}
 					alt="Personal handmade gifts made by Perlette Cakes as we prioritize quality over anything."
-					loading="eager"
+					loading="lazy"
+					widths={[480, 720, 900]}
+					sizes="(min-width: 80rem) 32vw, 80vw"
+					quality={65}
 				/>
 			</div>
 		</div>

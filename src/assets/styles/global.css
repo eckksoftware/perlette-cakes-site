@@ -1,9 +1,26 @@
-@import "@fontsource-variable/fraunces/wght.css";
-@import "@fontsource-variable/fraunces/wght-italic.css";
-@import "@fontsource/geist-sans/400.css";
-@import "@fontsource/geist-sans/500.css";
-@import "@fontsource/geist-sans/600.css";
-@import "@fontsource/geist-sans/700.css";
+@font-face {
+  font-family: "Fraunces Variable";
+  src: url("@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fraunces Variable";
+  src: url("@fontsource-variable/fraunces/files/fraunces-latin-wght-italic.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Zarathustra";
+  src: url("../fonts/zarathustra/zarathustra-v01.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
 
 :root {
   --color-surface: rgba(255, 253, 251, 0.92);
@@ -22,13 +39,14 @@
   --pink-primary-bg: #d6909e;
 
   --text-font-size: clamp(1.05rem, 0.98rem + 0.45vw, 1.35rem);
+  --label-text-font-size: clamp(0.95rem, 0.92rem + 0.2vw, 1.1rem);
   --brand-font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.7rem);
   --header-one-font-size: clamp(2.5rem, 5.25vw, 4.25rem);
   --header-two-font-size: clamp(2rem, 4.75vw, 3.75rem);
   --header-three-font-size: clamp(1.8rem, 4.25vw, 3.25rem);
 
   --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
-  --font-body: "Geist Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: "Zarathustra", Georgia, "Times New Roman", serif;
 
   --side-space-content-md: 30px;
 
