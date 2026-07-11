@@ -1,6 +1,7 @@
 ---
 import { SEO } from 'astro-seo';
 import OrderInquiryModal from '../components/OrderInquiryModal.astro';
+import FactualFooter from '../components/shared/FactualFooter.astro';
 import { whatsappHref, DEFAULT_INQUIRY } from '@lib/whatsapp';
 import '../assets/styles/global.css';
 import '../styles/accents.css';
@@ -25,6 +26,7 @@ const {
   socialImageAlt = 'Perlette Cakes homepage featuring custom cakes, cupcakes, pastries, and cookies in Klang Valley.',
 } = Astro.props;
 const orderHref = whatsappHref(DEFAULT_INQUIRY);
+const instagramHref = 'https://www.instagram.com/perlettecakes';
 
 const businessJsonLd = {
   "@context": "https://schema.org",
@@ -115,13 +117,19 @@ const allJsonLd = [
 		<div class="site-shell">
 			<header class="site-nav">
 				<div class="site-nav__inner content-shell">
-					<a class="site-nav__brand" href="/">perlette cakes</a>
+					<div class="site-nav__left">
+						<a class="site-nav__brand" href="/">perlette cakes</a>
+						<nav class="site-nav__links" aria-label="Primary">
+							<a class="site-nav__link" href="/custom-cakes/">Custom Cakes</a>
+						</nav>
+					</div>
 					<a class="site-nav__cta button button--primary" href={orderHref} target="_blank" rel="noreferrer" data-order-trigger>
 						Order on WhatsApp
 					</a>
 				</div>
 			</header>
 			<slot />
+			<FactualFooter whatsappHref={orderHref} instagramHref={instagramHref} />
 			<OrderInquiryModal />
 		</div>
 		<script>
@@ -158,6 +166,28 @@ const allJsonLd = [
 		gap: var(--space-md);
 	}
 
+	.site-nav__left {
+		display: flex;
+		align-items: center;
+		gap: var(--space-lg);
+	}
+
+	.site-nav__links {
+		display: none;
+	}
+
+	.site-nav__link {
+		font-size: var(--label-text-font-size);
+		font-weight: 600;
+		text-decoration: none;
+		white-space: nowrap;
+		transition: color var(--transition-base);
+	}
+
+	.site-nav__link:hover {
+		color: var(--color-primary-strong);
+	}
+
 	.site-nav__brand {
 		color: var(--color-primary-ink);
 		font-family: var(--font-display);
@@ -179,6 +209,12 @@ const allJsonLd = [
 	@media (min-width: 48rem) {
 		.site-nav {
 			padding-block: var(--space-lg);
+		}
+
+		.site-nav__links {
+			display: flex;
+			align-items: center;
+			gap: var(--space-md);
 		}
 
 		.site-nav__brand {
