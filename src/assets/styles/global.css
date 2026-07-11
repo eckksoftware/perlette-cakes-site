@@ -48,24 +48,25 @@
   --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
   --font-body: "Zarathustra", Georgia, "Times New Roman", serif;
 
-  --side-space-content-md: 30px;
+  --side-space-content-md: var(--space-xl);
 
-  --side-space-section-sm: 10px;
-  --side-space-section-md: 40px;
+  --side-space-section-sm: clamp(1rem, 4vw, 2rem);
+  --side-space-section-md: clamp(2.5rem, 5vw, 4rem);
+  --panel-space: clamp(1.5rem, 4vw, 3rem);
 
-  --top-space-media-md-mobile: 50px;
+  --top-space-media-md-mobile: clamp(2rem, 8vw, 3.125rem);
 
-  --top-space-section-md: 200px;
+  --top-space-section-md: clamp(5rem, 10vw, 10rem);
 
-  --bottom-space-section-s: 50px;
-  --bottom-space-section-md: 200px;
+  --bottom-space-section-s: clamp(3rem, 6vw, 5rem);
+  --bottom-space-section-md: clamp(5rem, 10vw, 10rem);
 
-  --bottom-space-header-md: 10px;
+  --bottom-space-header-md: var(--space-sm);
 
-  --bottom-space-text-md: 3px;
+  --bottom-space-text-md: var(--space-xs);
 
-  --gap-space-md: 1rem;
-  --gap-space-xl: 2.5rem;
+  --gap-space-md: var(--space-md);
+  --gap-space-xl: var(--space-xl);
   /* end refactor */
 
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
