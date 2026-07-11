@@ -1,0 +1,87 @@
+---
+interface LinkItem {
+  label: string;
+  href: string;
+  note?: string;
+}
+
+interface Props {
+  heading?: string;
+  links: LinkItem[];
+}
+
+const { heading = 'Keep exploring', links } = Astro.props;
+---
+
+<section class="related">
+	<div class="content-shell">
+		<h2 class="related__heading" data-reveal>{heading}</h2>
+		<ul class="related__list">
+			{links.map((link) => (
+				<li data-reveal>
+					<a class="related__link" href={link.href}>
+						<span class="related__label">{link.label}</span>
+						{link.note && <span class="related__note">{link.note}</span>}
+						<span class="related__arrow" aria-hidden="true">&rarr;</span>
+					</a>
+				</li>
+			))}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.related {
+		padding-top: var(--bottom-space-section-s);
+		padding-bottom: var(--bottom-space-section-md);
+	}
+
+	.related__heading {
+		font-size: var(--header-three-font-size);
+		margin-bottom: var(--space-lg);
+	}
+
+	.related__list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.related__link {
+		display: flex;
+		align-items: baseline;
+		gap: var(--space-md);
+		padding: var(--space-md) 0;
+		border-top: 1px solid var(--color-nav-border);
+		text-decoration: none;
+		transition: color var(--transition-base);
+	}
+
+	.related__list li:last-child .related__link {
+		border-bottom: 1px solid var(--color-nav-border);
+	}
+
+	.related__link:hover {
+		color: var(--accent-strong);
+	}
+
+	.related__label {
+		font-family: var(--font-display);
+		font-size: var(--step-1);
+	}
+
+	.related__note {
+		color: var(--color-text-muted);
+		font-size: var(--label-text-font-size);
+	}
+
+	.related__arrow {
+		margin-left: auto;
+		align-self: center;
+		transition: transform var(--transition-base);
+	}
+
+	.related__link:hover .related__arrow {
+		transform: translateX(4px);
+	}
+</style>

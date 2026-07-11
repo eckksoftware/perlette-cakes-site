@@ -1,0 +1,73 @@
+---
+import { Image } from 'astro:assets';
+import type { Variation } from '@data/catalogue';
+
+interface Props {
+  variation: Variation;
+}
+
+const { variation } = Astro.props;
+---
+
+<article class="collage__item" data-reveal id={variation.slug}>
+	<div class="collage__media">
+		<Image
+			src={variation.image}
+			alt={variation.imageAlt}
+			loading="lazy"
+			widths={[360, 540, 720, 900]}
+			sizes="(min-width: 64rem) 45vw, 90vw"
+			quality={66}
+		/>
+	</div>
+	<div class="collage__copy">
+		<h3 class="collage__name">{variation.name}</h3>
+		<p class="collage__crave">{variation.crave}</p>
+		{variation.detail && <p class="collage__detail">{variation.detail}</p>}
+	</div>
+</article>
+
+<style>
+	.collage__item {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.collage__media {
+		overflow: hidden;
+		border-radius: var(--radius-xl);
+		aspect-ratio: 4 / 3;
+		background: var(--accent-tint);
+	}
+
+	.collage__media :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 700ms cubic-bezier(0.2, 0.6, 0.2, 1);
+	}
+
+	.collage__item:hover .collage__media :global(img) {
+		transform: scale(1.06);
+	}
+
+	.collage__copy {
+		padding-top: var(--space-md);
+	}
+
+	.collage__name {
+		font-size: var(--header-three-font-size);
+		margin-bottom: var(--space-xs);
+	}
+
+	.collage__crave {
+		font-size: var(--text-font-size);
+		max-width: 42ch;
+	}
+
+	.collage__detail {
+		margin-top: var(--space-xs);
+		font-size: var(--label-text-font-size);
+		color: var(--color-text-muted);
+	}
+</style>

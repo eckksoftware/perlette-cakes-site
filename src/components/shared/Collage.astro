@@ -1,0 +1,87 @@
+---
+import CollageItem from './CollageItem.astro';
+import type { Variation } from '@data/catalogue';
+
+interface Props {
+  heading?: string;
+  intro?: string;
+  variations: Variation[];
+}
+
+const { heading, intro, variations } = Astro.props;
+---
+
+<section class="collage">
+	<div class="content-shell">
+		{(heading || intro) && (
+			<div class="collage__head" data-reveal>
+				{heading && <h2 class="collage__heading">{heading}</h2>}
+				{intro && <p class="collage__intro">{intro}</p>}
+			</div>
+		)}
+
+		<div class="collage__grid">
+			{variations.map((variation) => (
+				<CollageItem variation={variation} />
+			))}
+		</div>
+	</div>
+</section>
+
+<style>
+	.collage {
+		padding-top: var(--top-space-section-md);
+		padding-bottom: var(--bottom-space-section-md);
+	}
+
+	.collage__head {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+		max-width: 40rem;
+		margin-bottom: var(--space-2xl);
+	}
+
+	.collage__heading {
+		font-size: var(--header-two-font-size);
+		text-wrap: balance;
+	}
+
+	.collage__intro {
+		color: var(--color-text-muted);
+	}
+
+	.collage__grid {
+		display: grid;
+		gap: var(--space-2xl) var(--space-lg);
+	}
+
+	/* Editorial asymmetry: alternating widths + a gentle stagger. Items are rendered
+	   by CollageItem, so placement is applied through :global(). Repeats every 6. */
+	@media (min-width: 64rem) {
+		.collage__grid {
+			grid-template-columns: repeat(12, 1fr);
+			align-items: start;
+		}
+
+		.collage__grid > :global(.collage__item:nth-child(6n + 1)),
+		.collage__grid > :global(.collage__item:nth-child(6n + 4)) {
+			grid-column: span 7;
+		}
+
+		.collage__grid > :global(.collage__item:nth-child(6n + 2)),
+		.collage__grid > :global(.collage__item:nth-child(6n + 3)) {
+			grid-column: span 5;
+		}
+
+		.collage__grid > :global(.collage__item:nth-child(6n + 5)),
+		.collage__grid > :global(.collage__item:nth-child(6n + 6)) {
+			grid-column: span 6;
+		}
+
+		.collage__grid > :global(.collage__item:nth-child(6n + 3)),
+		.collage__grid > :global(.collage__item:nth-child(6n + 6)) {
+			margin-top: var(--space-2xl);
+		}
+	}
+</style>

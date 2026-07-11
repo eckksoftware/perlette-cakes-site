@@ -1,0 +1,132 @@
+---
+import { whatsappHref } from '@lib/whatsapp';
+
+interface Props {
+  whatsappMessage: string;
+  label?: string;
+  interest?: string;
+  variant?: 'panel' | 'inline' | 'onImage';
+  heading?: string;
+  body?: string;
+}
+
+const {
+  whatsappMessage,
+  label = 'Order on WhatsApp',
+  interest,
+  variant = 'inline',
+  heading,
+  body,
+} = Astro.props;
+
+const href = whatsappHref(whatsappMessage);
+---
+
+{variant === 'panel' ? (
+	<section class="cta-panel">
+		<div class="content-shell">
+			<div class="cta-panel__inner" data-reveal>
+				<div class="cta-panel__copy">
+					{heading && <h2 class="cta-panel__title">{heading}</h2>}
+					{body && <p>{body}</p>}
+				</div>
+				<a
+					class="button cta-panel__button"
+					href={href}
+					target="_blank"
+					rel="noreferrer"
+					data-order-trigger
+					data-order-interest-preselect={interest}
+				>
+					{label}
+				</a>
+			</div>
+		</div>
+	</section>
+) : (
+	<a
+		class:list={['button', 'cta-btn', `cta-btn--${variant}`]}
+		href={href}
+		target="_blank"
+		rel="noreferrer"
+		data-order-trigger
+		data-order-interest-preselect={interest}
+	>
+		{label}
+	</a>
+)}
+
+<style>
+	.cta-panel {
+		padding-top: var(--top-space-section-md);
+		padding-bottom: var(--bottom-space-section-md);
+	}
+
+	.cta-panel__inner {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xl);
+		padding: var(--space-2xl) var(--space-xl);
+		border-radius: var(--radius-xl);
+		background: var(--accent);
+		color: var(--on-accent);
+		box-shadow: var(--shadow-md);
+	}
+
+	.cta-panel__copy {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+		max-width: 40rem;
+	}
+
+	.cta-panel__title {
+		font-size: var(--header-two-font-size);
+		text-wrap: balance;
+	}
+
+	.cta-panel__copy p {
+		color: var(--on-accent);
+	}
+
+	.cta-panel__button {
+		align-self: flex-start;
+		color: var(--accent-strong);
+		background: var(--white-bg);
+		box-shadow: none;
+	}
+
+	.cta-panel__button:hover {
+		color: var(--on-accent);
+		background: var(--accent-strong);
+	}
+
+	.cta-btn--inline {
+		color: var(--on-accent);
+		background: var(--accent);
+		box-shadow: var(--shadow-md);
+	}
+
+	.cta-btn--inline:hover {
+		background: var(--accent-strong);
+	}
+
+	.cta-btn--onImage {
+		color: var(--accent-strong);
+		background: var(--white-bg);
+		box-shadow: var(--shadow-md);
+	}
+
+	.cta-btn--onImage:hover {
+		color: var(--on-accent);
+		background: var(--accent);
+	}
+
+	@media (min-width: 64rem) {
+		.cta-panel__inner {
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+		}
+	}
+</style>

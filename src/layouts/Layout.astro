@@ -1,7 +1,9 @@
 ---
 import { SEO } from 'astro-seo';
 import OrderInquiryModal from '../components/OrderInquiryModal.astro';
+import { whatsappHref, DEFAULT_INQUIRY } from '@lib/whatsapp';
 import '../assets/styles/global.css';
+import '../styles/accents.css';
 
 interface Props {
   title: string;
@@ -22,7 +24,7 @@ const {
   socialImageUrl = 'https://perlettecakes.com/favicon.svg',
   socialImageAlt = 'Perlette Cakes homepage featuring custom cakes, cupcakes, pastries, and cookies in Klang Valley.',
 } = Astro.props;
-const whatsappHref = `https://wa.me/60196505050?text=${encodeURIComponent("Hi Perlette Cakes! I'd like to enquire about a custom cake order.")}`;
+const orderHref = whatsappHref(DEFAULT_INQUIRY);
 
 const businessJsonLd = {
   "@context": "https://schema.org",
@@ -114,7 +116,7 @@ const allJsonLd = [
 			<header class="site-nav">
 				<div class="site-nav__inner content-shell">
 					<a class="site-nav__brand" href="/">perlette cakes</a>
-					<a class="site-nav__cta button button--primary" href={whatsappHref} target="_blank" rel="noreferrer" data-order-trigger>
+					<a class="site-nav__cta button button--primary" href={orderHref} target="_blank" rel="noreferrer" data-order-trigger>
 						Order on WhatsApp
 					</a>
 				</div>
@@ -122,6 +124,9 @@ const allJsonLd = [
 			<slot />
 			<OrderInquiryModal />
 		</div>
+		<script>
+			import '../lib/reveal.ts';
+		</script>
 	</body>
 </html>
 

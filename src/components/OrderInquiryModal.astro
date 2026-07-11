@@ -302,6 +302,16 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 			modal.hidden = false;
 			document.body.classList.add('modal-open');
 			setErrors([]);
+
+			const preselect = trigger instanceof HTMLElement ? trigger.dataset.orderInterestPreselect : undefined;
+			if (preselect) {
+				interestInputs.forEach((input) => {
+					if (input instanceof HTMLInputElement && input.value === preselect) {
+						input.checked = true;
+					}
+				});
+			}
+
 			requestAnimationFrame(() => {
 				if (nameInput instanceof HTMLElement) {
 					nameInput.focus();

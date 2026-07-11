@@ -237,3 +237,20 @@ p {
     padding-inline: var(--side-space-section-md);
   }
 }
+
+/* Scroll reveal. Elements are visible by default; JS adds .is-visible on enter.
+   Reduced-motion users skip the transition entirely and see everything at once. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(1.5rem);
+    transition:
+      opacity 700ms ease,
+      transform 700ms ease;
+  }
+
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
