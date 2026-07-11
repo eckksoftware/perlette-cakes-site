@@ -1,0 +1,165 @@
+---
+import Layout from '@layouts/Layout.astro';
+import Breadcrumbs from './Breadcrumbs.astro';
+import SignatureBand from './SignatureBand.astro';
+import Collage from './Collage.astro';
+import CategoryCta from './CategoryCta.astro';
+import RelatedLinks from './RelatedLinks.astro';
+import { categories, categoryPath, categoryUrl } from '@data/catalogue';
+import type { Category } from '@data/catalogue';
+import { categoryJsonLd } from '@lib/schema';
+
+interface Props {
+  category: Category;
+}
+
+const { category } = Astro.props;
+
+const path = categoryPath(category.slug);
+const url = categoryUrl(category.slug);
+const jsonLd = categoryJsonLd(category, url);
+
+// Cross-link the sibling categories, then home.
+const relatedLinks = [
+  ...categories
+    .filter((item) => item.slug !== category.slug)
+    .map((item) => ({ label: item.name, href: categoryPath(item.slug) })),
+  { label: 'Back to home', href: '/' },
+];
+---
+
+<Layout
+	title={category.title}
+	description={category.description}
+	canonicalUrl={url}
+	noIndex={false}
+	jsonLd={jsonLd}
+>
+	<main class:list={['category-page', category.accent.theme]}>
+		<Breadcrumbs trail={[{ name: 'Home', url: '/' }, { name: category.name, url: path }]} />
+
+		<header class="intro content-shell">
+			<p class="intro__eyebrow" data-reveal>{category.introEyebrow}</p>
+			<h1 class="intro__title" data-reveal>{category.h1}</h1>
+			<div class="intro__lead" data-reveal>
+				{category.intro.map((paragraph) => (
+					<p>{paragraph}</p>
+				))}
+			</div>
+		</header>
+
+		<SignatureBand
+			image={category.signature.image}
+			imageAlt={category.signature.imageAlt}
+			eyebrow={category.signatureEyebrow}
+			headline={category.signatureHeadline}
+			crave={category.signature.crave}
+			ctaLabel={category.signatureCtaLabel}
+			whatsappMessage={category.whatsappMessage}
+			interest={category.modalInterest}
+		/>
+
+		<Collage
+			heading={category.collageHeading}
+			intro={category.collageIntro}
+			variations={category.variations}
+		/>
+
+		<section class="usecases">
+			<div class="content-shell">
+				<div class="usecases__panel" data-reveal>
+					<h2 class="usecases__title">{category.useCasesTitle}</h2>
+					<ul class="usecases__tags">
+						{category.useCases.map((useCase) => (
+							<li class="usecases__tag">{useCase}</li>
+						))}
+					</ul>
+					<p class="usecases__note">{category.leadTimeNote}</p>
+				</div>
+			</div>
+		</section>
+
+		<CategoryCta
+			variant="panel"
+			heading={category.ctaHeading}
+			body={category.ctaBody}
+			label="Order on WhatsApp"
+			whatsappMessage={category.whatsappMessage}
+			interest={category.modalInterest}
+		/>
+
+		<RelatedLinks links={relatedLinks} />
+	</main>
+</Layout>
+
+<style>
+	.intro {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+		max-width: 60rem;
+		padding-top: var(--space-xl);
+		padding-bottom: var(--space-2xl);
+	}
+
+	.intro__eyebrow {
+		font-size: var(--step--1);
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--accent-strong);
+	}
+
+	.intro__lead {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+		max-width: 44rem;
+		margin-top: var(--space-sm);
+	}
+
+	.intro__lead p {
+		color: var(--color-text-muted);
+	}
+
+	.usecases {
+		padding-top: var(--top-space-section-md);
+		padding-bottom: var(--bottom-space-section-md);
+	}
+
+	.usecases__panel {
+		padding: var(--space-2xl) var(--space-xl);
+		border-radius: var(--radius-xl);
+		background: var(--accent-tint);
+	}
+
+	.usecases__title {
+		font-size: var(--header-two-font-size);
+		max-width: 22ch;
+		text-wrap: balance;
+		margin-bottom: var(--space-lg);
+	}
+
+	.usecases__tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-sm);
+		list-style: none;
+		margin: 0 0 var(--space-xl);
+		padding: 0;
+	}
+
+	.usecases__tag {
+		padding: 0.5rem 1rem;
+		border-radius: 999px;
+		background: var(--white-bg);
+		color: var(--accent-strong);
+		font-weight: 600;
+		font-size: var(--label-text-font-size);
+	}
+
+	.usecases__note {
+		max-width: 54rem;
+		font-size: var(--text-font-size);
+	}
+</style>

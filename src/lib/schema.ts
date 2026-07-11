@@ -2,6 +2,8 @@
 // merges them with the site-wide Bakery schema. Keep schema generated from the same
 // data arrays as the visible page so the two cannot drift.
 
+import type { Category } from '@data/catalogue';
+
 export const SITE_ORIGIN = 'https://perlettecakes.com';
 
 interface CollectionPageInput {
@@ -66,4 +68,25 @@ export function breadcrumbSchema(trail: { name: string; url: string }[]) {
       item: crumb.url,
     })),
   };
+}
+
+// Convenience builder for a category page: CollectionPage + ItemList + BreadcrumbList,
+// generated from the same catalogue record the page renders.
+export function categoryJsonLd(category: Category, url: string) {
+  const listItems: ListItemInput[] = [category.signature, ...category.variations].map(
+    (variation) => ({
+      name: variation.name,
+      description: variation.crave,
+      image: `${SITE_ORIGIN}${variation.image.src}`,
+    }),
+  );
+
+  return [
+    collectionPageSchema({ name: category.name, description: category.description, url }),
+    itemListSchema(url, listItems),
+    breadcrumbSchema([
+      { name: 'Home', url: `${SITE_ORIGIN}/` },
+      { name: category.name, url },
+    ]),
+  ];
 }

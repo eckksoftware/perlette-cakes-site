@@ -8,24 +8,28 @@ import pastriesImage from '../../assets/images/index/variety-pastries.JPG';
 const categories = [
 	{
 		title: 'Custom Cakes',
+		href: '/custom-cakes/',
 		description: 'Celebration cakes for birthdays, gifting, and gatherings, with flavours and finishing discussed directly on WhatsApp.',
 		image: cakesImage,
 		alt: 'Assorted custom celebration cakes with different colours, sizes, and piped details.',
 	},
 	{
 		title: 'Cupcakes',
+		href: '/cupcakes/',
 		description: 'Small-batch cupcakes that work well for dessert tables, office treats, and easy celebration orders.',
 		image: cupcakesImage,
 		alt: 'Assorted cupcakes with piped frosting and decorative toppings arranged together.',
 	},
 	{
 		title: 'Pastries',
+		href: '/pastries/',
 		description: 'Pastry boxes for everyday indulgence, gifting, and add-on orders when you want variety in one box.',
 		image: pastriesImage,
 		alt: 'Mixed pastries grouped together for a pastry box order.',
 	},
 	{
 		title: 'Cookies',
+		href: '/cookies/',
 		description: 'Cookies for festive gifting, snack trays, and easy-to-share orders across different occasions.',
 		image: cookiesImage,
 		alt: 'Assorted cookies displayed together for gifting and sharing.',
@@ -41,7 +45,7 @@ const categories = [
 
 		<div class="featured-categories__grid">
 			{categories.map((category) => (
-				<article class="featured-categories__card">
+				<a class="featured-categories__card" href={category.href}>
 					<div class="featured-categories__media">
 						<Image
 							src={category.image}
@@ -56,7 +60,7 @@ const categories = [
 						<h3>{category.title}</h3>
 						<p class="text-muted">{category.description}</p>
 					</div>
-				</article>
+				</a>
 			))}
 		</div>
 	</div>
@@ -87,10 +91,21 @@ const categories = [
 	}
 
 	.featured-categories__card {
+		display: block;
 		overflow: hidden;
 		border-radius: var(--radius-xl);
 		background: var(--color-surface);
 		box-shadow: var(--shadow-sm);
+		color: inherit;
+		text-decoration: none;
+		transition:
+			transform var(--transition-base),
+			box-shadow var(--transition-base);
+	}
+
+	.featured-categories__card:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--shadow-md);
 	}
 
 	.featured-categories__media {
