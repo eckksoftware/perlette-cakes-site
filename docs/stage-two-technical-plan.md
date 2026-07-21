@@ -14,9 +14,9 @@ Design direction was resolved in a grilling session; the locked decisions drive 
    and feel they are missing out if they do not order.
 3. **Showcase = signature band + collage.** Each product page opens with one cinematic full-bleed
    "signature" product, then an editorial asymmetric collage of the rest.
-4. **Warm accent per category.** One secondary accent each, from a shared warm family:
-   Custom Cakes = plum, Cupcakes = raspberry-coral, Pastries = caramel-cream, Cookies = toasted cocoa.
-   Pink stays the connective thread; warm off-white base on all.
+4. **One simple brand palette.** The signature pink, primary-strong ink, warm off-white, and white are
+   reused across every category. Pages can vary composition and section backgrounds without adding a
+   per-category theme layer.
 5. **Motion: tasteful CSS + light JS.** IntersectionObserver scroll reveals, gentle parallax on the
    signature image, slow hover zoom, soft accent transitions. No animation library. `prefers-reduced-motion`
    respected everywhere. Protects the existing LCP/SEO work.
@@ -44,10 +44,10 @@ signature shot + varied collage sizes** so repetition reads as intentional art d
 
 - **Bespoke composition, shared primitives.** There is no rigid `CategoryTemplate`. Each product page is a
   hand-authored `.astro` that composes shared primitives (`SignatureBand`, `Collage`, `CategoryCta`,
-  `Breadcrumbs`, `RelatedLinks`) in its own rhythm and sets its own accent theme. Cohesion comes from the
+  `Breadcrumbs`, `RelatedLinks`) in its own rhythm and section treatment. Cohesion comes from the
   primitives + shell + tokens, not from one locked layout.
-- **Accent theming via CSS custom properties.** Each page sets `--accent*` variables on a wrapper;
-  primitives consume `var(--accent)` with a pink fallback. One mechanism = four distinct looks, minimal code.
+- **Brand styling via global tokens.** Shared primitives use the existing global brand tokens directly;
+  page-specific layouts can choose a pink or cream section without introducing another theme abstraction.
 - **HTML-first + crawlable.** Every fact that matters ships as server-rendered HTML with matching JSON-LD.
 - **Reuse the design system.** New work consumes `global.css` tokens and existing classes. No new fonts.
 - **No new runtime dependencies.** Motion is IntersectionObserver + CSS only.
@@ -57,10 +57,10 @@ signature shot + varied collage sizes** so repetition reads as intentional art d
 | Decision | Choice | Why |
 | --- | --- | --- |
 | Category pages | Hand-authored bespoke `.astro` per route, composing shared primitives | Maximal-bespoke direction; each page is its own mini-brand |
-| Cohesion mechanism | Shared shell + primitives + `--accent*` CSS custom properties | Distinct per page, unmistakably one brand, low code |
+| Cohesion mechanism | Shared shell + primitives + global brand tokens | Distinct page compositions without a theme layer |
 | `/products/` | Bold-but-lighter gateway of 4 category doors, one style | Hub, not a craving page |
 | `/delivery/`, `/faq/` | Clean cohesive pages, shared shell, light flourish | Answer-first; usability over cinematics |
-| Data | One typed `src/data/catalogue.ts` | Single source for copy, images, accent, schema, WhatsApp messages |
+| Data | One typed `src/data/catalogue.ts` | Single source for copy, images, schema, WhatsApp messages |
 | WhatsApp links | `src/lib/whatsapp.ts` helper | De-duplicate current literals; make product-aware |
 | JSON-LD | `src/lib/schema.ts` builders | `CollectionPage`/`ItemList`/`FAQPage`/`BreadcrumbList` from data |
 | Motion | `src/lib/reveal` (one global IntersectionObserver) + CSS | Cinematic without a library; reduced-motion safe |
@@ -75,13 +75,11 @@ src/
     schema.ts                # JSON-LD builders (typed)
     reveal.ts                # one IntersectionObserver for [data-reveal]; no-ops on reduced-motion
   data/
-    catalogue.ts             # categories + variations + accents + signature (typed, single source)
+    catalogue.ts             # categories + variations + signature (typed, single source)
     faqs.ts                  # rename/expand of homeFaqs.ts; category-tagged
-  styles/
-    accents.css              # per-category --accent* theme classes (imported once, applied per page)
   components/
     shared/
-      SignatureBand.astro    # full-bleed cinematic signature product (accent-aware, parallax hook)
+      SignatureBand.astro    # full-bleed cinematic signature product (parallax hook)
       Collage.astro          # editorial asymmetric layout wrapper (accepts sized items)
       CollageItem.astro      # one image + sensory copy; size variant (lg/md/sm), reveal + hover zoom
       CategoryCta.astro      # product-aware WhatsApp CTA (message + modal interest preselect)
@@ -89,10 +87,10 @@ src/
       RelatedLinks.astro     # crawlable internal-link block
       NavLinks.astro         # slim Products/Delivery/FAQ links + mobile menu (used by Layout)
   pages/
-    custom-cakes.astro       # FLAGSHIP bespoke page (plum)
-    cupcakes.astro           # bespoke (coral)
-    pastries.astro           # bespoke (caramel)
-    cookies.astro            # bespoke (cocoa)
+    custom-cakes.astro       # FLAGSHIP bespoke page
+    cupcakes.astro           # bespoke
+    pastries.astro           # bespoke
+    cookies.astro            # bespoke
     products.astro           # gateway hub
     delivery.astro           # WebPage (+ optional FAQPage)
     faq.astro                # FAQPage
@@ -108,11 +106,6 @@ import type { ImageMetadata } from 'astro';
 import cakesImage from '../assets/images/index/variety-cakes.JPG';
 import flowerCake from '../assets/images/index/hero-flowery-cake.JPG';
 // ...cupcakes, pastries, cookies, hero-cupcakes, owner-personal-handmade-gifts
-
-export interface Accent {
-  theme: string;      // css class in accents.css, e.g. 'accent-plum'
-  label: string;      // human note: 'plum'
-}
 
 export interface Variation {
   slug: string;            // anchor id now; dedicated URL later if the variation rule is met
@@ -131,7 +124,6 @@ export interface Category {
   slug: CategorySlug;
   name: string;                // "Custom Cakes"
   navLabel: string;
-  accent: Accent;
   // SEO
   title: string;
   description: string;
@@ -154,40 +146,20 @@ export const categoryPath = (slug: CategorySlug) => `/${slug}/`;
 export const categoryUrl = (slug: CategorySlug) => `https://perlettecakes.com/${slug}/`;
 ```
 
-Placeholder image + accent mapping:
+Placeholder image mapping:
 
-| Category | Accent | Placeholder assets |
-| --- | --- | --- |
-| Custom Cakes | plum `#693f4a` | `hero-flowery-cake` (signature), `variety-cakes` |
-| Cupcakes | raspberry-coral | `hero-cupcakes` (signature), `variety-cupcakes` |
-| Pastries | caramel-cream | `variety-pastries` (signature), `owner-personal-handmade-gifts` |
-| Cookies | toasted cocoa | `variety-cookies` (signature), `variety-cakes` |
-
-## Accent Theming — `src/styles/accents.css`
-
-Each product page wraps its `<main>` in an accent class. Primitives read the variables; pink is the
-fallback so nothing breaks if a theme is missing.
-
-```css
-:root {
-  --accent: var(--pink-primary-bg);          /* default = brand pink */
-  --accent-strong: var(--color-primary-strong);
-  --accent-tint: #f7f1eb;                     /* soft background wash */
-  --on-accent: var(--white-text);
-}
-.accent-plum    { --accent: #693f4a; --accent-strong: #4c2b34; --accent-tint: #f3e9ec; }
-.accent-coral   { --accent: #e0687a; --accent-strong: #b64457; --accent-tint: #fbe9ec; }
-.accent-caramel { --accent: #b9814e; --accent-strong: #8a5c32; --accent-tint: #f6ece0; }
-.accent-cocoa   { --accent: #7a5340; --accent-strong: #573729; --accent-tint: #f1e8e2; }
-```
-(Values are starting points; tune for contrast/appetite during the flagship review. All must pass WCAG
-contrast for text on accent.)
+| Category | Placeholder assets |
+| --- | --- |
+| Custom Cakes | `hero-flowery-cake` (signature), `variety-cakes` |
+| Cupcakes | `hero-cupcakes` (signature), `variety-cupcakes` |
+| Pastries | `variety-pastries` (signature), `owner-personal-handmade-gifts` |
+| Cookies | `variety-cookies` (signature), `variety-cakes` |
 
 ## Motion — `src/lib/reveal.ts`
 
 - One IntersectionObserver toggles a `is-visible` class on `[data-reveal]` elements (fade + rise).
 - `[data-parallax]` gets a small translate on scroll for the signature image (rAF-throttled).
-- Card hover zoom + accent transitions are pure CSS.
+- Card hover zoom is pure CSS.
 - Guard: if `matchMedia('(prefers-reduced-motion: reduce)')` matches, skip observers and show everything.
 - Loaded once via the shared shell; ~a few lines, no dependency.
 
@@ -195,7 +167,7 @@ contrast for text on accent.)
 
 - **`SignatureBand.astro`** — props: `variation`, `headline`, `whatsappMessage`. Full-bleed `<Image>`
   (eager + `fetchpriority="high"` — this is the page LCP), overlaid editorial headline + `crave` line +
-  CTA, accent-aware scrim. `data-parallax` on the image.
+  CTA, shared scrim. `data-parallax` on the image.
 - **`Collage.astro` / `CollageItem.astro`** — editorial asymmetric grid. Items carry `size` (lg/md/sm) so
   a page can arrange large heroes beside small supporting shots. Each item: `<Image>` (lazy, widths/sizes/
   quality per Stage 1 image rule), `id={slug}` anchor, name `<h3>`, `crave` copy, `data-reveal`, hover zoom.
@@ -233,22 +205,19 @@ arrays so they cannot drift.
 Each page passes unique `title`/`description`/`canonicalUrl` to `Layout` and a `jsonLd` array. All get
 exactly one `<h1>`, a visible WhatsApp CTA, and internal links in/out.
 
-### `/custom-cakes/` — FLAGSHIP (accent: plum), build first
+### `/custom-cakes/` — FLAGSHIP, build first
 Composition:
-1. `Breadcrumbs`.
-2. **Answer-first intro** — `<h1>` "Custom cakes delivered across Klang Valley" + intro paragraphs
-   (home-based baker, WhatsApp start, Lalamove). Kept tight; the signature band carries the mood.
-3. **`SignatureBand`** — the flowery cake, full-bleed, sensory headline ("the cake people photograph
-   before they cut it"), CTA. Page LCP.
-4. **`Collage`** — variation set (strawberry, chocolate, vintage heart, floral, bento) as sized items with
-   crave copy. Reuses placeholders at varied sizes.
-5. **Use-cases + lead time** — birthdays, gifting, gatherings, corporate; lead-time + Lalamove/no-pickup.
-6. **`CategoryCta`** (interest = Cake) → **`RelatedLinks`**.
-- Schema: `CollectionPage` + `ItemList` (signature + variations) + `BreadcrumbList`.
+1. **Two-image intro** — the Perlette Cakes H1, answer-first business description, and WhatsApp CTA.
+2. **Cake collection** — filterable reference cards with size and description instead of pricing.
+3. **Three-step ordering flow** — choose a cake, schedule delivery, await delivery.
+4. **Custom cake FAQ** — native closed-by-default disclosure rows beside an image.
+5. **Occasions** — three image cards for birthdays, anniversaries, and new beginnings.
+6. **`CategoryCta`** (interest = Cake).
+- Schema: `CollectionPage` + `ItemList` (signature + variations).
 - Title: `Custom Cake Delivery Klang Valley | Custom Cakes by Perlette Cakes`.
 
-### `/cupcakes/` (coral), `/pastries/` (caramel), `/cookies/` (cocoa)
-Same primitive kit, own accent + signature + copy + collage rhythm. Each is hand-authored so its layout can
+### `/cupcakes/`, `/pastries/`, `/cookies/`
+Same primitive kit, own copy + signature + collage rhythm. Each is hand-authored so its layout can
 differ (e.g. cookies leans festive/gifting, pastries leans warm/everyday). Schema: `CollectionPage` +
 `ItemList` + `BreadcrumbList`.
 
@@ -267,7 +236,7 @@ postponement, delivery limits). Reuse the homepage FAQ accordion. Schema: `FAQPa
 ## Homepage & Global Changes
 
 - **`Layout.astro`**: add `NavLinks`; swap inline `wa.me` for `whatsappHref(DEFAULT_INQUIRY)`; load
-  `reveal.ts` and `accents.css` once.
+  `reveal.ts` once.
 - **`FeaturedCategories.astro`**: wrap cards in `<a href={categoryPath(slug)}>`; add `slug` to data.
 - **`FactualFooter.astro`**: add a link column for the new routes.
 - **`public/llms.txt`**: add the new routes under Key Links **after** pages ship.
@@ -282,11 +251,11 @@ no-ops without config. Safe to defer past first launch.
 ## Build Order (flagship-first)
 
 1. **Foundation** — `lib/whatsapp.ts`, `lib/schema.ts`, `lib/reveal.ts`, `data/catalogue.ts`,
-   `data/faqs.ts`, `styles/accents.css`, path aliases. Refactor `Layout`/`Landing` to the helper.
+   `data/faqs.ts`, path aliases. Refactor `Layout`/`Landing` to the helper.
 2. **Shell** — `NavLinks` + nav update + footer links.
 3. **Primitives** — `SignatureBand`, `Collage`/`CollageItem`, `CategoryCta`, `Breadcrumbs`, `RelatedLinks`.
 4. **`/custom-cakes/` flagship** — full page. **→ review real look/feel, adjust.**
-5. **Replicate** — `/cupcakes/`, `/pastries/`, `/cookies/` with their accents/copy.
+5. **Replicate** — `/cupcakes/`, `/pastries/`, `/cookies/` with their own copy and layouts.
 6. **`/products/`** gateway + homepage card links.
 7. **`/delivery/`, `/faq/`**.
 8. **`llms.txt`** update + internal-link pass.
@@ -309,7 +278,7 @@ no-ops without config. Safe to defer past first launch.
 - Exactly one `<h1>`; unique `<title>` + meta description; canonical `https://perlettecakes.com/<route>/`.
 - Answer-first copy names Perlette Cakes, Klang Valley, WhatsApp, Lalamove where relevant.
 - Sensory copy stays truthful — no unverified health/allergen claims.
-- Accent text/background pairs pass WCAG contrast.
+- Pink/white and primary-strong/white text pairs pass WCAG contrast.
 - Motion respects `prefers-reduced-motion`; signature image is the only eager image per page.
 - JSON-LD validates and reflects only what is visible.
 - `npm run astro -- check` → `npm run build` → `npm run check:images` after any image change.

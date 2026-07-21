@@ -10,11 +10,6 @@ import varietyCupcakes from '../assets/images/index/variety-cupcakes.JPG';
 import varietyPastries from '../assets/images/index/variety-pastries.JPG';
 import varietyCookies from '../assets/images/index/variety-cookies.JPG';
 
-export interface Accent {
-  theme: string; // class in src/styles/accents.css
-  label: string;
-}
-
 export interface Variation {
   slug: string; // anchor id now; dedicated URL later only if the variation rule is met
   name: string;
@@ -31,7 +26,6 @@ export interface Category {
   slug: CategorySlug;
   name: string;
   navLabel: string;
-  accent: Accent;
   // SEO
   title: string;
   description: string;
@@ -60,7 +54,6 @@ const customCakes: Category = {
   slug: 'custom-cakes',
   name: 'Custom Cakes',
   navLabel: 'Custom Cakes',
-  accent: { theme: 'accent-plum', label: 'plum' },
   title: 'Custom Cake Delivery Klang Valley | Custom Cakes by Perlette Cakes',
   description:
     'Custom celebration cakes made to order by Perlette Cakes, a home-based baker in Klang Valley. Birthdays, gifting, and gatherings, delivered by Lalamove. Start your order on WhatsApp.',
@@ -137,7 +130,6 @@ const cupcakes: Category = {
   slug: 'cupcakes',
   name: 'Cupcakes',
   navLabel: 'Cupcakes',
-  accent: { theme: 'accent-coral', label: 'coral' },
   title: 'Cupcake Delivery Klang Valley | Cupcakes by Perlette Cakes',
   description:
     'Small-batch cupcakes made to order by Perlette Cakes, a home-based baker in Klang Valley. For dessert tables, office treats, and celebrations, delivered by Lalamove. Order on WhatsApp.',
@@ -211,7 +203,6 @@ const pastries: Category = {
   slug: 'pastries',
   name: 'Pastries',
   navLabel: 'Pastries',
-  accent: { theme: 'accent-caramel', label: 'caramel' },
   title: 'Pastry Boxes Klang Valley | Pastries by Perlette Cakes',
   description:
     'Freshly baked pastries and pastry boxes made to order by Perlette Cakes, a home-based baker in Klang Valley. For gifting, gatherings, and everyday treats, delivered by Lalamove. Order on WhatsApp.',
@@ -285,7 +276,6 @@ const cookies: Category = {
   slug: 'cookies',
   name: 'Cookies',
   navLabel: 'Cookies',
-  accent: { theme: 'accent-cocoa', label: 'cocoa' },
   title: 'Cookie Gift Boxes Klang Valley | Cookies by Perlette Cakes',
   description:
     'Freshly baked cookies and cookie gift boxes made to order by Perlette Cakes, a home-based baker in Klang Valley. For festive gifting, snack trays, and sharing, delivered by Lalamove. Order on WhatsApp.',

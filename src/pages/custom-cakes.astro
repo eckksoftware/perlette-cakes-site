@@ -113,7 +113,7 @@ const jsonLd = [
 	noIndex={false}
 	jsonLd={jsonLd}
 >
-	<main class="custom-cakes-page accent-plum">
+	<main class="custom-cakes-page">
 		<section class="custom-hero content-shell">
 			<div class="custom-hero__images" data-reveal>
 				<div class="custom-hero__image custom-hero__image--tall">
@@ -160,8 +160,8 @@ const jsonLd = [
 		<section class="cake-collection content-shell" aria-labelledby="cake-collection-title">
 			<div class="section-heading" data-reveal>
 				<div>
-					<p class="eyebrow">Collections <span aria-hidden="true">|</span> Cakes</p>
-					<h2 id="cake-collection-title">Find the cake for your moment</h2>
+					<p class="eyebrow">Our prized cakes</p>
+					<h2 id="cake-collection-title">Cakes worth drooling over</h2>
 				</div>
 				<label class="cake-filter">
 					<span>Browse collection</span>
@@ -331,7 +331,7 @@ const jsonLd = [
 	.custom-hero__image {
 		overflow: hidden;
 		border-radius: var(--radius-md);
-		background: var(--accent-tint);
+		background: var(--color-surface-soft);
 	}
 
 	.custom-hero__image--tall {
@@ -361,7 +361,7 @@ const jsonLd = [
 	}
 
 	.eyebrow {
-		color: var(--accent-strong);
+		color: var(--color-primary-strong);
 		font-size: var(--label-text-font-size);
 		font-weight: 700;
 		letter-spacing: 0.12em;
@@ -389,6 +389,17 @@ const jsonLd = [
 		padding-bottom: var(--space-xl);
 	}
 
+	.cake-collection {
+		padding-bottom: var(--bottom-space-section-md);
+		background: var(--pink-primary-bg);
+		color: var(--color-primary-strong);
+	}
+
+	.cake-collection .eyebrow,
+	.cake-collection .cake-filter {
+		color: var(--color-primary-strong);
+	}
+
 	.section-heading > div {
 		display: flex;
 		flex-direction: column;
@@ -401,7 +412,7 @@ const jsonLd = [
 		flex-direction: column;
 		gap: var(--space-xs);
 		min-width: 12rem;
-		color: var(--accent-strong);
+		color: var(--color-text);
 		font-size: var(--label-text-font-size);
 		font-weight: 700;
 		text-transform: uppercase;
@@ -410,7 +421,7 @@ const jsonLd = [
 	.cake-filter select {
 		min-height: 3rem;
 		padding: 0.6rem 2.5rem 0.6rem var(--space-md);
-		border: 1px solid var(--accent-strong);
+		border: 1px solid var(--color-primary-strong);
 		border-radius: 999px;
 		background: var(--color-surface);
 		color: var(--color-text);
@@ -427,6 +438,7 @@ const jsonLd = [
 		overflow: hidden;
 		border-radius: var(--radius-md);
 		background: var(--color-surface);
+		color: var(--color-text);
 		box-shadow: var(--shadow-sm);
 	}
 
@@ -438,7 +450,7 @@ const jsonLd = [
 		position: relative;
 		aspect-ratio: 1 / 1;
 		overflow: hidden;
-		background: var(--accent-tint);
+		background: var(--color-surface-soft);
 	}
 
 	.cake-card__media :global(img) {
@@ -460,7 +472,7 @@ const jsonLd = [
 		padding: var(--space-xs) var(--space-md);
 		border-radius: 999px;
 		background: var(--color-surface);
-		color: var(--accent-strong);
+		color: var(--color-primary-strong);
 		font-size: var(--step--1);
 		font-weight: 700;
 	}
@@ -484,7 +496,7 @@ const jsonLd = [
 	}
 
 	.cake-card__size {
-		color: var(--accent-strong);
+		color: var(--color-primary-strong);
 		font-size: var(--step--1) !important;
 		font-weight: 700;
 		text-transform: uppercase;
@@ -502,7 +514,7 @@ const jsonLd = [
 		aspect-ratio: 1 / 1;
 		overflow: hidden;
 		border-radius: var(--radius-md);
-		background: var(--accent-tint);
+		background: var(--color-surface-soft);
 	}
 
 	.how-it-works__copy,
@@ -528,7 +540,7 @@ const jsonLd = [
 		display: grid;
 		gap: var(--space-xs);
 		padding-left: var(--space-lg);
-		border-left: 2px solid var(--accent);
+		border-left: 2px solid var(--pink-primary-bg);
 	}
 
 	.steps strong {
@@ -573,7 +585,7 @@ const jsonLd = [
 
 	.faq-item summary span {
 		display: inline-block;
-		color: var(--accent-strong);
+		color: var(--color-primary-strong);
 		font-size: var(--step-1);
 		font-weight: 400;
 	}
@@ -626,6 +638,24 @@ const jsonLd = [
 
 	.occasion-card p {
 		font-size: var(--label-text-font-size);
+	}
+
+	@media (max-width: 25rem) {
+		#cake-collection-title {
+			text-wrap: wrap;
+		}
+
+		.section-heading {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: var(--space-xl);
+			padding-bottom: var(--space-xl);
+		}
+
+		.cake-filter {
+			width: 100%;
+		}
 	}
 
 	@media (min-width: 48rem) {

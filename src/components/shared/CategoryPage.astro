@@ -35,7 +35,7 @@ const relatedLinks = [
 	noIndex={false}
 	jsonLd={jsonLd}
 >
-	<main class:list={['category-page', category.accent.theme]}>
+		<main class="category-page">
 		<Breadcrumbs trail={[{ name: 'Home', url: '/' }, { name: category.name, url: path }]} />
 
 		<header class="intro content-shell">
@@ -107,7 +107,7 @@ const relatedLinks = [
 		font-weight: 700;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
-		color: var(--accent-strong);
+		color: var(--color-primary-strong);
 	}
 
 	.intro__lead {
@@ -130,7 +130,7 @@ const relatedLinks = [
 	.usecases__panel {
 		padding: var(--space-2xl) var(--space-xl);
 		border-radius: var(--radius-xl);
-		background: var(--accent-tint);
+		background: var(--color-surface-soft);
 	}
 
 	.usecases__title {
@@ -153,7 +153,7 @@ const relatedLinks = [
 		padding: 0.5rem 1rem;
 		border-radius: 999px;
 		background: var(--white-bg);
-		color: var(--accent-strong);
+		color: var(--color-primary-strong);
 		font-weight: 600;
 		font-size: var(--label-text-font-size);
 	}
