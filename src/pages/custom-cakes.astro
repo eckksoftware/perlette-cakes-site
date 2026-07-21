@@ -1,6 +1,658 @@
 ---
-import CategoryPage from '@components/shared/CategoryPage.astro';
-import { categoryBySlug } from '@data/catalogue';
+import { Image } from 'astro:assets';
+import Layout from '@layouts/Layout.astro';
+import CategoryCta from '@components/shared/CategoryCta.astro';
+import { categoryBySlug, type Variation } from '@data/catalogue';
+import { collectionPageSchema, itemListSchema } from '@lib/schema';
+
+const category = categoryBySlug('custom-cakes');
+const url = 'https://perlettecakes.com/custom-cakes/';
+
+const variationBySlug = (slug: string): Variation => {
+	const variation = category.variations.find((item) => item.slug === slug);
+	if (!variation) throw new Error(`Unknown custom cake variation: ${slug}`);
+	return variation;
+};
+
+const cakeCards = [
+	{
+		variation: variationBySlug('strawberry'),
+		name: '6" Birthday Cake',
+		size: '6-inch cake',
+		description: 'A bright, celebratory cake with soft sponge, fresh cream, and a finish made for the birthday table.',
+		badge: 'Popular',
+		collections: ['featured', 'favorites'],
+	},
+	{
+		variation: variationBySlug('bento'),
+		name: '6" Floral Celebration Cake',
+		size: '6-inch cake',
+		description: 'A delicate floral finish for birthdays, thank-yous, and the occasions that deserve something thoughtful.',
+		badge: 'Favourite',
+		collections: ['featured', 'favorites', 'newest'],
+	},
+	{
+		variation: variationBySlug('chocolate'),
+		name: '6" Chocolate Fudge Cake',
+		size: '6-inch cake',
+		description: 'Deep chocolate sponge with a rich fudge finish for celebrations that call for a more indulgent slice.',
+		badge: 'Favourite',
+		collections: ['featured', 'favorites'],
+	},
+	{
+		variation: variationBySlug('vintage-heart'),
+		name: '6" Vintage Heart Cake',
+		size: '6-inch cake',
+		description: 'A nostalgic piped design with room for a personal message, made for gifting and romantic milestones.',
+		badge: 'New',
+		collections: ['newest', 'favorites'],
+	},
+	{
+		variation: variationBySlug('bento'),
+		name: '4" Bento Cake',
+		size: '4-inch cake',
+		description: 'A little cake for a small surprise, with a custom message and a finish shaped around your moment.',
+		badge: 'New',
+		collections: ['newest'],
+	},
+	{
+		variation: variationBySlug('strawberry'),
+		name: 'Custom Message Cake',
+		size: 'Size discussed on WhatsApp',
+		description: 'Bring us your colours, words, and references, and we will confirm what can be made for your date.',
+		badge: 'Perlette favourite',
+		collections: ['favorites'],
+	},
+];
+
+const faqs = [
+	{
+		question: 'How far ahead should I order a custom cake?',
+		answer:
+			'Custom cakes are best ordered 3 to 5 days ahead. Larger or more detailed designs may need more notice, so share your date and idea with us on WhatsApp early.',
+	},
+	{
+		question: 'Can I request a specific design or flavour?',
+		answer:
+			'Yes. Customisation is subject to availability and the design requirements. Send your references, preferred flavour, size, and delivery date on WhatsApp so we can confirm the details.',
+	},
+	{
+		question: 'Which cake sizes are available?',
+		answer:
+			'Sizes depend on the cake style and number of guests. The examples on this page show common reference sizes; we can recommend a size when you share how many people you are serving.',
+	},
+	{
+		question: 'Do you deliver custom cakes?',
+		answer:
+			'Perlette Cakes delivers across Klang Valley through Lalamove. There is no physical storefront and no customer pickup.',
+	},
+	{
+		question: 'Are eggless or vegan cakes available?',
+		answer:
+			'Eggless and vegan cakes are available for selected flavours on request. Please discuss dietary needs directly with us on WhatsApp.',
+	},
+];
+
+const jsonLd = [
+	collectionPageSchema({ name: category.name, description: category.description, url }),
+	itemListSchema(
+		url,
+		[category.signature, ...category.variations].map((variation) => ({
+			name: variation.name,
+			description: variation.crave,
+			image: `https://perlettecakes.com${variation.image.src}`,
+		})),
+	),
+];
 ---
 
-<CategoryPage category={categoryBySlug('custom-cakes')} />
+<Layout
+	title={category.title}
+	description={category.description}
+	canonicalUrl={url}
+	noIndex={false}
+	jsonLd={jsonLd}
+>
+	<main class="custom-cakes-page accent-plum">
+		<section class="custom-hero content-shell">
+			<div class="custom-hero__images" data-reveal>
+				<div class="custom-hero__image custom-hero__image--tall">
+					<Image
+						src={category.signature.image}
+						alt={category.signature.imageAlt}
+						loading="eager"
+						fetchpriority="high"
+						widths={[480, 720, 960]}
+						sizes="(min-width: 64rem) 22vw, 48vw"
+						quality={72}
+					/>
+				</div>
+				<div class="custom-hero__image custom-hero__image--short">
+					<Image
+						src={variationBySlug('strawberry').image}
+						alt={variationBySlug('strawberry').imageAlt}
+						loading="eager"
+						widths={[480, 720, 960]}
+						sizes="(min-width: 64rem) 22vw, 48vw"
+						quality={72}
+					/>
+				</div>
+			</div>
+
+			<div class="custom-hero__copy" data-reveal>
+				<p class="eyebrow">Custom cakes · Klang Valley</p>
+				<h1>The Perlette cakes to get</h1>
+				<p class="custom-hero__lead">
+					Perlette Cakes makes custom celebration cakes to order in Klang Valley, Malaysia. We bake each cake for one date, one table, and one moment worth remembering.
+				</p>
+				<p>
+					Choose a reference below or bring us your own idea. We will confirm the flavour, size, design, and Lalamove delivery details with you on WhatsApp.
+				</p>
+				<CategoryCta
+					variant="inline"
+					label="Start your cake on WhatsApp"
+					whatsappMessage={category.whatsappMessage}
+					interest={category.modalInterest}
+				/>
+			</div>
+		</section>
+
+		<section class="cake-collection content-shell" aria-labelledby="cake-collection-title">
+			<div class="section-heading" data-reveal>
+				<div>
+					<p class="eyebrow">Collections <span aria-hidden="true">|</span> Cakes</p>
+					<h2 id="cake-collection-title">Find the cake for your moment</h2>
+				</div>
+				<label class="cake-filter">
+					<span>Browse collection</span>
+					<select data-cake-filter>
+						<option value="featured">Featured</option>
+						<option value="newest">Newest</option>
+						<option value="favorites">Favourites</option>
+					</select>
+				</label>
+			</div>
+
+			<div class="cake-grid">
+				{cakeCards.map((cake) => (
+					<article class="cake-card" data-cake-card data-collections={cake.collections.join(' ')} data-reveal>
+						<div class="cake-card__media">
+							<span class="cake-card__badge">{cake.badge}</span>
+							<Image
+								src={cake.variation.image}
+								alt={cake.variation.imageAlt}
+								loading="lazy"
+								widths={[360, 540, 720]}
+								sizes="(min-width: 64rem) 28vw, (min-width: 48rem) 45vw, 92vw"
+								quality={66}
+							/>
+						</div>
+						<div class="cake-card__copy">
+							<p class="cake-card__size">{cake.size}</p>
+							<h3>{cake.name}</h3>
+							<p>{cake.description}</p>
+						</div>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<section class="how-it-works content-shell" aria-labelledby="how-it-works-title">
+			<div class="how-it-works__image" data-reveal>
+				<Image
+					src={variationBySlug('chocolate').image}
+					alt={variationBySlug('chocolate').imageAlt}
+					loading="lazy"
+					widths={[600, 900, 1200]}
+					sizes="(min-width: 64rem) 48vw, 92vw"
+					quality={70}
+				/>
+			</div>
+			<div class="how-it-works__copy" data-reveal>
+				<p class="eyebrow">From idea to doorstep</p>
+				<h2 id="how-it-works-title">Your cake, without the complicated part</h2>
+				<ol class="steps">
+					<li>
+						<strong>Choose your cake</strong>
+						<span>Pick a reference from the collection or send us your own design, flavour, and size idea on WhatsApp.</span>
+					</li>
+					<li>
+						<strong>Schedule your delivery</strong>
+						<span>Share your date and delivery area. We will confirm the order and arrange Lalamove across Klang Valley.</span>
+					</li>
+					<li>
+						<strong>Await the good part</strong>
+						<span>We bake your cake fresh for the occasion, then send it carefully to your door. There is no pickup.</span>
+					</li>
+				</ol>
+			</div>
+		</section>
+
+		<section class="cake-faq content-shell" aria-labelledby="cake-faq-title">
+			<div class="cake-faq__copy" data-reveal>
+				<p class="eyebrow">Custom cake questions</p>
+				<h2 id="cake-faq-title">Before you choose your cake</h2>
+				<p class="cake-faq__intro">The practical details, kept simple. Open a question when you need it.</p>
+				<div class="faq-list">
+					{faqs.map((faq) => (
+						<details class="faq-item">
+							<summary>{faq.question}<span aria-hidden="true">+</span></summary>
+							<p>{faq.answer}</p>
+						</details>
+					))}
+				</div>
+			</div>
+			<div class="cake-faq__image" data-reveal>
+				<Image
+					src={variationBySlug('vintage-heart').image}
+					alt={variationBySlug('vintage-heart').imageAlt}
+					loading="lazy"
+					widths={[600, 900, 1200]}
+					sizes="(min-width: 64rem) 42vw, 92vw"
+					quality={70}
+				/>
+			</div>
+		</section>
+
+		<section class="occasions content-shell" aria-labelledby="occasions-title">
+			<div class="occasions__heading" data-reveal>
+				<p class="eyebrow">Made for your people</p>
+				<h2 id="occasions-title">As personal as the moment itself</h2>
+				<p>Custom cakes for the birthdays, anniversaries, and little life milestones that deserve more than an ordinary dessert.</p>
+			</div>
+			<div class="occasion-grid">
+				<article class="occasion-card" data-reveal>
+					<Image src={variationBySlug('strawberry').image} alt={variationBySlug('strawberry').imageAlt} loading="lazy" widths={[480, 720, 960]} sizes="(min-width: 64rem) 30vw, 92vw" quality={68} />
+					<h3>Birthdays</h3>
+					<p>A cake with their favourite colours, flavours, and a message made just for them.</p>
+				</article>
+				<article class="occasion-card" data-reveal>
+					<Image src={variationBySlug('vintage-heart').image} alt={variationBySlug('vintage-heart').imageAlt} loading="lazy" widths={[480, 720, 960]} sizes="(min-width: 64rem) 30vw, 92vw" quality={68} />
+					<h3>Anniversaries</h3>
+					<p>Romantic details, soft finishes, and a centrepiece for another year together.</p>
+				</article>
+				<article class="occasion-card" data-reveal>
+					<Image src={category.signature.image} alt={category.signature.imageAlt} loading="lazy" widths={[480, 720, 960]} sizes="(min-width: 64rem) 30vw, 92vw" quality={68} />
+					<h3>New beginnings</h3>
+					<p>For gender reveals, new homes, promotions, and every occasion worth gathering for.</p>
+				</article>
+			</div>
+		</section>
+
+		<CategoryCta
+			variant="panel"
+			heading="Have a date and a vision? Let's make the cake."
+			body="Tell us what you are celebrating, and we will take it from there on WhatsApp."
+			label="Start your cake order"
+			whatsappMessage={category.whatsappMessage}
+			interest={category.modalInterest}
+		/>
+	</main>
+</Layout>
+
+<script>
+	const filter = document.querySelector<HTMLSelectElement>('[data-cake-filter]');
+	const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-cake-card]'));
+
+	const applyFilter = (collection: string) => {
+		cards.forEach((card) => {
+			const collections = card.dataset.collections?.split(' ') ?? [];
+			card.hidden = collection !== 'all' && !collections.includes(collection);
+		});
+	};
+
+	filter?.addEventListener('change', () => applyFilter(filter.value));
+	if (filter) applyFilter(filter.value);
+</script>
+
+<style>
+	.custom-hero,
+	.section-heading,
+	.how-it-works,
+	.cake-faq,
+	.occasions {
+		padding-top: var(--top-space-section-md);
+		padding-bottom: var(--bottom-space-section-md);
+	}
+
+	.custom-hero {
+		display: grid;
+		gap: var(--space-xl);
+		align-items: center;
+		padding-top: var(--space-2xl);
+	}
+
+	.custom-hero__images {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--space-xs);
+	}
+
+	.custom-hero__image {
+		overflow: hidden;
+		border-radius: var(--radius-md);
+		background: var(--accent-tint);
+	}
+
+	.custom-hero__image--tall {
+		aspect-ratio: 4 / 5;
+	}
+
+	.custom-hero__image--short {
+		aspect-ratio: 4 / 5;
+		margin-top: var(--space-xl);
+	}
+
+	.custom-hero__image :global(img),
+	.how-it-works__image :global(img),
+	.cake-faq__image :global(img),
+	.occasion-card :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.custom-hero__copy {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-md);
+		max-width: 38rem;
+	}
+
+	.eyebrow {
+		color: var(--accent-strong);
+		font-size: var(--label-text-font-size);
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.custom-hero__copy h1,
+	.section-heading h2,
+	.how-it-works__copy h2,
+	.cake-faq__copy h2,
+	.occasions__heading h2 {
+		text-wrap: balance;
+	}
+
+	.custom-hero__lead {
+		font-size: var(--step-1);
+		line-height: 1.4;
+	}
+
+	.section-heading {
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: var(--space-xl);
+		padding-bottom: var(--space-xl);
+	}
+
+	.section-heading > div {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+		max-width: 42rem;
+	}
+
+	.cake-filter {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		min-width: 12rem;
+		color: var(--accent-strong);
+		font-size: var(--label-text-font-size);
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	.cake-filter select {
+		min-height: 3rem;
+		padding: 0.6rem 2.5rem 0.6rem var(--space-md);
+		border: 1px solid var(--accent-strong);
+		border-radius: 999px;
+		background: var(--color-surface);
+		color: var(--color-text);
+		font-weight: 700;
+	}
+
+	.cake-grid {
+		display: grid;
+		grid-template-columns: repeat(1, minmax(0, 1fr));
+		gap: var(--space-lg);
+	}
+
+	.cake-card {
+		overflow: hidden;
+		border-radius: var(--radius-md);
+		background: var(--color-surface);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.cake-card[hidden] {
+		display: none;
+	}
+
+	.cake-card__media {
+		position: relative;
+		aspect-ratio: 1 / 1;
+		overflow: hidden;
+		background: var(--accent-tint);
+	}
+
+	.cake-card__media :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 700ms cubic-bezier(0.2, 0.6, 0.2, 1);
+	}
+
+	.cake-card:hover .cake-card__media :global(img) {
+		transform: scale(1.04);
+	}
+
+	.cake-card__badge {
+		position: absolute;
+		top: var(--space-md);
+		left: var(--space-md);
+		z-index: 1;
+		padding: var(--space-xs) var(--space-md);
+		border-radius: 999px;
+		background: var(--color-surface);
+		color: var(--accent-strong);
+		font-size: var(--step--1);
+		font-weight: 700;
+	}
+
+	.cake-card__copy {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		padding: var(--space-lg);
+		text-align: center;
+	}
+
+	.cake-card__copy h3 {
+		font-size: var(--step-1);
+		line-height: 1.05;
+		text-transform: uppercase;
+	}
+
+	.cake-card__copy p {
+		font-size: var(--label-text-font-size);
+	}
+
+	.cake-card__size {
+		color: var(--accent-strong);
+		font-size: var(--step--1) !important;
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	.how-it-works,
+	.cake-faq {
+		display: grid;
+		gap: var(--space-2xl);
+		align-items: center;
+	}
+
+	.how-it-works__image,
+	.cake-faq__image {
+		aspect-ratio: 1 / 1;
+		overflow: hidden;
+		border-radius: var(--radius-md);
+		background: var(--accent-tint);
+	}
+
+	.how-it-works__copy,
+	.cake-faq__copy {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-lg);
+	}
+
+	.steps,
+	.faq-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.steps {
+		display: grid;
+		gap: var(--space-lg);
+	}
+
+	.steps li {
+		display: grid;
+		gap: var(--space-xs);
+		padding-left: var(--space-lg);
+		border-left: 2px solid var(--accent);
+	}
+
+	.steps strong {
+		font-family: var(--font-display);
+		font-size: var(--step-1);
+	}
+
+	.steps span {
+		font-size: var(--label-text-font-size);
+	}
+
+	.cake-faq {
+		background: var(--color-surface-soft);
+	}
+
+	.cake-faq__intro {
+		color: var(--color-text-muted);
+	}
+
+	.faq-item {
+		border-top: 1px solid var(--color-nav-border);
+	}
+
+	.faq-item:last-child {
+		border-bottom: 1px solid var(--color-nav-border);
+	}
+
+	.faq-item summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-md);
+		padding-block: var(--space-md);
+		cursor: pointer;
+		font-weight: 700;
+		list-style: none;
+	}
+
+	.faq-item summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.faq-item summary span {
+		display: inline-block;
+		color: var(--accent-strong);
+		font-size: var(--step-1);
+		font-weight: 400;
+	}
+
+	.faq-item[open] summary span {
+		transform: rotate(45deg);
+	}
+
+	.faq-item p {
+		padding: 0 var(--space-xl) var(--space-lg) 0;
+		color: var(--color-text-muted);
+		font-size: var(--label-text-font-size);
+	}
+
+	.occasions {
+		padding-bottom: var(--space-2xl);
+	}
+
+	.occasions__heading {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-md);
+		max-width: 48rem;
+		margin-bottom: var(--space-xl);
+		text-align: center;
+		margin-inline: auto;
+	}
+
+	.occasion-grid {
+		display: grid;
+		grid-template-columns: repeat(1, minmax(0, 1fr));
+		gap: var(--space-lg);
+	}
+
+	.occasion-card {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+		text-align: center;
+	}
+
+	.occasion-card :global(img) {
+		aspect-ratio: 4 / 3;
+		border-radius: var(--radius-md);
+	}
+
+	.occasion-card h3 {
+		font-size: var(--step-1);
+	}
+
+	.occasion-card p {
+		font-size: var(--label-text-font-size);
+	}
+
+	@media (min-width: 48rem) {
+		.custom-hero {
+			grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+			gap: var(--space-2xl);
+		}
+
+		.cake-grid,
+		.occasion-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.how-it-works,
+		.cake-faq {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.cake-grid,
+		.occasion-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.cake-faq__image {
+			order: 2;
+		}
+	}
+</style>
