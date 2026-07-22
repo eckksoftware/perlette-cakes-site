@@ -1,6 +1,609 @@
 ---
-import CategoryPage from '@components/shared/CategoryPage.astro';
-import { categoryBySlug } from '@data/catalogue';
+import { Image } from 'astro:assets';
+import Layout from '@layouts/Layout.astro';
+import CategoryCta from '@components/shared/CategoryCta.astro';
+import { categoryBySlug, type Variation } from '@data/catalogue';
+import { collectionPageSchema, itemListSchema } from '@lib/schema';
+import { whatsappHref } from '@lib/whatsapp';
+
+const category = categoryBySlug('cookies');
+const url = 'https://perlettecakes.com/cookies/';
+
+const variationBySlug = (slug: string): Variation => {
+	const variation = category.variations.find((item) => item.slug === slug);
+	if (!variation) throw new Error(`Unknown cookie variation: ${slug}`);
+	return variation;
+};
+
+const bestSellers = [
+	{
+		variation: variationBySlug('chocolate-chip'),
+		label: 'The everyday favourite',
+		name: 'Chocolate chip cookies',
+		description: 'Golden edges, soft centres, and chocolate in every bite.',
+	},
+	{
+		variation: variationBySlug('festive-box'),
+		label: 'Made to gift',
+		name: 'Festive cookie box',
+		description: 'A box of little treats for sharing, gifting, and keeping close by.',
+	},
+	{
+		variation: variationBySlug('shortbread'),
+		label: 'Tea-time favourite',
+		name: 'Buttery shortbread',
+		description: 'Crumbly, buttery, and just sweet enough for another one.',
+	},
+];
+
+const cookieSpread = [
+	{
+		variation: variationBySlug('shortbread'),
+		name: 'Almond cookie',
+		description: 'A delicate, buttery bite with a gentle nutty finish.',
+	},
+	{
+		variation: variationBySlug('chocolate-chip'),
+		name: 'Chocolate chip',
+		description: 'Soft-centred, golden-edged, and full of chocolate.',
+	},
+	{
+		variation: variationBySlug('double-chocolate'),
+		name: 'Double chocolate',
+		description: 'Deep cocoa dough with chocolate chunks throughout.',
+	},
+	{
+		variation: variationBySlug('festive-box'),
+		name: 'Festive favourites',
+		description: 'A seasonal mix to put on the table and pass around.',
+	},
+];
+
+const requestCookies = [
+	{
+		variation: variationBySlug('chocolate-chip'),
+		name: 'Chocolate chip',
+		description: 'A reliable classic for every cookie craving.',
+	},
+	{
+		variation: variationBySlug('double-chocolate'),
+		name: 'Double chocolate',
+		description: 'Rich cocoa flavour for serious chocolate people.',
+	},
+	{
+		variation: variationBySlug('shortbread'),
+		name: 'Almond cookie',
+		description: 'A delicate choice for gifting and afternoon tea.',
+	},
+	{
+		variation: variationBySlug('festive-box'),
+		name: 'Festive cookie box',
+		description: 'A generous assortment made for sharing.',
+	},
+];
+
+const jsonLd = [
+	collectionPageSchema({ name: category.name, description: category.description, url }),
+	itemListSchema(
+		url,
+		[category.signature, ...category.variations].map((variation) => ({
+			name: variation.name,
+			description: variation.crave,
+			image: `https://perlettecakes.com${variation.image.src}`,
+		})),
+	),
+];
 ---
 
-<CategoryPage category={categoryBySlug('cookies')} />
+<Layout
+	title={category.title}
+	description={category.description}
+	canonicalUrl={url}
+	noIndex={false}
+	jsonLd={jsonLd}
+>
+	<main class="cookies-page">
+		<section class="cookie-intro content-shell">
+			<div class="cookie-intro__image" data-reveal>
+				<Image
+					src={category.signature.image}
+					alt={category.signature.imageAlt}
+					loading="eager"
+					fetchpriority="high"
+					widths={[520, 780, 1040]}
+					sizes="(min-width: 64rem) 48vw, 92vw"
+					quality={72}
+				/>
+			</div>
+
+			<div class="cookie-intro__copy" data-reveal>
+				<p class="eyebrow">Cookies · Klang Valley</p>
+				<h1>The box that fills the room before it opens</h1>
+				<p class="cookie-intro__lead">
+					Freshly baked cookies with golden edges, soft centres, and the warm smell that gets everyone to the kitchen.
+				</p>
+				<p>
+					Perlette Cakes makes cookies to order in Klang Valley, Malaysia. Choose a favourite, build a box, or tell us what you are craving on WhatsApp.
+				</p>
+				<CategoryCta
+					variant="inline"
+					label="Start a cookie order"
+					whatsappMessage={category.whatsappMessage}
+					interest={category.modalInterest}
+				/>
+			</div>
+		</section>
+
+		<section class="best-sellers" aria-labelledby="best-sellers-title">
+			<div class="content-shell">
+				<header class="section-heading" data-reveal>
+					<p class="eyebrow">The ones people come back for</p>
+					<h2 id="best-sellers-title">Most ordered cookies</h2>
+				</header>
+
+				<div class="best-sellers__layout">
+					{bestSellers.map((cookie, index) => (
+						<article class:list={['best-seller', index === 0 && 'best-seller--featured']} data-reveal>
+							<div class="best-seller__media">
+								<Image
+									src={cookie.variation.image}
+									alt={cookie.variation.imageAlt}
+									loading="lazy"
+									widths={[480, 720, 960]}
+									sizes="(min-width: 64rem) 48vw, (min-width: 48rem) 48vw, 92vw"
+									quality={68}
+								/>
+							</div>
+							<div class="best-seller__copy">
+								<p class="best-seller__label">{cookie.label}</p>
+								<h3>{cookie.name}</h3>
+								<p>{cookie.description}</p>
+							</div>
+						</article>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="cookie-spread" aria-labelledby="cookie-spread-title">
+			<div class="content-shell">
+				<header class="section-heading section-heading--center" data-reveal>
+					<p class="eyebrow">Small batch, big pull</p>
+					<h2 id="cookie-spread-title">Cookie spread</h2>
+					<p>Freshly baked for the day they are delivered, then boxed for the people you want to share them with.</p>
+				</header>
+
+				<div class="spread-grid">
+					{cookieSpread.map((cookie) => (
+						<article class="spread-card" data-reveal>
+							<Image
+								src={cookie.variation.image}
+								alt={cookie.variation.imageAlt}
+								loading="lazy"
+								widths={[360, 540, 720]}
+								sizes="(min-width: 64rem) 23vw, (min-width: 48rem) 45vw, 92vw"
+								quality={66}
+							/>
+							<div class="spread-card__copy">
+								<h3>{cookie.name}</h3>
+								<p>{cookie.description}</p>
+							</div>
+						</article>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="cookie-story" aria-labelledby="cookie-story-title">
+			<div class="content-shell">
+				<div class="cookie-story__media" data-reveal>
+					<div>
+						<Image
+							src={category.signature.image}
+							alt={category.signature.imageAlt}
+							loading="lazy"
+							widths={[720, 1080, 1440]}
+							sizes="(min-width: 64rem) 50vw, 92vw"
+							quality={70}
+						/>
+					</div>
+					<div>
+						<Image
+							src={variationBySlug('festive-box').image}
+							alt={variationBySlug('festive-box').imageAlt}
+							loading="lazy"
+							widths={[720, 1080, 1440]}
+							sizes="(min-width: 64rem) 50vw, 92vw"
+							quality={70}
+						/>
+					</div>
+					<div class="cookie-story__overlay">
+						<p class="eyebrow">The Perlette way</p>
+						<h2 id="cookie-story-title">Cookies</h2>
+						<p>
+							We use quality ingredients, careful batches, and our own recipes to make cookies that feel homemade and taste worth sharing.
+						</p>
+					</div>
+				</div>
+
+				<div class="cookie-request" data-reveal>
+					<header class="section-heading">
+						<p class="eyebrow">From our kitchen to yours</p>
+						<h2>Cookies from us, possibly from you</h2>
+						<p>Try a go-to favourite or tell us about the cookie you have been dying to try.</p>
+					</header>
+
+					<div class="request-grid">
+						{requestCookies.map((cookie) => (
+							<article class="request-card">
+								<div class="request-card__media">
+									<Image
+										src={cookie.variation.image}
+										alt={cookie.variation.imageAlt}
+										loading="lazy"
+										widths={[300, 480, 640]}
+										sizes="(min-width: 64rem) 18vw, (min-width: 48rem) 45vw, 92vw"
+										quality={64}
+									/>
+								</div>
+								<h3>{cookie.name}</h3>
+								<p>{cookie.description}</p>
+							</article>
+						))}
+
+						<a
+							class="request-card request-card--cta"
+							href={whatsappHref(category.whatsappMessage)}
+							target="_blank"
+							rel="noreferrer"
+							data-order-trigger
+							data-order-interest-preselect={category.modalInterest}
+						>
+							<strong>Cookies you are dying to try?</strong>
+							<span>Make a request on WhatsApp</span>
+							<span aria-hidden="true">&rarr;</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	.cookies-page {
+		background: var(--color-surface);
+	}
+
+	.cookie-intro,
+	.best-sellers,
+	.cookie-spread,
+	.cookie-story {
+		padding-top: var(--top-space-section-md);
+		padding-bottom: var(--bottom-space-section-md);
+	}
+
+	.cookie-intro {
+		display: grid;
+		gap: var(--space-2xl);
+		align-items: center;
+		padding-top: var(--space-2xl);
+	}
+
+	.cookie-intro__image {
+		aspect-ratio: 4 / 5;
+		overflow: hidden;
+		border-radius: var(--radius-md);
+		background: var(--color-surface-soft);
+	}
+
+	.cookie-intro__image :global(img),
+	.best-seller__media :global(img),
+	.spread-card :global(img),
+	.cookie-story__media :global(img),
+	.request-card__media :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.cookie-intro__copy {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-md);
+		max-width: 38rem;
+	}
+
+	.eyebrow {
+		color: var(--color-primary-strong);
+		font-size: var(--label-text-font-size);
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.cookie-intro h1,
+	.section-heading h2,
+	.cookie-story__overlay h2 {
+		text-wrap: balance;
+	}
+
+	.cookie-intro__lead {
+		font-size: var(--step-1);
+		line-height: 1.4;
+	}
+
+	.best-sellers {
+		background: var(--color-surface-soft);
+	}
+
+	.section-heading {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-sm);
+		margin-bottom: var(--space-xl);
+	}
+
+	.section-heading h2 {
+		max-width: 24ch;
+	}
+
+	.best-sellers__layout {
+		display: grid;
+		gap: var(--space-lg);
+	}
+
+	.best-seller {
+		overflow: hidden;
+		border-radius: var(--radius-md);
+		background: var(--color-surface);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.best-seller__media {
+		aspect-ratio: 4 / 3;
+		overflow: hidden;
+		background: var(--color-surface-soft);
+	}
+
+	.best-seller__copy {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		padding: var(--space-lg);
+	}
+
+	.best-seller__label {
+		color: var(--color-primary-strong);
+		font-size: var(--step--1);
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	.best-seller h3,
+	.request-card h3 {
+		font-size: var(--step-1);
+		line-height: 1.05;
+	}
+
+	.best-seller__copy > p:last-child,
+	.request-card p {
+		font-size: var(--label-text-font-size);
+	}
+
+	.cookie-spread {
+		background: var(--pink-primary-bg);
+		color: var(--color-primary-strong);
+	}
+
+	.cookie-spread .section-heading {
+		align-items: center;
+		max-width: 42rem;
+		margin-inline: auto;
+		text-align: center;
+	}
+
+	.cookie-spread .section-heading h2 {
+		max-width: none;
+	}
+
+	.spread-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--space-sm);
+	}
+
+	.spread-card {
+		position: relative;
+		aspect-ratio: 1 / 1;
+		overflow: hidden;
+		border-radius: var(--radius-md);
+		background: var(--color-surface-soft);
+	}
+
+	.spread-card::after {
+		content: "";
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to top, rgba(5, 10, 48, 0.78), rgba(5, 10, 48, 0.04) 72%);
+	}
+
+	.spread-card__copy {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: var(--space-md);
+		color: var(--white-text);
+		text-align: center;
+	}
+
+	.spread-card__copy h3 {
+		font-size: var(--step-1);
+		line-height: 1;
+	}
+
+	.spread-card__copy p {
+		margin-top: var(--space-xs);
+		font-size: var(--step--1);
+	}
+
+	.cookie-story {
+		background: var(--color-surface);
+	}
+
+	.cookie-story__media {
+		position: relative;
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		min-height: 20rem;
+		overflow: hidden;
+		border-radius: var(--radius-md);
+		background: var(--color-primary-strong);
+	}
+
+	.cookie-story__media > div:not(.cookie-story__overlay) {
+		min-height: 20rem;
+	}
+
+	.cookie-story__overlay {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-md);
+		padding: var(--space-xl);
+		background: rgba(5, 10, 48, 0.55);
+		color: var(--white-text);
+		text-align: center;
+	}
+
+	.cookie-story__overlay .eyebrow {
+		color: var(--white-text);
+	}
+
+	.cookie-story__overlay h2 {
+		font-size: var(--header-one-font-size);
+	}
+
+	.cookie-story__overlay p:last-child {
+		max-width: 38rem;
+	}
+
+	.cookie-request {
+		padding-top: var(--bottom-space-section-md);
+	}
+
+	.cookie-request .section-heading {
+		max-width: 42rem;
+	}
+
+	.request-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--space-lg);
+	}
+
+	.request-card {
+		min-width: 0;
+	}
+
+	.request-card__media {
+		aspect-ratio: 1 / 1;
+		overflow: hidden;
+		border-radius: var(--radius-md);
+		background: var(--color-surface-soft);
+	}
+
+	.request-card h3 {
+		margin-top: var(--space-md);
+	}
+
+	.request-card p {
+		margin-top: var(--space-xs);
+		color: var(--color-text-muted);
+	}
+
+	.request-card--cta {
+		display: flex;
+		min-height: 14rem;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-sm);
+		padding: var(--space-lg);
+		border-radius: var(--radius-md);
+		background: var(--pink-primary-bg);
+		color: var(--white-text);
+		text-align: center;
+		text-decoration: none;
+	}
+
+	.request-card--cta strong {
+		font-family: var(--font-display);
+		font-size: var(--step-1);
+		line-height: 1.05;
+	}
+
+	.request-card--cta span {
+		font-size: var(--label-text-font-size);
+	}
+
+	.request-card--cta span:last-child {
+		font-size: var(--step-1);
+		transition: transform var(--transition-base);
+	}
+
+	.request-card--cta:hover span:last-child {
+		transform: translateX(0.25rem);
+	}
+
+	@media (min-width: 48rem) {
+		.cookie-intro {
+			grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.85fr);
+		}
+
+		.best-sellers__layout {
+			grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+			align-items: stretch;
+		}
+
+		.best-seller--featured {
+			grid-row: span 2;
+		}
+
+		.best-seller:not(.best-seller--featured) {
+			grid-column: 2;
+		}
+
+		.best-seller--featured .best-seller__media {
+			aspect-ratio: 1 / 1;
+		}
+
+		.best-seller:not(.best-seller--featured) .best-seller__media {
+			aspect-ratio: 4 / 3;
+		}
+
+		.request-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.spread-grid {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+
+		.request-grid {
+			grid-template-columns: repeat(5, minmax(0, 1fr));
+		}
+	}
+</style>
