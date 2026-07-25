@@ -1,6 +1,540 @@
 ---
-import CategoryPage from '@components/shared/CategoryPage.astro';
-import { categoryBySlug } from '@data/catalogue';
+import { Image } from 'astro:assets';
+import Layout from '@layouts/Layout.astro';
+import CategoryCta from '@components/shared/CategoryCta.astro';
+import { categoryBySlug, type Variation } from '@data/catalogue';
+import { collectionPageSchema, itemListSchema } from '@lib/schema';
+
+const category = categoryBySlug('cupcakes');
+const url = 'https://perlettecakes.com/cupcakes/';
+
+const variationBySlug = (slug: string): Variation => {
+	const variation = category.variations.find((item) => item.slug === slug);
+	if (!variation) throw new Error(`Unknown cupcake variation: ${slug}`);
+	return variation;
+};
+
+const cupcakeSelection = [
+	{
+		variation: variationBySlug('classic-vanilla'),
+		name: 'Classic vanilla',
+		description: 'Soft vanilla sponge crowned with smooth vanilla buttercream.',
+	},
+	{
+		variation: variationBySlug('chocolate-cupcake'),
+		name: 'Chocolate',
+		description: 'Deep cocoa sponge and chocolate buttercream for the serious sweet tooth.',
+	},
+	{
+		variation: variationBySlug('red-velvet'),
+		name: 'Red velvet',
+		description: 'Velvety crumb with a gentle tang of cream cheese frosting.',
+	},
+	{
+		variation: variationBySlug('seasonal-cupcake'),
+		name: 'Seasonal flavour',
+		description: 'A rotating flavour made around what is fresh and lovely right now.',
+	},
+];
+
+const instagramPosts = [
+	{
+		variation: variationBySlug('classic-vanilla'),
+		caption: 'A box of little celebrations.',
+	},
+	{
+		variation: variationBySlug('chocolate-cupcake'),
+		caption: 'Chocolate days are good days.',
+	},
+	{
+		variation: variationBySlug('red-velvet'),
+		caption: 'Piped fresh for the weekend table.',
+	},
+	{
+		variation: variationBySlug('seasonal-cupcake'),
+		caption: 'Something sweet from our kitchen.',
+	},
+];
+
+const jsonLd = [
+	collectionPageSchema({ name: category.name, description: category.description, url }),
+	itemListSchema(
+		url,
+		[category.signature, ...category.variations].map((variation) => ({
+			name: variation.name,
+			description: variation.crave,
+			image: `https://perlettecakes.com${variation.image.src}`,
+		})),
+	),
+];
 ---
 
-<CategoryPage category={categoryBySlug('cupcakes')} />
+<Layout
+	title={category.title}
+	description={category.description}
+	canonicalUrl={url}
+	noIndex={false}
+	jsonLd={jsonLd}
+>
+	<main class="cupcakes-page">
+		<section class="cupcake-hero">
+			<div class="cupcake-hero__image" data-reveal>
+				<Image
+					src={category.signature.image}
+					alt={category.signature.imageAlt}
+					loading="eager"
+					fetchpriority="high"
+					widths={[720, 1080, 1440, 1800]}
+					sizes="(min-width: 64rem) 66vw, 100vw"
+					quality={72}
+				/>
+			</div>
+			<div class="cupcake-hero__copy content-shell" data-reveal>
+				<p class="eyebrow">Cupcakes · Klang Valley</p>
+				<h1>Homemade cupcakes for the sweetest table</h1>
+				<p class="cupcake-hero__lead">
+					Perlette Cakes makes homemade cupcakes to order, piped fresh and boxed with care for your celebration.
+				</p>
+				<p>
+					Tell us your flavours, quantity, and date on WhatsApp. We will take care of the rest, right through to Lalamove delivery across Klang Valley.
+				</p>
+				<CategoryCta
+					variant="inline"
+					label="Order cupcakes on WhatsApp"
+					whatsappMessage={category.whatsappMessage}
+					interest={category.modalInterest}
+				/>
+			</div>
+		</section>
+
+		<section class="cupcake-menu" aria-labelledby="cupcake-menu-title">
+			<div class="content-shell">
+				<header class="section-heading" data-reveal>
+					<div>
+						<p class="eyebrow">A little box of joy</p>
+						<h2 id="cupcake-menu-title">Your next cupcake obsession starts here</h2>
+					</div>
+					<button class="carousel-next" type="button" aria-label="View more cupcakes" data-carousel-next>
+						<span aria-hidden="true">&rarr;</span>
+					</button>
+				</header>
+
+				<div class="cupcake-carousel" data-cupcake-carousel tabindex="0">
+					{cupcakeSelection.map((cupcake) => (
+						<article class="cupcake-card" data-reveal>
+							<div class="cupcake-card__image">
+								<Image
+									src={cupcake.variation.image}
+									alt={cupcake.variation.imageAlt}
+									loading="lazy"
+									widths={[420, 640, 840]}
+									sizes="(min-width: 64rem) 25vw, (min-width: 48rem) 42vw, 82vw"
+									quality={66}
+								/>
+							</div>
+							<div class="cupcake-card__copy">
+								<h3>{cupcake.name}</h3>
+								<p>{cupcake.description}</p>
+							</div>
+						</article>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="cupcake-trio content-shell" aria-labelledby="cupcake-trio-title">
+			<header class="trio-heading" data-reveal>
+				<p class="eyebrow">Made for passing around</p>
+				<h2 id="cupcake-trio-title">More than one reason to bring a box</h2>
+			</header>
+			<div class="trio-grid">
+				<div class="trio-image" data-reveal>
+					<Image
+						src={variationBySlug('classic-vanilla').image}
+						alt={variationBySlug('classic-vanilla').imageAlt}
+						loading="lazy"
+						widths={[540, 810, 1080]}
+						sizes="(min-width: 64rem) 33vw, (min-width: 48rem) 33vw, 92vw"
+						quality={68}
+					/>
+				</div>
+				<div class="trio-image" data-reveal>
+					<Image
+						src={variationBySlug('chocolate-cupcake').image}
+						alt={variationBySlug('chocolate-cupcake').imageAlt}
+						loading="lazy"
+						widths={[540, 810, 1080]}
+						sizes="(min-width: 64rem) 33vw, (min-width: 48rem) 33vw, 92vw"
+						quality={68}
+					/>
+				</div>
+				<div class="trio-image" data-reveal>
+					<Image
+						src={variationBySlug('red-velvet').image}
+						alt={variationBySlug('red-velvet').imageAlt}
+						loading="lazy"
+						widths={[540, 810, 1080]}
+						sizes="(min-width: 64rem) 33vw, (min-width: 48rem) 33vw, 92vw"
+						quality={68}
+					/>
+				</div>
+			</div>
+		</section>
+
+		<section class="instagram-section" aria-labelledby="instagram-title">
+			<div class="content-shell">
+				<div class="instagram-layout">
+					<div class="instagram-intro" data-reveal>
+						<p class="eyebrow">From our feed</p>
+						<h2 id="instagram-title">Spoon us. Then follow us on Instagram.</h2>
+						<p>See what is coming out of the kitchen and what has recently made it to a celebration table.</p>
+						<a class="instagram-handle" href="https://www.instagram.com/perlettecakes" target="_blank" rel="noreferrer">@perlettecakes <span aria-hidden="true">&rarr;</span></a>
+					</div>
+
+					<div class="instagram-grid">
+						{instagramPosts.map((post) => (
+							<article class="instagram-post" data-reveal>
+								<div class="instagram-post__image">
+									<Image
+										src={post.variation.image}
+										alt={post.variation.imageAlt}
+										loading="lazy"
+										widths={[300, 480, 640]}
+										sizes="(min-width: 64rem) 18vw, (min-width: 48rem) 22vw, 44vw"
+										quality={62}
+									/>
+								</div>
+								<div class="instagram-post__copy">
+									<strong>@perlettecakes</strong>
+									<p>{post.caption}</p>
+								</div>
+							</article>
+						))}
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<script>
+	const carousel = document.querySelector<HTMLElement>('[data-cupcake-carousel]');
+	const nextButton = document.querySelector<HTMLButtonElement>('[data-carousel-next]');
+
+	nextButton?.addEventListener('click', () => {
+		if (!carousel) return;
+
+		carousel.scrollBy({
+			left: carousel.clientWidth * 0.82,
+			behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+		});
+	});
+</script>
+
+<style>
+	.cupcakes-page {
+		background: var(--color-surface);
+	}
+
+	.cupcake-hero {
+		display: grid;
+		background: var(--color-surface-soft);
+	}
+
+	.cupcake-hero__image {
+		min-height: 24rem;
+		overflow: hidden;
+		background: var(--pink-primary-bg);
+	}
+
+	.cupcake-hero__image :global(img) {
+		width: 100%;
+		height: 100%;
+		min-height: 24rem;
+		object-fit: cover;
+	}
+
+	.cupcake-hero__copy {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+		gap: var(--space-md);
+		padding-top: var(--space-2xl);
+		padding-bottom: var(--space-2xl);
+	}
+
+	.eyebrow {
+		color: var(--color-primary-strong);
+		font-size: var(--label-text-font-size);
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+	}
+
+	.cupcake-hero h1,
+	.section-heading h2,
+	.trio-heading h2,
+	.instagram-intro h2 {
+		text-wrap: balance;
+	}
+
+	.cupcake-hero h1 {
+		max-width: 13ch;
+	}
+
+	.cupcake-hero__lead {
+		max-width: 32rem;
+		font-size: var(--step-1);
+		line-height: 1.4;
+	}
+
+	.cupcake-menu,
+	.cupcake-trio,
+	.instagram-section {
+		padding-top: var(--top-space-section-md);
+		padding-bottom: var(--bottom-space-section-md);
+	}
+
+	.cupcake-menu {
+		background: var(--pink-primary-bg);
+		color: var(--color-primary-strong);
+	}
+
+	.section-heading {
+		display: flex;
+		align-items: end;
+		justify-content: space-between;
+		gap: var(--space-lg);
+		margin-bottom: var(--space-xl);
+	}
+
+	.section-heading > div {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-sm);
+		max-width: 44rem;
+	}
+
+	.cupcake-menu .eyebrow {
+		color: var(--color-primary-strong);
+	}
+
+	.carousel-next {
+		display: inline-flex;
+		width: 3.25rem;
+		height: 3.25rem;
+		flex: 0 0 auto;
+		align-items: center;
+		justify-content: center;
+		border: 1px solid var(--color-primary-strong);
+		border-radius: 999px;
+		background: var(--color-surface);
+		color: var(--color-primary-strong);
+		font-size: var(--step-1);
+		transition: transform var(--transition-base), background-color var(--transition-base), color var(--transition-base);
+	}
+
+	.carousel-next:hover {
+		transform: translateX(0.2rem);
+		background: var(--color-primary-strong);
+		color: var(--white-text);
+	}
+
+	.cupcake-carousel {
+		display: grid;
+		grid-auto-columns: minmax(15rem, 31vw);
+		grid-auto-flow: column;
+		gap: var(--space-md);
+		overflow-x: auto;
+		padding-bottom: var(--space-sm);
+		scroll-snap-type: x mandatory;
+		scrollbar-width: thin;
+	}
+
+	.cupcake-carousel:focus-visible {
+		box-shadow: var(--focus-ring);
+	}
+
+	.cupcake-card {
+		overflow: hidden;
+		scroll-snap-align: start;
+		border-radius: var(--radius-md);
+		background: var(--color-surface);
+		color: var(--color-text);
+	}
+
+	.cupcake-card__image {
+		aspect-ratio: 4 / 3;
+		overflow: hidden;
+		background: var(--color-surface-soft);
+	}
+
+	.cupcake-card__image :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: transform 600ms cubic-bezier(0.2, 0.6, 0.2, 1);
+	}
+
+	.cupcake-card:hover .cupcake-card__image :global(img) {
+		transform: scale(1.04);
+	}
+
+	.cupcake-card__copy {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-xs);
+		padding: var(--space-lg);
+	}
+
+	.cupcake-card__copy h3 {
+		font-size: var(--step-1);
+		line-height: 1.05;
+	}
+
+	.cupcake-card__copy p {
+		font-size: var(--label-text-font-size);
+	}
+
+	.trio-heading {
+		padding-bottom: var(--space-xl);
+		text-align: center;
+	}
+
+	.trio-heading h2 {
+		max-width: 24ch;
+		margin: var(--space-sm) auto 0;
+	}
+
+	.trio-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--space-xs);
+	}
+
+	.trio-image {
+		aspect-ratio: 4 / 3;
+		overflow: hidden;
+		background: var(--color-surface-soft);
+	}
+
+	.trio-image :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.instagram-section {
+		background: var(--color-surface-soft);
+	}
+
+	.instagram-layout {
+		display: grid;
+		gap: var(--space-2xl);
+		align-items: center;
+	}
+
+	.instagram-intro {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-md);
+		max-width: 28rem;
+	}
+
+	.instagram-intro h2 {
+		font-size: var(--header-two-font-size);
+	}
+
+	.instagram-handle {
+		color: var(--color-primary-strong);
+		font-size: var(--label-text-font-size);
+		font-weight: 700;
+		text-underline-offset: 0.25em;
+	}
+
+	.instagram-handle span {
+		display: inline-block;
+		margin-left: var(--space-xs);
+		transition: transform var(--transition-base);
+	}
+
+	.instagram-handle:hover span {
+		transform: translateX(0.2rem);
+	}
+
+	.instagram-grid {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--space-md);
+	}
+
+	.instagram-post {
+		padding: var(--space-xs);
+		background: var(--color-surface);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.instagram-post__image {
+		aspect-ratio: 1 / 1;
+		overflow: hidden;
+		background: var(--color-surface-soft);
+	}
+
+	.instagram-post__image :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.instagram-post__copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		padding: var(--space-sm) var(--space-xs) var(--space-xs);
+	}
+
+	.instagram-post__copy strong,
+	.instagram-post__copy p {
+		font-size: var(--step--1);
+	}
+
+	.instagram-post__copy p {
+		color: var(--color-text-muted);
+	}
+
+	@media (min-width: 48rem) {
+		.cupcake-hero {
+			grid-template-columns: minmax(0, 1.9fr) minmax(20rem, 0.85fr);
+			min-height: 38rem;
+		}
+
+		.cupcake-hero__image,
+		.cupcake-hero__image :global(img) {
+			min-height: 38rem;
+		}
+
+		.cupcake-hero__copy {
+			padding-inline: var(--side-space-section-md);
+		}
+
+		.instagram-layout {
+			grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.8fr);
+		}
+
+		.instagram-grid {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.cupcake-carousel {
+			grid-auto-columns: minmax(17rem, 25vw);
+		}
+
+		.trio-grid {
+			gap: 0.2rem;
+		}
+	}
+</style>

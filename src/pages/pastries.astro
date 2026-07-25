@@ -1,6 +1,507 @@
 ---
-import CategoryPage from '@components/shared/CategoryPage.astro';
+import { Image } from 'astro:assets';
+import Layout from '@layouts/Layout.astro';
 import { categoryBySlug } from '@data/catalogue';
+import { categoryJsonLd } from '@lib/schema';
+import { whatsappHref } from '@lib/whatsapp';
+
+const category = categoryBySlug('pastries');
+const canonicalUrl = 'https://perlettecakes.com/pastries/';
+const jsonLd = categoryJsonLd(category, canonicalUrl);
+const orderHref = whatsappHref(category.whatsappMessage);
+const pastryImage = category.signature.image;
+const pastryImageAlt = category.signature.imageAlt;
 ---
 
-<CategoryPage category={categoryBySlug('pastries')} />
+<Layout
+	title={category.title}
+	description={category.description}
+	canonicalUrl={canonicalUrl}
+	noIndex={false}
+	jsonLd={jsonLd}
+	socialImageAlt={pastryImageAlt}
+>
+	<main class="pastries-page">
+		<section class="pastry-hero" aria-labelledby="pastry-hero-title">
+			<div class="pastry-hero__media">
+				<Image
+					src={pastryImage}
+					alt={pastryImageAlt}
+					loading="eager"
+					fetchpriority="high"
+					widths={[720, 1080, 1600, 2000]}
+					sizes="(min-width: 64rem) 73vw, 100vw"
+					quality={78}
+				/>
+			</div>
+			<div class="pastry-hero__copy">
+				<p class="pastry-hero__eyebrow">Fresh from Perlette Cakes</p>
+				<h1 id="pastry-hero-title">Pastries made for the good part of the day.</h1>
+				<p>
+					Buttery, golden pastries baked to order in Klang Valley, Malaysia. Pick a box for
+					sharing, gifting, or keeping all to yourself.
+				</p>
+				<a
+					class="button pastry-hero__button"
+					href={orderHref}
+					target="_blank"
+					rel="noreferrer"
+					data-order-trigger
+					data-order-interest-preselect="Pastries"
+				>
+					Order on WhatsApp
+				</a>
+			</div>
+		</section>
+
+		<section class="pastry-bento" aria-labelledby="pastry-bento-title">
+			<div class="pastry-bento__heading" data-reveal>
+				<p class="section-kicker">Our pastries</p>
+				<h2 id="pastry-bento-title">A little more than a pastry box.</h2>
+			</div>
+
+			<div class="pastry-bento__grid content-shell">
+				<article class="pastry-bento__testimonial" data-reveal>
+					<p class="pastry-bento__quote">"Gooey, freshly baked cookie is to die for."</p>
+				</article>
+
+				<div class="pastry-bento__feature" data-reveal>
+					<Image
+						src={pastryImage}
+						alt="Fresh savoury quiche pastries with golden pastry crusts, spinach, mushrooms, and herbs."
+						widths={[720, 1080, 1600]}
+						sizes="(min-width: 64rem) 50vw, 100vw"
+						quality={76}
+					/>
+				</div>
+
+				<div class="pastry-bento__side">
+					<article class="pastry-bento__note" data-reveal>
+						<p>Made in small batches, packed with care, and delivered across Klang Valley by Lalamove.</p>
+					</article>
+					<article class="pastry-bento__order" data-reveal>
+						<p class="pastry-bento__order-label">Your next box is one click away.</p>
+						<a
+							class="button pastry-bento__order-button"
+							href={orderHref}
+							target="_blank"
+							rel="noreferrer"
+							data-order-trigger
+							data-order-interest-preselect="Pastries"
+						>
+							Easily order with a click
+						</a>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<section class="pastry-process" aria-labelledby="pastry-process-title">
+			<div class="pastry-process__copy" data-reveal>
+				<p class="section-kicker">The Perlette way</p>
+				<h2 id="pastry-process-title">Fresh pastries, made differently.</h2>
+				<ul class="pastry-process__list">
+					<li>Baked to order, so every box leaves the oven at its best.</li>
+					<li>Small-batch fillings and pastry, made with care in a home kitchen.</li>
+					<li>Boxed fresh for gifting, gatherings, and everyday treats.</li>
+				</ul>
+				<p class="pastry-process__lead-time">
+					Pastry orders are best placed 3 to 5 days ahead. Tell us your date and box on
+					WhatsApp, and we will arrange the bake and delivery.
+				</p>
+			</div>
+
+			<div class="pastry-process__main-image" data-reveal>
+				<Image
+					src={pastryImage}
+					alt="A freshly baked spinach and mushroom quiche with a crisp golden crust."
+					widths={[720, 1080, 1600]}
+					sizes="(min-width: 64rem) 38vw, 100vw"
+					quality={76}
+				/>
+			</div>
+
+			<div class="pastry-process__detail-images" aria-label="Pastry details">
+				<div class="pastry-process__detail pastry-process__detail--top" data-reveal>
+					<Image src={pastryImage} alt="Close detail of the golden quiche pastry crust." widths={[480, 720]} sizes="(min-width: 64rem) 15vw, 50vw" quality={74} />
+				</div>
+				<div class="pastry-process__detail pastry-process__detail--bottom" data-reveal>
+					<Image src={pastryImage} alt="Freshly baked quiche pastries arranged in a box." widths={[480, 720]} sizes="(min-width: 64rem) 15vw, 50vw" quality={74} />
+				</div>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	.pastries-page {
+		background: var(--white-bg);
+	}
+
+	.pastry-hero {
+		display: grid;
+		background: var(--color-surface-soft);
+	}
+
+	.pastry-hero__media {
+		min-height: 58vh;
+		max-height: 52rem;
+		overflow: hidden;
+	}
+
+	.pastry-hero__media :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center 48%;
+	}
+
+	.pastry-hero__copy {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: center;
+		gap: var(--space-lg);
+		padding: var(--space-2xl) var(--side-space-section-sm);
+		color: var(--color-text);
+	}
+
+	.pastry-hero__copy h1 {
+		max-width: 11ch;
+		font-size: clamp(2.8rem, 5vw, 5rem);
+		line-height: 0.93;
+		text-wrap: balance;
+	}
+
+	.pastry-hero__copy > p:not(.pastry-hero__eyebrow) {
+		max-width: 28rem;
+		color: var(--color-text-muted);
+	}
+
+	.pastry-hero__eyebrow,
+	.section-kicker {
+		font-size: var(--label-text-font-size);
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		line-height: 1.2;
+		text-transform: uppercase;
+		color: var(--color-primary-strong);
+	}
+
+	.pastry-hero__button {
+		color: var(--white-text);
+		background: var(--color-text);
+		box-shadow: none;
+	}
+
+	.pastry-hero__button:hover {
+		color: var(--white-text);
+		background: var(--color-primary-strong);
+	}
+
+	.pastry-bento {
+		padding-block: var(--top-space-section-md) var(--bottom-space-section-md);
+	}
+
+	.pastry-bento__heading {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-md);
+		padding-inline: var(--side-space-section-sm);
+		text-align: center;
+	}
+
+	.pastry-bento__heading h2 {
+		max-width: 18ch;
+		color: var(--color-primary-strong);
+		font-size: clamp(2.6rem, 5vw, 5rem);
+		text-wrap: balance;
+	}
+
+	.pastry-bento__grid {
+		display: grid;
+		gap: var(--space-md);
+		margin-top: var(--space-2xl);
+	}
+
+	.pastry-bento__testimonial,
+	.pastry-bento__note,
+	.pastry-bento__order,
+	.pastry-bento__feature {
+		min-width: 0;
+		overflow: hidden;
+		border-radius: var(--radius-lg);
+	}
+
+	.pastry-bento__testimonial {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: 16rem;
+		padding: var(--space-xl);
+		background: var(--color-surface-soft);
+		border: 1px solid var(--color-nav-border);
+	}
+
+	.pastry-bento__quote {
+		max-width: 16ch;
+		font-family: var(--font-display);
+		font-size: clamp(1.8rem, 3vw, 2.75rem);
+		line-height: 1;
+		letter-spacing: -0.04em;
+		color: var(--color-primary-strong);
+	}
+
+	.pastry-bento__feature {
+		min-height: 22rem;
+	}
+
+	.pastry-bento__feature :global(img) {
+		width: 100%;
+		height: 100%;
+		min-height: inherit;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.pastry-bento__side {
+		display: grid;
+		gap: var(--space-md);
+	}
+
+	.pastry-bento__note,
+	.pastry-bento__order {
+		padding: var(--space-xl);
+	}
+
+	.pastry-bento__note {
+		display: flex;
+		align-items: flex-end;
+		min-height: 12rem;
+		background: var(--color-surface-soft);
+		color: var(--color-primary-strong);
+	}
+
+	.pastry-bento__note p {
+		font-size: var(--step-1);
+		line-height: 1.15;
+	}
+
+	.pastry-bento__order {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: var(--space-xl);
+		min-height: 12rem;
+		background: var(--pink-primary-bg);
+		color: var(--white-text);
+	}
+
+	.pastry-bento__order-label {
+		max-width: 12ch;
+		font-family: var(--font-display);
+		font-size: var(--step-1);
+		line-height: 1.05;
+	}
+
+	.pastry-bento__order-button {
+		color: var(--color-primary-strong);
+		background: var(--white-bg);
+		box-shadow: none;
+	}
+
+	.pastry-bento__order-button:hover {
+		color: var(--white-text);
+		background: var(--color-primary-strong);
+	}
+
+	.pastry-process {
+		display: grid;
+		gap: var(--space-md);
+		padding: var(--top-space-section-md) var(--side-space-section-sm) var(--bottom-space-section-md);
+		background: var(--color-surface-soft);
+	}
+
+	.pastry-process__copy {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--space-lg);
+	}
+
+	.pastry-process__copy h2 {
+		max-width: 10ch;
+		font-size: clamp(2.8rem, 5vw, 5rem);
+		line-height: 0.92;
+		text-wrap: balance;
+		color: var(--color-text);
+	}
+
+	.pastry-process__list {
+		display: grid;
+		gap: var(--space-sm);
+		padding: 0;
+		list-style: none;
+		color: var(--color-primary-strong);
+	}
+
+	.pastry-process__list li {
+		position: relative;
+		padding-left: 1.5rem;
+	}
+
+	.pastry-process__list li::before {
+		content: "✓";
+		position: absolute;
+		left: 0;
+		font-weight: 700;
+		color: var(--pink-primary-bg);
+	}
+
+	.pastry-process__lead-time {
+		max-width: 34rem;
+		color: var(--color-text-muted);
+	}
+
+	.pastry-process__main-image,
+	.pastry-process__detail {
+		overflow: hidden;
+		border-radius: var(--radius-lg);
+	}
+
+	.pastry-process__main-image {
+		min-height: 30rem;
+	}
+
+	.pastry-process__main-image :global(img),
+	.pastry-process__detail :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.pastry-process__detail-images {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--space-md);
+	}
+
+	.pastry-process__detail {
+		min-height: 14rem;
+	}
+
+	.pastry-process__detail--top :global(img) {
+		object-position: 22% center;
+	}
+
+	.pastry-process__detail--bottom :global(img) {
+		object-position: 78% center;
+	}
+
+	@media (min-width: 48rem) {
+		.pastry-hero__copy {
+			padding-inline: var(--side-space-section-md);
+		}
+
+		.pastry-bento__grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.pastry-bento__feature {
+			grid-column: span 2;
+			grid-row: 1;
+		}
+
+		.pastry-bento__testimonial {
+			grid-row: 2;
+		}
+
+		.pastry-bento__side {
+			grid-row: 2;
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		.pastry-process {
+			grid-template-columns: 1fr 1.15fr;
+			padding-inline: var(--side-space-section-md);
+		}
+
+		.pastry-process__copy {
+			grid-row: span 2;
+			justify-content: center;
+			padding-right: var(--space-xl);
+		}
+
+		.pastry-process__main-image {
+			min-height: 38rem;
+		}
+
+		.pastry-process__detail-images {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.pastry-hero {
+			grid-template-columns: minmax(0, 3fr) minmax(22rem, 1fr);
+			min-height: min(45rem, calc(100svh - 5rem));
+		}
+
+		.pastry-hero__media {
+			min-height: auto;
+		}
+
+		.pastry-hero__copy {
+			padding-inline: clamp(2rem, 4vw, 5rem);
+		}
+
+		.pastry-bento__grid {
+			grid-template-columns: 3fr 6fr 3fr;
+			align-items: stretch;
+		}
+
+		.pastry-bento__feature {
+			grid-column: auto;
+			grid-row: auto;
+			min-height: 32rem;
+		}
+
+		.pastry-bento__testimonial {
+			grid-row: auto;
+		}
+
+		.pastry-bento__side {
+			grid-row: auto;
+			grid-template-columns: 1fr;
+		}
+
+		.pastry-process {
+			grid-template-columns: 1.15fr 1.35fr 0.55fr;
+			align-items: stretch;
+		}
+
+		.pastry-process__copy {
+			grid-row: auto;
+		}
+
+		.pastry-process__main-image {
+			min-height: 42rem;
+		}
+
+		.pastry-process__detail-images {
+			grid-template-columns: 1fr;
+		}
+
+		.pastry-process__detail {
+			min-height: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.pastry-hero__media :global(img) {
+			transform: none;
+		}
+	}
+</style>
