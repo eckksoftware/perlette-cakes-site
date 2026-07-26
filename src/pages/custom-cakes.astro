@@ -234,9 +234,11 @@ const jsonLd = [
 				<p class="cake-faq__intro">The practical details, kept simple.</p>
 				<div class="faq-list">
 					{faqs.map((faq) => (
-						<details class="faq-item">
+						<details class="faq-item" data-faq-item>
 							<summary>{faq.question}<span aria-hidden="true">+</span></summary>
-							<p>{faq.answer}</p>
+							<div class="faq-item__answer" aria-hidden="true">
+								<div><p>{faq.answer}</p></div>
+							</div>
 						</details>
 					))}
 				</div>
@@ -308,6 +310,30 @@ const jsonLd = [
 
 	filter?.addEventListener('change', () => applyFilter(filter.value));
 	if (filter) applyFilter(filter.value);
+
+	document.querySelectorAll<HTMLDetailsElement>('[data-faq-item]').forEach((item) => {
+		const summary = item.querySelector<HTMLElement>('summary');
+		const answer = item.querySelector<HTMLElement>('.faq-item__answer');
+		if (!summary || !answer) return;
+
+		summary.addEventListener('click', (event) => {
+			event.preventDefault();
+			const shouldOpen = !item.classList.contains('is-open');
+
+			if (shouldOpen) {
+				item.setAttribute('open', '');
+				answer.setAttribute('aria-hidden', 'false');
+				requestAnimationFrame(() => item.classList.add('is-open'));
+				return;
+			}
+
+			item.classList.remove('is-open');
+			answer.setAttribute('aria-hidden', 'true');
+			window.setTimeout(() => {
+				if (!item.classList.contains('is-open')) item.removeAttribute('open');
+			}, 280);
+		});
+	});
 </script>
 
 <style>
@@ -575,10 +601,32 @@ const jsonLd = [
 		transform: rotate(45deg);
 	}
 
-	.faq-item p {
+	.faq-item__answer {
+		display: grid;
+		grid-template-rows: 0fr;
+		opacity: 0;
+		transition: grid-template-rows 280ms ease, opacity 280ms ease;
+	}
+
+	.faq-item.is-open .faq-item__answer {
+		grid-template-rows: 1fr;
+		opacity: 1;
+	}
+
+	.faq-item__answer > div {
+		overflow: hidden;
+	}
+
+	.faq-item__answer p {
 		padding: 0 var(--space-xl) var(--space-lg) 0;
 		color: var(--color-text-muted);
 		font-size: var(--label-text-font-size);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.faq-item__answer {
+			transition: none;
+		}
 	}
 
 	.occasions {

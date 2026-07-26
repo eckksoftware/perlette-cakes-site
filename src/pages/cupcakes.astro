@@ -92,26 +92,29 @@ const jsonLd = [
 	jsonLd={jsonLd}
 >
 	<main class="cupcakes-page">
-		<section class="cupcake-hero">
+		<section class="cupcake-hero content-shell">
 			<div class="cupcake-hero__images" data-reveal>
-				<Image
-					src={category.signature.image}
-					alt={category.signature.imageAlt}
-					loading="eager"
-					fetchpriority="high"
-					widths={[720, 1080, 1440, 1800]}
-					sizes="(min-width: 64rem) 66vw, 100vw"
-					quality={72}
-				/>
-				<Image
-					src={category.signature.image}
-					alt={category.signature.imageAlt}
-					loading="eager"
-					fetchpriority="high"
-					widths={[720, 1080, 1440, 1800]}
-					sizes="(min-width: 64rem) 66vw, 100vw"
-					quality={72}
-				/>
+				<div class="cupcake-hero__image cupcake-hero__image--tall">
+					<Image
+						src={category.signature.image}
+						alt={category.signature.imageAlt}
+						loading="eager"
+						fetchpriority="high"
+						widths={[480, 720, 960]}
+						sizes="(min-width: 64rem) 22vw, 48vw"
+						quality={72}
+					/>
+				</div>
+				<div class="cupcake-hero__image cupcake-hero__image--short">
+					<Image
+						src={variationBySlug('classic-vanilla').image}
+						alt={variationBySlug('classic-vanilla').imageAlt}
+						loading="eager"
+						widths={[480, 720, 960]}
+						sizes="(min-width: 64rem) 22vw, 48vw"
+						quality={72}
+					/>
+				</div>
 			</div>
 			<div class="cupcake-hero__copy content-shell" data-reveal>
 				<p class="text-header">CUPCAKES IN KLANG VALLEY</p>
@@ -267,31 +270,47 @@ const jsonLd = [
 	}
 
 	.cupcake-hero {
-		height: 100vh;
-		display: flex;
+		display: grid;
+		gap: var(--space-xl);
+		align-items: center;
+		background: var(--color-surface-soft);
+		padding-top: var(--space-2xl);
+	}
+
+	.cupcake-hero__images {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--space-xs);
+	}
+
+	.cupcake-hero__image {
+		overflow: hidden;
+		border-radius: var(--radius-md);
 		background: var(--color-surface-soft);
 	}
 
-	.cupcake-hero__images :global(img) {
-		width: 70%;
+	.cupcake-hero__image--tall,
+	.cupcake-hero__image--short {
+		aspect-ratio: 4 / 5;
+	}
+
+	.cupcake-hero__image--short {
+		margin-top: var(--space-xl);
+	}
+
+	.cupcake-hero__image :global(img) {
+		width: 100%;
 		height: 100%;
 		object-fit: cover;
 	}
 
-	.cupcake-hero__images {
-		display: flex;
-		flex-direction: row;
-	}
-
 	.cupcake-hero__copy {
-		width: 30%;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
 		justify-content: center;
 		gap: var(--space-md);
-		padding-top: var(--space-2xl);
-		padding-bottom: var(--space-2xl);
+		max-width: 38rem;
 	}
 
 	.cupcake-hero__lead {
@@ -370,7 +389,12 @@ const jsonLd = [
 		overflow-x: auto;
 		padding-bottom: var(--space-sm);
 		scroll-snap-type: x mandatory;
-		scrollbar-width: thin;
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+	}
+
+	.cupcake-carousel::-webkit-scrollbar {
+		display: none;
 	}
 
 	.cupcake-carousel:focus-visible {
@@ -430,7 +454,7 @@ const jsonLd = [
 
 	.trio-grid {
 		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
+		grid-template-columns: minmax(0, 1fr);
 		gap: var(--space-xs);
 	}
 
@@ -500,7 +524,7 @@ const jsonLd = [
 
 	.instagram-grid {
 		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
+		grid-template-columns: minmax(0, 1fr);
 		gap: var(--space-md);
 	}
 
@@ -538,37 +562,34 @@ const jsonLd = [
 		color: var(--color-text-muted);
 	}
 
-	@media (max-width: 400px) {
+	@media (min-width: 48rem) {
 		.cupcake-hero {
-			display: flex;
-			background: var(--color-surface-soft);
-			flex-direction: column;
-			height: 100vh;
+			grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+			gap: var(--space-2xl);
 		}
 
 		.cupcake-hero__copy {
-			width: 100%;
-			display: flex;
-			flex-direction: column;
-			align-items: flex-start;
-			justify-content: center;
-			gap: var(--space-md);
-			padding-top: var(--space-2xl);
-			padding-bottom: var(--space-2xl);
+			padding-inline: 0;
 		}
-	}
 
-	@media (min-width: 48rem) {
 		.instagram-layout {
 			grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.8fr);
 		}
 
 		.instagram-grid {
-			grid-template-columns: repeat(4, minmax(0, 1fr));
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 	}
 
 	@media (min-width: 64rem) {
+		.trio-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.instagram-grid {
+			grid-template-columns: repeat(4, minmax(0, 1fr));
+		}
+
 		.cupcake-carousel {
 			grid-auto-columns: minmax(17rem, 25vw);
 		}

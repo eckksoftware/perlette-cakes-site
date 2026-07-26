@@ -22,7 +22,7 @@ const pastryImageAlt = category.signature.imageAlt;
 	socialImageAlt={pastryImageAlt}
 >
 	<main class="pastries-page">
-		<section class="pastry-hero" aria-labelledby="pastry-hero-title">
+		<section class="pastry-hero content-shell" aria-labelledby="pastry-hero-title">
 			<div class="pastry-hero__media">
 				<Image
 					src={pastryImage}
@@ -149,13 +149,17 @@ const pastryImageAlt = category.signature.imageAlt;
 
 	.pastry-hero {
 		display: grid;
-		background: var(--pink-primary-bg);
+		gap: var(--space-xl);
+		align-items: center;
+		padding-top: var(--space-2xl);
+		background: var(--color-surface-soft);
 	}
 
 	.pastry-hero__media {
-		min-height: 58vh;
-		max-height: 52rem;
+		aspect-ratio: 4 / 5;
 		overflow: hidden;
+		border-radius: var(--radius-md);
+		background: var(--color-surface-soft);
 	}
 
 	.pastry-hero__media :global(img) {
@@ -171,7 +175,9 @@ const pastryImageAlt = category.signature.imageAlt;
 		align-items: flex-start;
 		justify-content: center;
 		gap: var(--space-lg);
-		padding: var(--space-2xl) var(--side-space-section-sm);
+		max-width: 38rem;
+		padding: var(--space-xl);
+		background: var(--pink-primary-bg);
 		color: var(--white-text);
 	}
 
@@ -442,15 +448,12 @@ const pastryImageAlt = category.signature.imageAlt;
 
 	@media (min-width: 48rem) {
 		.pastry-hero {
-			min-height: var(--product-hero-height);
-		}
-
-		.pastry-hero__media {
-			min-height: var(--product-hero-height);
+			grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+			gap: var(--space-2xl);
 		}
 
 		.pastry-hero__copy {
-			padding-inline: var(--side-space-section-md);
+			padding-inline: var(--space-xl);
 		}
 
 		.pastry-bento__grid {
@@ -499,16 +502,11 @@ const pastryImageAlt = category.signature.imageAlt;
 
 	@media (min-width: 64rem) {
 		.pastry-hero {
-			grid-template-columns: minmax(0, 3fr) minmax(22rem, 1fr);
-			min-height: var(--product-hero-height);
-		}
-
-		.pastry-hero__media {
-			min-height: var(--product-hero-height);
+			grid-template-columns: minmax(0, 1.15fr) minmax(22rem, 0.85fr);
 		}
 
 		.pastry-hero__copy {
-			padding-inline: clamp(2rem, 4vw, 5rem);
+			padding-inline: var(--space-2xl);
 		}
 
 		.pastry-bento__grid {
