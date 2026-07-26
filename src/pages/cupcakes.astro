@@ -93,7 +93,16 @@ const jsonLd = [
 >
 	<main class="cupcakes-page">
 		<section class="cupcake-hero">
-			<div class="cupcake-hero__image" data-reveal>
+			<div class="cupcake-hero__images" data-reveal>
+				<Image
+					src={category.signature.image}
+					alt={category.signature.imageAlt}
+					loading="eager"
+					fetchpriority="high"
+					widths={[720, 1080, 1440, 1800]}
+					sizes="(min-width: 64rem) 66vw, 100vw"
+					quality={72}
+				/>
 				<Image
 					src={category.signature.image}
 					alt={category.signature.imageAlt}
@@ -105,13 +114,10 @@ const jsonLd = [
 				/>
 			</div>
 			<div class="cupcake-hero__copy content-shell" data-reveal>
-				<p class="eyebrow">Cupcakes · Klang Valley</p>
-				<h1>Homemade cupcakes for the sweetest table</h1>
+				<p class="text-header">CUPCAKES IN KLANG VALLEY</p>
+				<h1>Homemade cupcakes for all to have</h1>
 				<p class="cupcake-hero__lead">
-					Perlette Cakes makes homemade cupcakes to order, piped fresh and boxed with care for your celebration.
-				</p>
-				<p>
-					Tell us your flavours, quantity, and date on WhatsApp. We will take care of the rest, right through to Lalamove delivery across Klang Valley.
+					Homemade cupcakes made to order, piped fresh and boxed with care for your celebration.
 				</p>
 				<CategoryCta
 					variant="inline"
@@ -261,24 +267,24 @@ const jsonLd = [
 	}
 
 	.cupcake-hero {
-		display: grid;
+		height: 100vh;
+		display: flex;
 		background: var(--color-surface-soft);
 	}
 
-	.cupcake-hero__image {
-		min-height: 24rem;
-		overflow: hidden;
-		background: var(--pink-primary-bg);
-	}
-
-	.cupcake-hero__image :global(img) {
-		width: 100%;
+	.cupcake-hero__images :global(img) {
+		width: 70%;
 		height: 100%;
-		min-height: 24rem;
 		object-fit: cover;
 	}
 
+	.cupcake-hero__images {
+		display: flex;
+		flex-direction: row;
+	}
+
 	.cupcake-hero__copy {
+		width: 30%;
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -286,25 +292,6 @@ const jsonLd = [
 		gap: var(--space-md);
 		padding-top: var(--space-2xl);
 		padding-bottom: var(--space-2xl);
-	}
-
-	.eyebrow {
-		color: var(--color-primary-strong);
-		font-size: var(--label-text-font-size);
-		font-weight: 700;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-	}
-
-	.cupcake-hero h1,
-	.section-heading h2,
-	.trio-heading h2,
-	.instagram-intro h2 {
-		text-wrap: balance;
-	}
-
-	.cupcake-hero h1 {
-		max-width: 13ch;
 	}
 
 	.cupcake-hero__lead {
@@ -551,21 +538,27 @@ const jsonLd = [
 		color: var(--color-text-muted);
 	}
 
-	@media (min-width: 48rem) {
+	@media (max-width: 400px) {
 		.cupcake-hero {
-			grid-template-columns: minmax(0, 1.9fr) minmax(20rem, 0.85fr);
-			min-height: var(--product-hero-height);
-		}
-
-		.cupcake-hero__image,
-		.cupcake-hero__image :global(img) {
-			min-height: var(--product-hero-height);
+			display: flex;
+			background: var(--color-surface-soft);
+			flex-direction: column;
+			height: 100vh;
 		}
 
 		.cupcake-hero__copy {
-			padding-inline: var(--side-space-section-md);
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+			gap: var(--space-md);
+			padding-top: var(--space-2xl);
+			padding-bottom: var(--space-2xl);
 		}
+	}
 
+	@media (min-width: 48rem) {
 		.instagram-layout {
 			grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.8fr);
 		}
