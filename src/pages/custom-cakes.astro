@@ -116,7 +116,7 @@ const jsonLd = [
 	<main class="custom-cakes-page">
 		<section class="custom-hero content-shell">
 			<div class="custom-hero__images" data-reveal>
-				<div class="custom-hero__image custom-hero__image--tall">
+				<div class="custom-hero__image">
 					<Image
 						src={category.signature.image}
 						alt={category.signature.imageAlt}
@@ -127,7 +127,7 @@ const jsonLd = [
 						quality={72}
 					/>
 				</div>
-				<div class="custom-hero__image custom-hero__image--short">
+				<div class="custom-hero__image">
 					<Image
 						src={variationBySlug('strawberry').image}
 						alt={variationBySlug('strawberry').imageAlt}
@@ -140,13 +140,13 @@ const jsonLd = [
 			</div>
 
 			<div class="custom-hero__copy" data-reveal>
-				<p class="eyebrow">Custom cakes · Klang Valley</p>
-				<h1>The Perlette cakes to get</h1>
+				<p class="text-header">CUSTOM CAKES IN KLANG VALLEY</p>
+				<h1>Finest Perlette Cakes</h1>
 				<p class="custom-hero__lead">
-					Perlette Cakes makes custom celebration cakes to order in Klang Valley, Malaysia. We bake each cake for one date, one table, and one moment worth remembering.
+					Each cake is baked for one date, one table and one moment that lasts a lifetime. Scroll through our cakes and take a peak at what we can offer.
 				</p>
 				<p>
-					Choose a reference below or bring us your own idea. We will confirm the flavour, size, design, and Lalamove delivery details with you on WhatsApp.
+					Want something different? Shoot us a message.
 				</p>
 				<CategoryCta
 					variant="inline"
@@ -160,11 +160,10 @@ const jsonLd = [
 		<section class="cake-collection content-shell" aria-labelledby="cake-collection-title">
 			<div class="section-heading" data-reveal>
 				<div>
-					<p class="eyebrow">Our prized cakes</p>
-					<h2 id="cake-collection-title">Cakes worth drooling over</h2>
+					<p class="text-header">OUR FAMOUS CAKES</p>
+					<h2 id="cake-collection-title">Cakes in demand</h2>
 				</div>
 				<label class="cake-filter">
-					<span>Browse collection</span>
 					<select data-cake-filter>
 						<option value="featured">Featured</option>
 						<option value="newest">Newest</option>
@@ -209,12 +208,12 @@ const jsonLd = [
 				/>
 			</div>
 			<div class="how-it-works__copy" data-reveal>
-				<p class="eyebrow">From idea to doorstep</p>
-				<h2 id="how-it-works-title">Your cake, without the complicated part</h2>
+				<p class="text-header">GET YOUR CAKE EASILY</p>
+				<h2 id="how-it-works-title">Cakes delivered to your doorsteps</h2>
 				<ol class="steps">
 					<li>
 						<strong>Choose your cake</strong>
-						<span>Pick a reference from the collection or send us your own design, flavour, and size idea on WhatsApp.</span>
+						<span>Explore our cake collection or reach out to us for a custom order.</span>
 					</li>
 					<li>
 						<strong>Schedule your delivery</strong>
@@ -222,7 +221,7 @@ const jsonLd = [
 					</li>
 					<li>
 						<strong>Await the good part</strong>
-						<span>We bake your cake fresh for the occasion, then send it carefully to your door. There is no pickup.</span>
+						<span>We bake your cake fresh for the occasion, then send it to your door. There is no pickup.</span>
 					</li>
 				</ol>
 			</div>
@@ -230,9 +229,9 @@ const jsonLd = [
 
 		<section class="cake-faq content-shell" aria-labelledby="cake-faq-title">
 			<div class="cake-faq__copy" data-reveal>
-				<p class="eyebrow">Custom cake questions</p>
-				<h2 id="cake-faq-title">Before you choose your cake</h2>
-				<p class="cake-faq__intro">The practical details, kept simple. Open a question when you need it.</p>
+				<p class="text-header">COMMON CAKE QUESTIONS</p>
+				<h2 id="cake-faq-title">Before choosing a cake</h2>
+				<p class="cake-faq__intro">The practical details, kept simple.</p>
 				<div class="faq-list">
 					{faqs.map((faq) => (
 						<details class="faq-item">
@@ -256,32 +255,38 @@ const jsonLd = [
 
 		<section class="occasions content-shell" aria-labelledby="occasions-title">
 			<div class="occasions__heading" data-reveal>
-				<p class="eyebrow">Made for your people</p>
+				<p class="text-header">MADE TO ELEVATE THE MOMENTS</p>
 				<h2 id="occasions-title">As personal as the moment itself</h2>
 				<p>Custom cakes for the birthdays, anniversaries, and little life milestones that deserve more than an ordinary dessert.</p>
 			</div>
 			<div class="occasion-grid">
 				<article class="occasion-card" data-reveal>
 					<Image src={variationBySlug('strawberry').image} alt={variationBySlug('strawberry').imageAlt} loading="lazy" widths={[480, 720, 960]} sizes="(min-width: 64rem) 30vw, 92vw" quality={68} />
-					<h3>Birthdays</h3>
-					<p>A cake with their favourite colours, flavours, and a message made just for them.</p>
+					<div>
+						<h3>Birthdays</h3>
+						<p>A cake with their favourite colours, flavours, and a message made just for them.</p>
+					</div>
 				</article>
 				<article class="occasion-card" data-reveal>
 					<Image src={variationBySlug('vintage-heart').image} alt={variationBySlug('vintage-heart').imageAlt} loading="lazy" widths={[480, 720, 960]} sizes="(min-width: 64rem) 30vw, 92vw" quality={68} />
-					<h3>Anniversaries</h3>
-					<p>Romantic details, soft finishes, and a centrepiece for another year together.</p>
+					<div>
+						<h3>Anniversaries</h3>
+						<p>Romantic details, soft finishes, and a centrepiece for another year together.</p>
+					</div>
 				</article>
 				<article class="occasion-card" data-reveal>
 					<Image src={category.signature.image} alt={category.signature.imageAlt} loading="lazy" widths={[480, 720, 960]} sizes="(min-width: 64rem) 30vw, 92vw" quality={68} />
-					<h3>New beginnings</h3>
-					<p>For gender reveals, new homes, promotions, and every occasion worth gathering for.</p>
+					<div>
+						<h3>New beginnings</h3>
+						<p>For gender reveals, new homes, promotions, and every occasion worth gathering for.</p>
+					</div>
 				</article>
 			</div>
 		</section>
 
 		<CategoryCta
 			variant="panel"
-			heading="Have a date and a vision? Let's make the cake."
+			heading="Got the date? Let's make the cake."
 			body="Tell us what you are celebrating, and we will take it from there on WhatsApp."
 			label="Start your cake order"
 			whatsappMessage={category.whatsappMessage}
@@ -334,15 +339,6 @@ const jsonLd = [
 		background: var(--color-surface-soft);
 	}
 
-	.custom-hero__image--tall {
-		aspect-ratio: 4 / 5;
-	}
-
-	.custom-hero__image--short {
-		aspect-ratio: 4 / 5;
-		margin-top: var(--space-xl);
-	}
-
 	.custom-hero__image :global(img),
 	.how-it-works__image :global(img),
 	.cake-faq__image :global(img),
@@ -358,22 +354,6 @@ const jsonLd = [
 		align-items: flex-start;
 		gap: var(--space-md);
 		max-width: 38rem;
-	}
-
-	.eyebrow {
-		color: var(--color-primary-strong);
-		font-size: var(--label-text-font-size);
-		font-weight: 700;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
-	}
-
-	.custom-hero__copy h1,
-	.section-heading h2,
-	.how-it-works__copy h2,
-	.cake-faq__copy h2,
-	.occasions__heading h2 {
-		text-wrap: balance;
 	}
 
 	.custom-hero__lead {
@@ -395,7 +375,7 @@ const jsonLd = [
 		color: var(--color-primary-strong);
 	}
 
-	.cake-collection .eyebrow,
+	.cake-collection .text-header,
 	.cake-collection .cake-filter {
 		color: var(--white-text);
 	}
@@ -408,7 +388,6 @@ const jsonLd = [
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-md);
-		max-width: 42rem;
 	}
 
 	.cake-filter {
@@ -424,11 +403,9 @@ const jsonLd = [
 
 	.cake-filter select {
 		min-height: 3rem;
-		padding: 0.6rem 2.5rem 0.6rem var(--space-md);
+		padding: 0.6rem 2.6rem 0.9rem var(--space-md);
 		border: 1px solid var(--color-primary-strong);
 		border-radius: 999px;
-		background: var(--color-surface);
-		color: var(--color-text);
 		font-weight: 700;
 	}
 
@@ -610,9 +587,7 @@ const jsonLd = [
 		color: var(--white-text);
 	}
 
-	.occasions .eyebrow,
-	.occasion-card h3,
-	.occasion-card p {
+	.occasions .text-header {
 		color: var(--white-text);
 	}
 
@@ -620,7 +595,7 @@ const jsonLd = [
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-md);
-		max-width: 48rem;
+		max-width: 60rem;
 		margin-bottom: var(--space-xl);
 		text-align: center;
 		margin-inline: auto;
@@ -635,27 +610,26 @@ const jsonLd = [
 	.occasion-card {
 		display: flex;
 		flex-direction: column;
-		gap: var(--space-sm);
 		text-align: center;
 	}
 
 	.occasion-card :global(img) {
 		aspect-ratio: 4 / 3;
-		border-radius: var(--radius-md);
+		border-top-left-radius: var(--radius-md);
+		border-top-right-radius: var(--radius-md);
 	}
 
 	.occasion-card h3 {
-		font-size: var(--step-1);
+		font-size: var(--step-2);
 	}
 
-	.occasion-card p {
-		font-size: var(--label-text-font-size);
+	.occasion-card div {
+		padding: var(--space-sm) 0 var(--space-sm) 0;
+		background-color: var(--white-bg);
+		color: var(--color-text);
 	}
 
 	@media (max-width: 25rem) {
-		#cake-collection-title {
-			text-wrap: wrap;
-		}
 
 		.section-heading {
 			display: flex;

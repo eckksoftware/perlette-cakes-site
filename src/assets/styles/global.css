@@ -188,6 +188,12 @@ p {
   font-size: var(--text-font-size);
 }
 
+.text-header {
+  font-size: var(--label-text-font-size);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
 :focus-visible {
   outline: none;
   box-shadow: var(--focus-ring);
