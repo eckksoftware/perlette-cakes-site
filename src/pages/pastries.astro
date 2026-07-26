@@ -62,8 +62,18 @@ const pastryImageAlt = category.signature.imageAlt;
 
 			<div class="pastry-bento__grid content-shell">
 				<article class="pastry-bento__testimonial" data-reveal>
-					<p class="pastry-bento__quote">"Gooey, freshly baked cookie is to die for."</p>
+					<p class="pastry-bento__quote">"Gooey, freshly baked pastry is to die for."</p>
 				</article>
+
+				<div class="pastry-bento__testimonial-image" data-reveal>
+					<Image
+						src={pastryImage}
+						alt="Freshly baked pastry with a golden, flaky crust."
+						widths={[480, 720, 960]}
+						sizes="(min-width: 64rem) 25vw, 50vw"
+						quality={74}
+					/>
+				</div>
 
 				<div class="pastry-bento__feature" data-reveal>
 					<Image
@@ -79,19 +89,18 @@ const pastryImageAlt = category.signature.imageAlt;
 					<article class="pastry-bento__note" data-reveal>
 						<p>Made in small batches, packed with care, and delivered across Klang Valley by Lalamove.</p>
 					</article>
-					<article class="pastry-bento__order" data-reveal>
+					<a
+						class="pastry-bento__order"
+						href={orderHref}
+						target="_blank"
+						rel="noreferrer"
+						data-order-trigger
+						data-order-interest-preselect="Pastries"
+						data-reveal
+					>
 						<p class="pastry-bento__order-label">Your next box is one click away.</p>
-						<a
-							class="button pastry-bento__order-button"
-							href={orderHref}
-							target="_blank"
-							rel="noreferrer"
-							data-order-trigger
-							data-order-interest-preselect="Pastries"
-						>
-							Easily order with a click
-						</a>
-					</article>
+						<span class="pastry-bento__order-link">Easily order with a click <span aria-hidden="true">&rarr;</span></span>
+					</a>
 				</div>
 			</div>
 		</section>
@@ -140,7 +149,7 @@ const pastryImageAlt = category.signature.imageAlt;
 
 	.pastry-hero {
 		display: grid;
-		background: var(--color-surface-soft);
+		background: var(--pink-primary-bg);
 	}
 
 	.pastry-hero__media {
@@ -163,7 +172,7 @@ const pastryImageAlt = category.signature.imageAlt;
 		justify-content: center;
 		gap: var(--space-lg);
 		padding: var(--space-2xl) var(--side-space-section-sm);
-		color: var(--color-text);
+		color: var(--white-text);
 	}
 
 	.pastry-hero__copy h1 {
@@ -175,7 +184,7 @@ const pastryImageAlt = category.signature.imageAlt;
 
 	.pastry-hero__copy > p:not(.pastry-hero__eyebrow) {
 		max-width: 28rem;
-		color: var(--color-text-muted);
+		color: var(--white-text);
 	}
 
 	.pastry-hero__eyebrow,
@@ -188,15 +197,20 @@ const pastryImageAlt = category.signature.imageAlt;
 		color: var(--color-primary-strong);
 	}
 
+	.pastry-hero__eyebrow {
+		color: var(--white-text);
+	}
+
 	.pastry-hero__button {
 		color: var(--white-text);
-		background: var(--color-text);
+		border-color: var(--white-text);
+		background: transparent;
 		box-shadow: none;
 	}
 
 	.pastry-hero__button:hover {
-		color: var(--white-text);
-		background: var(--color-primary-strong);
+		color: var(--color-primary-strong);
+		background: var(--white-text);
 	}
 
 	.pastry-bento {
@@ -226,6 +240,7 @@ const pastryImageAlt = category.signature.imageAlt;
 	}
 
 	.pastry-bento__testimonial,
+	.pastry-bento__testimonial-image,
 	.pastry-bento__note,
 	.pastry-bento__order,
 	.pastry-bento__feature {
@@ -244,6 +259,17 @@ const pastryImageAlt = category.signature.imageAlt;
 		border: 1px solid var(--color-nav-border);
 	}
 
+	.pastry-bento__testimonial-image {
+		aspect-ratio: 1 / 1;
+		background: var(--color-surface-soft);
+	}
+
+	.pastry-bento__testimonial-image :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
 	.pastry-bento__quote {
 		max-width: 16ch;
 		font-family: var(--font-display);
@@ -254,13 +280,12 @@ const pastryImageAlt = category.signature.imageAlt;
 	}
 
 	.pastry-bento__feature {
-		min-height: 22rem;
+		aspect-ratio: 1 / 1;
 	}
 
 	.pastry-bento__feature :global(img) {
 		width: 100%;
 		height: 100%;
-		min-height: inherit;
 		object-fit: cover;
 		object-position: center;
 	}
@@ -273,6 +298,7 @@ const pastryImageAlt = category.signature.imageAlt;
 	.pastry-bento__note,
 	.pastry-bento__order {
 		padding: var(--space-xl);
+		aspect-ratio: 1 / 1;
 	}
 
 	.pastry-bento__note {
@@ -297,24 +323,38 @@ const pastryImageAlt = category.signature.imageAlt;
 		min-height: 12rem;
 		background: var(--pink-primary-bg);
 		color: var(--white-text);
+		text-decoration: none;
+		transition: transform var(--transition-base), box-shadow var(--transition-base);
 	}
 
-	.pastry-bento__order-label {
+	.pastry-bento__order:hover {
+		transform: translateY(-0.25rem);
+		box-shadow: var(--shadow-md);
+	}
+
+	.pastry-bento__order-label,
+	.pastry-bento__order-link {
 		max-width: 12ch;
 		font-family: var(--font-display);
 		font-size: var(--step-1);
 		line-height: 1.05;
 	}
 
-	.pastry-bento__order-button {
-		color: var(--color-primary-strong);
-		background: var(--white-bg);
-		box-shadow: none;
+	.pastry-bento__order-link {
+		max-width: none;
+		font-family: var(--font-body);
+		font-size: var(--label-text-font-size);
+		font-weight: 700;
 	}
 
-	.pastry-bento__order-button:hover {
-		color: var(--white-text);
-		background: var(--color-primary-strong);
+	.pastry-bento__order-link span {
+		display: inline-block;
+		margin-left: var(--space-xs);
+		transition: transform var(--transition-base);
+	}
+
+	.pastry-bento__order:hover .pastry-bento__order-link span {
+		transform: translateX(0.25rem);
 	}
 
 	.pastry-process {
@@ -372,7 +412,7 @@ const pastryImageAlt = category.signature.imageAlt;
 	}
 
 	.pastry-process__main-image {
-		min-height: 30rem;
+		min-height: clamp(18rem, 30vw, 28rem);
 	}
 
 	.pastry-process__main-image :global(img),
@@ -389,7 +429,7 @@ const pastryImageAlt = category.signature.imageAlt;
 	}
 
 	.pastry-process__detail {
-		min-height: 14rem;
+		aspect-ratio: 1 / 1;
 	}
 
 	.pastry-process__detail--top :global(img) {
@@ -401,6 +441,14 @@ const pastryImageAlt = category.signature.imageAlt;
 	}
 
 	@media (min-width: 48rem) {
+		.pastry-hero {
+			min-height: var(--product-hero-height);
+		}
+
+		.pastry-hero__media {
+			min-height: var(--product-hero-height);
+		}
+
 		.pastry-hero__copy {
 			padding-inline: var(--side-space-section-md);
 		}
@@ -415,11 +463,17 @@ const pastryImageAlt = category.signature.imageAlt;
 		}
 
 		.pastry-bento__testimonial {
+			grid-column: 1;
 			grid-row: 2;
 		}
 
+		.pastry-bento__testimonial-image {
+			grid-row: 3;
+		}
+
 		.pastry-bento__side {
-			grid-row: 2;
+			grid-column: 2;
+			grid-row: 2 / span 2;
 			grid-template-columns: repeat(2, 1fr);
 		}
 
@@ -435,7 +489,7 @@ const pastryImageAlt = category.signature.imageAlt;
 		}
 
 		.pastry-process__main-image {
-			min-height: 38rem;
+			min-height: clamp(20rem, 32vw, 28rem);
 		}
 
 		.pastry-process__detail-images {
@@ -446,11 +500,11 @@ const pastryImageAlt = category.signature.imageAlt;
 	@media (min-width: 64rem) {
 		.pastry-hero {
 			grid-template-columns: minmax(0, 3fr) minmax(22rem, 1fr);
-			min-height: min(45rem, calc(100svh - 5rem));
+			min-height: var(--product-hero-height);
 		}
 
 		.pastry-hero__media {
-			min-height: auto;
+			min-height: var(--product-hero-height);
 		}
 
 		.pastry-hero__copy {
@@ -465,15 +519,23 @@ const pastryImageAlt = category.signature.imageAlt;
 		.pastry-bento__feature {
 			grid-column: auto;
 			grid-row: auto;
-			min-height: 32rem;
+			aspect-ratio: auto;
 		}
 
 		.pastry-bento__testimonial {
-			grid-row: auto;
+			grid-column: 1;
+			grid-row: 1;
+			aspect-ratio: 1 / 1;
+		}
+
+		.pastry-bento__testimonial-image {
+			grid-column: 1;
+			grid-row: 2;
 		}
 
 		.pastry-bento__side {
-			grid-row: auto;
+			grid-column: 3;
+			grid-row: 1 / span 2;
 			grid-template-columns: 1fr;
 		}
 
@@ -487,7 +549,7 @@ const pastryImageAlt = category.signature.imageAlt;
 		}
 
 		.pastry-process__main-image {
-			min-height: 42rem;
+			min-height: clamp(22rem, 30vw, 28rem);
 		}
 
 		.pastry-process__detail-images {

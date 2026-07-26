@@ -65,6 +65,8 @@
 
   --bottom-space-text-md: var(--space-xs);
 
+  --product-hero-height: min(42rem, calc(100svh - 5rem));
+
   --gap-space-md: var(--space-md);
   --gap-space-xl: var(--space-xl);
   /* end refactor */

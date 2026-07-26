@@ -28,7 +28,7 @@ const cakeCards = [
 		name: '6" Floral Celebration Cake',
 		size: '6-inch cake',
 		description: 'A delicate floral finish for birthdays, thank-yous, and the occasions that deserve something thoughtful.',
-		badge: 'Favourite',
+		badge: 'Favorite',
 		collections: ['featured', 'favorites', 'newest'],
 	},
 	{
@@ -36,7 +36,7 @@ const cakeCards = [
 		name: '6" Chocolate Fudge Cake',
 		size: '6-inch cake',
 		description: 'Deep chocolate sponge with a rich fudge finish for celebrations that call for a more indulgent slice.',
-		badge: 'Favourite',
+		badge: 'Favorite',
 		collections: ['featured', 'favorites'],
 	},
 	{
@@ -400,6 +400,10 @@ const jsonLd = [
 		color: var(--white-text);
 	}
 
+	.cake-collection h2 {
+		color: var(--white-text);
+	}
+
 	.section-heading > div {
 		display: flex;
 		flex-direction: column;
@@ -467,13 +471,13 @@ const jsonLd = [
 	.cake-card__badge {
 		position: absolute;
 		top: var(--space-md);
-		left: var(--space-md);
+		right: var(--space-md);
 		z-index: 1;
-		padding: var(--space-xs) var(--space-md);
+		padding: var(--space-sm) var(--space-md);
 		border-radius: 999px;
 		background: var(--color-surface);
 		color: var(--color-primary-strong);
-		font-size: var(--step--1);
+		font-size: var(--label-text-font-size);
 		font-weight: 700;
 	}
 
@@ -602,6 +606,14 @@ const jsonLd = [
 
 	.occasions {
 		padding-bottom: var(--space-2xl);
+		background: var(--pink-primary-bg);
+		color: var(--white-text);
+	}
+
+	.occasions .eyebrow,
+	.occasion-card h3,
+	.occasion-card p {
+		color: var(--white-text);
 	}
 
 	.occasions__heading {

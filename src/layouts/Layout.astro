@@ -2,6 +2,7 @@
 import { SEO } from 'astro-seo';
 import OrderInquiryModal from '../components/OrderInquiryModal.astro';
 import FactualFooter from '../components/shared/FactualFooter.astro';
+import SiteNav from '../components/shared/SiteNav.astro';
 import { whatsappHref, DEFAULT_INQUIRY } from '@lib/whatsapp';
 import '../assets/styles/global.css';
 
@@ -114,19 +115,7 @@ const allJsonLd = [
 	</head>
 	<body>
 		<div class="site-shell">
-			<header class="site-nav">
-				<div class="site-nav__inner content-shell">
-					<div class="site-nav__left">
-						<a class="site-nav__brand" href="/">perlette cakes</a>
-						<nav class="site-nav__links" aria-label="Primary">
-							<a class="site-nav__link" href="/custom-cakes/">Custom Cakes</a>
-						</nav>
-					</div>
-					<a class="site-nav__cta button button--primary" href={orderHref} target="_blank" rel="noreferrer" data-order-trigger>
-						Order on WhatsApp
-					</a>
-				</div>
-			</header>
+			<SiteNav orderHref={orderHref} />
 			<slot />
 			<FactualFooter whatsappHref={orderHref} instagramHref={instagramHref} />
 			<OrderInquiryModal />
@@ -148,80 +137,4 @@ const allJsonLd = [
 		min-height: 100vh;
 	}
 
-	.site-nav {
-		position: sticky;
-		top: 0;
-		z-index: 20;
-		padding-block: var(--space-md);
-		background: var(--color-nav-surface);
-		backdrop-filter: blur(14px);
-		border-bottom: 1px solid var(--color-nav-border);
-	}
-
-	.site-nav__inner {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var(--space-md);
-	}
-
-	.site-nav__left {
-		display: flex;
-		align-items: center;
-		gap: var(--space-lg);
-	}
-
-	.site-nav__links {
-		display: none;
-	}
-
-	.site-nav__link {
-		font-size: var(--label-text-font-size);
-		font-weight: 600;
-		text-decoration: none;
-		white-space: nowrap;
-		transition: color var(--transition-base);
-	}
-
-	.site-nav__link:hover {
-		color: var(--color-primary-strong);
-	}
-
-	.site-nav__brand {
-		color: var(--color-primary-ink);
-		font-family: var(--font-display);
-		font-size: var(--brand-font-size);
-		font-style: italic;
-		font-weight: 600;
-		letter-spacing: -0.04em;
-		text-transform: lowercase;
-		text-decoration: none;
-		white-space: nowrap;
-	}
-
-	.site-nav__cta {
-		min-height: 2.9rem;
-		padding-inline: 1.1rem;
-		flex-shrink: 0;
-	}
-
-	@media (min-width: 48rem) {
-		.site-nav {
-			padding-block: var(--space-lg);
-		}
-
-		.site-nav__links {
-			display: flex;
-			align-items: center;
-			gap: var(--space-md);
-		}
-
-		.site-nav__brand {
-			font-size: var(--step-2);
-		}
-
-		.site-nav__cta {
-			padding-inline: 1.35rem;
-		}
-	}
 </style>

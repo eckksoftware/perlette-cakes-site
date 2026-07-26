@@ -35,6 +35,21 @@ const cupcakeSelection = [
 		name: 'Seasonal flavour',
 		description: 'A rotating flavour made around what is fresh and lovely right now.',
 	},
+	{
+		variation: variationBySlug('classic-vanilla'),
+		name: 'Birthday box',
+		description: 'A cheerful mix of vanilla cupcakes made for candles, wishes, and second helpings.',
+	},
+	{
+		variation: variationBySlug('chocolate-cupcake'),
+		name: 'Buttercream mix',
+		description: 'A box of chocolate and vanilla favourites with a little something for everyone.',
+	},
+	{
+		variation: variationBySlug('red-velvet'),
+		name: 'Celebration dozen',
+		description: 'Twelve freshly piped cupcakes ready to make a dessert table feel complete.',
+	},
 ];
 
 const instagramPosts = [
@@ -114,9 +129,14 @@ const jsonLd = [
 						<p class="eyebrow">A little box of joy</p>
 						<h2 id="cupcake-menu-title">Your next cupcake obsession starts here</h2>
 					</div>
-					<button class="carousel-next" type="button" aria-label="View more cupcakes" data-carousel-next>
-						<span aria-hidden="true">&rarr;</span>
-					</button>
+					<div class="carousel-controls">
+						<button class="carousel-button" type="button" aria-label="View previous cupcakes" data-carousel-prev>
+							<span aria-hidden="true">&larr;</span>
+						</button>
+						<button class="carousel-button" type="button" aria-label="View more cupcakes" data-carousel-next>
+							<span aria-hidden="true">&rarr;</span>
+						</button>
+					</div>
 				</header>
 
 				<div class="cupcake-carousel" data-cupcake-carousel tabindex="0">
@@ -219,16 +239,20 @@ const jsonLd = [
 
 <script>
 	const carousel = document.querySelector<HTMLElement>('[data-cupcake-carousel]');
+	const previousButton = document.querySelector<HTMLButtonElement>('[data-carousel-prev]');
 	const nextButton = document.querySelector<HTMLButtonElement>('[data-carousel-next]');
 
-	nextButton?.addEventListener('click', () => {
+	const moveCarousel = (direction: number) => {
 		if (!carousel) return;
 
 		carousel.scrollBy({
-			left: carousel.clientWidth * 0.82,
+			left: carousel.clientWidth * 0.82 * direction,
 			behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
 		});
-	});
+	};
+
+	previousButton?.addEventListener('click', () => moveCarousel(-1));
+	nextButton?.addEventListener('click', () => moveCarousel(1));
 </script>
 
 <style>
@@ -316,11 +340,17 @@ const jsonLd = [
 		max-width: 44rem;
 	}
 
-	.cupcake-menu .eyebrow {
-		color: var(--color-primary-strong);
+	.cupcake-menu .eyebrow,
+	.cupcake-menu h2 {
+		color: var(--white-text);
 	}
 
-	.carousel-next {
+	.carousel-controls {
+		display: flex;
+		gap: var(--space-xs);
+	}
+
+	.carousel-button {
 		display: inline-flex;
 		width: 3.25rem;
 		height: 3.25rem;
@@ -335,10 +365,14 @@ const jsonLd = [
 		transition: transform var(--transition-base), background-color var(--transition-base), color var(--transition-base);
 	}
 
-	.carousel-next:hover {
+	.carousel-button:hover {
 		transform: translateX(0.2rem);
 		background: var(--color-primary-strong);
 		color: var(--white-text);
+	}
+
+	.carousel-button:first-child:hover {
+		transform: translateX(-0.2rem);
 	}
 
 	.cupcake-carousel {
@@ -448,10 +482,23 @@ const jsonLd = [
 	}
 
 	.instagram-handle {
-		color: var(--color-primary-strong);
+		display: inline-flex;
+		min-height: 3rem;
+		align-items: center;
+		padding-inline: var(--space-lg);
+		border: 1px solid var(--pink-primary-bg);
+		border-radius: 999px;
+		background: var(--pink-primary-bg);
+		color: var(--white-text);
 		font-size: var(--label-text-font-size);
 		font-weight: 700;
-		text-underline-offset: 0.25em;
+		text-decoration: none;
+		transition: background-color var(--transition-base), transform var(--transition-base);
+	}
+
+	.instagram-handle:hover {
+		background: var(--color-primary-strong);
+		transform: translateY(-1px);
 	}
 
 	.instagram-handle span {
@@ -507,12 +554,12 @@ const jsonLd = [
 	@media (min-width: 48rem) {
 		.cupcake-hero {
 			grid-template-columns: minmax(0, 1.9fr) minmax(20rem, 0.85fr);
-			min-height: 38rem;
+			min-height: var(--product-hero-height);
 		}
 
 		.cupcake-hero__image,
 		.cupcake-hero__image :global(img) {
-			min-height: 38rem;
+			min-height: var(--product-hero-height);
 		}
 
 		.cupcake-hero__copy {

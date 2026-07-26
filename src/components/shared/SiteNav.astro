@@ -1,0 +1,310 @@
+---
+interface Props {
+  orderHref: string;
+}
+
+const { orderHref } = Astro.props;
+const productLinks = [
+  { label: 'Custom Cakes', href: '/custom-cakes/' },
+  { label: 'Cupcakes', href: '/cupcakes/' },
+  { label: 'Cookies', href: '/cookies/' },
+  { label: 'Pastries', href: '/pastries/' },
+];
+---
+
+<header class="site-nav">
+	<div class="site-nav__inner content-shell">
+		<div class="site-nav__left">
+			<a class="site-nav__brand" href="/">perlette cakes</a>
+			<nav class="site-nav__links" aria-label="Primary">
+				{productLinks.map((link) => <a class="site-nav__link" href={link.href}>{link.label}</a>)}
+			</nav>
+		</div>
+
+		<div class="site-nav__actions">
+			<a class="site-nav__cta button button--primary" href={orderHref} target="_blank" rel="noreferrer" data-order-trigger>
+				Order on WhatsApp
+			</a>
+			<button
+				class="site-nav__menu-button"
+				type="button"
+				aria-expanded="false"
+				aria-controls="mobile-product-nav"
+				data-mobile-nav-open
+			>
+				<span class="site-nav__menu-icon" aria-hidden="true"><span></span><span></span></span>
+				<span>Menu</span>
+			</button>
+		</div>
+	</div>
+
+	<div class="mobile-nav" id="mobile-product-nav" data-mobile-nav hidden>
+		<button class="mobile-nav__backdrop" type="button" aria-label="Close menu" data-mobile-nav-close></button>
+		<nav class="mobile-nav__panel" aria-label="Mobile product navigation">
+			<div class="mobile-nav__header">
+				<span>Browse Perlette Cakes</span>
+				<button class="mobile-nav__close" type="button" aria-label="Close menu" data-mobile-nav-close>&times;</button>
+			</div>
+			<ul class="mobile-nav__list">
+				<li><a class="mobile-nav__brand" href="/">perlette cakes</a></li>
+				{productLinks.map((link) => (
+					<li><a class="mobile-nav__link" href={link.href}>{link.label}</a></li>
+				))}
+			</ul>
+		</nav>
+	</div>
+</header>
+
+<script>
+	const mobileNav = document.querySelector<HTMLElement>('[data-mobile-nav]');
+	const openButton = document.querySelector<HTMLButtonElement>('[data-mobile-nav-open]');
+	const closeButtons = document.querySelectorAll<HTMLButtonElement>('[data-mobile-nav-close]');
+	const panel = mobileNav?.querySelector<HTMLElement>('.mobile-nav__panel');
+
+	const closeMenu = () => {
+		if (!mobileNav || !openButton) return;
+		mobileNav.classList.remove('is-open');
+		openButton.setAttribute('aria-expanded', 'false');
+		document.body.classList.remove('mobile-nav-open');
+		window.setTimeout(() => {
+			if (!mobileNav.classList.contains('is-open')) mobileNav.hidden = true;
+		}, 180);
+	};
+
+	openButton?.addEventListener('click', () => {
+		if (!mobileNav) return;
+		mobileNav.hidden = false;
+		openButton.setAttribute('aria-expanded', 'true');
+		document.body.classList.add('mobile-nav-open');
+		requestAnimationFrame(() => mobileNav.classList.add('is-open'));
+	});
+
+	closeButtons.forEach((button) => button.addEventListener('click', closeMenu));
+	panel?.addEventListener('click', (event) => {
+		if (event.target instanceof Element && event.target.closest('a')) closeMenu();
+	});
+	document.addEventListener('keydown', (event) => {
+		if (event.key === 'Escape' && mobileNav && !mobileNav.hidden) closeMenu();
+	});
+</script>
+
+<style>
+	.site-nav {
+		position: sticky;
+		top: 0;
+		z-index: 20;
+		padding-block: var(--space-md);
+		background: var(--color-nav-surface);
+		backdrop-filter: blur(14px);
+		border-bottom: 1px solid var(--color-nav-border);
+	}
+
+	.site-nav__inner,
+	.site-nav__left,
+	.site-nav__actions {
+		display: flex;
+		align-items: center;
+	}
+
+	.site-nav__inner {
+		justify-content: space-between;
+		gap: var(--space-md);
+	}
+
+	.site-nav__left {
+		min-width: 0;
+		gap: var(--space-lg);
+	}
+
+	.site-nav__actions {
+		gap: var(--space-sm);
+	}
+
+	.site-nav__links {
+		display: none;
+		align-items: center;
+		gap: var(--space-md);
+	}
+
+	.site-nav__link,
+	.mobile-nav__link {
+		font-size: var(--label-text-font-size);
+		font-weight: 600;
+		text-decoration: none;
+		white-space: nowrap;
+		transition: color var(--transition-base);
+	}
+
+	.site-nav__link:hover,
+	.mobile-nav__link:hover {
+		color: var(--color-primary-strong);
+	}
+
+	.site-nav__brand,
+	.mobile-nav__brand {
+		color: var(--color-primary-ink);
+		font-family: var(--font-display);
+		font-size: var(--brand-font-size);
+		font-style: italic;
+		font-weight: 600;
+		letter-spacing: -0.04em;
+		text-transform: lowercase;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.site-nav__cta {
+		min-height: 2.9rem;
+		padding-inline: 0.9rem;
+		flex-shrink: 0;
+	}
+
+	.site-nav__menu-button {
+		display: inline-flex;
+		min-height: 2.9rem;
+		align-items: center;
+		gap: var(--space-xs);
+		padding: 0.6rem 0.8rem;
+		border: 1px solid var(--color-primary-strong);
+		border-radius: 999px;
+		background: var(--color-surface);
+		color: var(--color-primary-strong);
+		font-size: var(--step--1);
+		font-weight: 700;
+	}
+
+	.site-nav__menu-icon {
+		display: grid;
+		gap: 0.2rem;
+	}
+
+	.site-nav__menu-icon span {
+		display: block;
+		width: 1rem;
+		height: 1px;
+		background: currentColor;
+	}
+
+	.mobile-nav[hidden] {
+		display: none;
+	}
+
+	.mobile-nav {
+		position: fixed;
+		inset: 0;
+		z-index: 30;
+		background: rgba(5, 10, 48, 0.34);
+	}
+
+	.mobile-nav__backdrop {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		border: 0;
+		background: transparent;
+	}
+
+	.mobile-nav__panel {
+		position: relative;
+		z-index: 1;
+		display: flex;
+		width: min(88vw, 25rem);
+		height: 100%;
+		flex-direction: column;
+		padding: var(--space-lg);
+		background: var(--color-surface);
+		box-shadow: var(--shadow-md);
+		transform: translateX(-100%);
+		transition: transform var(--transition-base);
+	}
+
+	.mobile-nav.is-open .mobile-nav__panel {
+		transform: translateX(0);
+	}
+
+	.mobile-nav__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-md);
+		padding-bottom: var(--space-lg);
+		border-bottom: 1px solid var(--color-nav-border);
+		color: var(--color-text-muted);
+		font-size: var(--step--1);
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+
+	.mobile-nav__close {
+		width: 2.5rem;
+		height: 2.5rem;
+		border: 1px solid var(--color-primary-strong);
+		border-radius: 999px;
+		background: var(--color-surface);
+		color: var(--color-primary-strong);
+		font-size: var(--step-1);
+		line-height: 1;
+	}
+
+	.mobile-nav__list {
+		display: grid;
+		gap: var(--space-lg);
+		margin: 0;
+		padding: var(--space-xl) 0;
+		list-style: none;
+	}
+
+	.mobile-nav__brand {
+		font-size: var(--step-2);
+	}
+
+	.mobile-nav__link {
+		display: block;
+		padding-block: var(--space-xs);
+		font-family: var(--font-display);
+		font-size: var(--step-1);
+	}
+
+	:global(body.mobile-nav-open) {
+		overflow: hidden;
+	}
+
+	@media (max-width: 29rem) {
+		.site-nav__cta {
+			padding-inline: 0.7rem;
+			font-size: 0.75rem;
+		}
+
+		.site-nav__menu-button {
+			padding-inline: 0.65rem;
+		}
+
+		.site-nav__menu-button > span:last-child {
+			display: none;
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.site-nav {
+			padding-block: var(--space-lg);
+		}
+
+		.site-nav__links {
+			display: flex;
+		}
+
+		.site-nav__brand {
+			font-size: var(--step-2);
+		}
+
+		.site-nav__cta {
+			padding-inline: 1.1rem;
+		}
+
+		.site-nav__menu-button,
+		.mobile-nav {
+			display: none;
+		}
+	}
+</style>
