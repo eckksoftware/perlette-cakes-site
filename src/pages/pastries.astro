@@ -645,10 +645,7 @@ const pastrySlides = [
 		}
 
 		.pastry-bento__grid {
-			grid-template-areas:
-				"selection feature testimonial"
-				"selection feature order";
-			grid-template-columns: 3fr 6fr 3fr;
+			grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr);
 			grid-template-rows: repeat(2, minmax(0, 1fr));
 			gap: var(--space-sm);
 			min-height: clamp(30rem, 40vw, 42rem);
@@ -656,6 +653,8 @@ const pastrySlides = [
 		}
 
 		.pastry-bento__selection {
+			grid-column: 1;
+			grid-row: 1 / span 2;
 			flex-direction: column;
 		}
 
@@ -663,6 +662,23 @@ const pastrySlides = [
 			flex: 1 1 auto;
 			min-height: 0;
 			aspect-ratio: auto;
+		}
+
+		.pastry-bento__feature {
+			grid-column: 2;
+			grid-row: 1 / span 2;
+			aspect-ratio: auto;
+			height: 100%;
+		}
+
+		.pastry-bento__testimonial {
+			grid-column: 3;
+			grid-row: 1;
+		}
+
+		.pastry-bento__order {
+			grid-column: 3;
+			grid-row: 2;
 		}
 
 		.pastry-process {
