@@ -117,27 +117,18 @@ const jsonLd = [
 			</div>
 
 			<div class="cookie-intro__copy" data-reveal>
-				<p class="eyebrow">Cookies · Klang Valley</p>
+				<p class="eyebrow">OUR COOKIES</p>
 				<h1>The box that fills the room before it opens</h1>
 				<p class="cookie-intro__lead">
-					Freshly baked cookies with golden edges, soft centres, and the warm smell that gets everyone to the kitchen.
+					Freshly baked cookies with golden edges, soft centres, and the warm smell that gets everyone to the kitchen - by Perlette Cakess and only in Klang Valley.
 				</p>
-				<p>
-					Perlette Cakes makes cookies to order in Klang Valley, Malaysia. Choose a favourite, build a box, or tell us what you are craving on WhatsApp.
-				</p>
-				<CategoryCta
-					variant="inline"
-					label="Start a cookie order"
-					whatsappMessage={category.whatsappMessage}
-					interest={category.modalInterest}
-				/>
 			</div>
 		</section>
 
 		<section class="best-sellers" aria-labelledby="best-sellers-title">
 			<div class="content-shell">
 				<header class="section-heading" data-reveal>
-					<p class="eyebrow">The ones people come back for</p>
+					<p class="eyebrow">THE ONES PEOPLE COME BACK FOR</p>
 					<h2 id="best-sellers-title">Most ordered cookies</h2>
 				</header>
 
@@ -168,7 +159,7 @@ const jsonLd = [
 		<section class="cookie-spread" aria-labelledby="cookie-spread-title">
 			<div class="content-shell">
 				<header class="section-heading section-heading--center" data-reveal>
-					<p class="eyebrow">Small batch, big pull</p>
+					<p class="eyebrow">SMALL BATCH, BIG PULL</p>
 					<h2 id="cookie-spread-title">Cookie spread</h2>
 					<p>Freshly baked for the day they are delivered, then boxed for the people you want to share them with.</p>
 				</header>
@@ -218,7 +209,7 @@ const jsonLd = [
 						/>
 					</div>
 					<div class="cookie-story__overlay">
-						<p class="eyebrow">The Perlette way</p>
+						<p class="eyebrow">THE PERLETTE WAY</p>
 						<h2 id="cookie-story-title">Cookies</h2>
 						<p>
 							We use quality ingredients, careful batches, and our own recipes to make cookies that feel homemade and taste worth sharing.
@@ -228,9 +219,9 @@ const jsonLd = [
 
 				<div class="cookie-request" data-reveal>
 					<header class="section-heading">
-						<p class="eyebrow">From our kitchen to yours</p>
+						<p class="eyebrow">FROM OUR KITCHEN TO YOURS</p>
 						<h2>Cookies from us, possibly from you</h2>
-						<p>Try a go-to favourite or tell us about the cookie you have been dying to try.</p>
+						<p>Try a go-to favourite or tell us about a cookie you have been dying to try.</p>
 					</header>
 
 					<div class="request-grid">
@@ -275,7 +266,6 @@ const jsonLd = [
 		background: var(--color-surface);
 	}
 
-	.cookie-intro,
 	.best-sellers,
 	.cookie-spread,
 	.cookie-story {
@@ -288,6 +278,7 @@ const jsonLd = [
 		gap: var(--space-2xl);
 		align-items: center;
 		padding-top: var(--space-2xl);
+		padding-bottom: var(--space-2xl);
 	}
 
 	.cookie-intro__image {
@@ -323,7 +314,6 @@ const jsonLd = [
 		font-size: var(--label-text-font-size);
 		font-weight: 700;
 		letter-spacing: 0.12em;
-		text-transform: uppercase;
 	}
 
 	.cookie-intro__copy .eyebrow {
@@ -374,15 +364,11 @@ const jsonLd = [
 	}
 
 	.best-seller {
-		overflow: hidden;
 		border-radius: var(--radius-md);
-		background: var(--color-surface);
-		box-shadow: var(--shadow-sm);
 	}
 
 	.best-seller__media {
 		aspect-ratio: 4 / 3;
-		overflow: hidden;
 		background: var(--color-surface-soft);
 	}
 
@@ -425,7 +411,7 @@ const jsonLd = [
 
 	.cookie-spread .section-heading {
 		align-items: center;
-		max-width: 42rem;
+		max-width: 60rem;
 		margin-inline: auto;
 		text-align: center;
 	}
@@ -528,7 +514,7 @@ const jsonLd = [
 	}
 
 	.cookie-request .section-heading {
-		max-width: 42rem;
+		max-width: 100rem;
 	}
 
 	.request-grid {
