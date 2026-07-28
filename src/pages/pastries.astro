@@ -11,6 +11,20 @@ const jsonLd = categoryJsonLd(category, canonicalUrl);
 const orderHref = whatsappHref(category.whatsappMessage);
 const pastryImage = category.signature.image;
 const pastryImageAlt = category.signature.imageAlt;
+const pastrySlides = [
+	{
+		image: category.signature.image,
+		imageAlt: category.signature.imageAlt,
+		title: 'Pastry boxes for every table',
+		description: category.signature.crave,
+	},
+	...category.variations.slice(0, 3).map((variation) => ({
+		image: variation.image,
+		imageAlt: variation.imageAlt,
+		title: variation.name,
+		description: variation.crave,
+	})),
+];
 ---
 
 <Layout
@@ -61,19 +75,40 @@ const pastryImageAlt = category.signature.imageAlt;
 			</div>
 
 			<div class="pastry-bento__grid content-shell">
-				<article class="pastry-bento__testimonial" data-reveal>
-					<p class="pastry-bento__quote">"Gooey, freshly baked pastry is to die for."</p>
+				<article class="pastry-bento__selection" data-pastry-gallery data-reveal>
+					<div class="pastry-bento__selection-media">
+						{pastrySlides.map((slide, index) => (
+							<div class="pastry-bento__slide" data-pastry-slide hidden={index !== 0}>
+								<Image
+									src={slide.image}
+									alt={slide.imageAlt}
+									widths={[480, 720, 960]}
+									sizes="(min-width: 64rem) 25vw, 50vw"
+									quality={74}
+								/>
+							</div>
+						))}
+					</div>
+					<div class="pastry-bento__selection-copy">
+						<div class="pastry-bento__controls" aria-label="Choose a pastry view">
+							{pastrySlides.map((slide, index) => (
+								<button
+									type="button"
+									class="pastry-bento__control"
+									data-pastry-gallery-button
+									data-pastry-title={slide.title}
+									data-pastry-description={slide.description}
+									aria-label={`View ${slide.title}`}
+									aria-pressed={index === 0}
+								>
+									{String(index + 1).padStart(2, '0')}
+								</button>
+							))}
+						</div>
+						<h3 data-pastry-gallery-title aria-live="polite">{pastrySlides[0].title}</h3>
+						<p data-pastry-gallery-description aria-live="polite">{pastrySlides[0].description}</p>
+					</div>
 				</article>
-
-				<div class="pastry-bento__testimonial-image" data-reveal>
-					<Image
-						src={pastryImage}
-						alt="Freshly baked pastry with a golden, flaky crust."
-						widths={[480, 720, 960]}
-						sizes="(min-width: 64rem) 25vw, 50vw"
-						quality={74}
-					/>
-				</div>
 
 				<div class="pastry-bento__feature" data-reveal>
 					<Image
@@ -85,23 +120,23 @@ const pastryImageAlt = category.signature.imageAlt;
 					/>
 				</div>
 
-				<div class="pastry-bento__side">
-					<article class="pastry-bento__note" data-reveal>
-						<p>Made in small batches, packed with care, and delivered across Klang Valley by Lalamove.</p>
-					</article>
-					<a
-						class="pastry-bento__order"
-						href={orderHref}
-						target="_blank"
-						rel="noreferrer"
-						data-order-trigger
-						data-order-interest-preselect="Pastries"
-						data-reveal
-					>
-						<p class="pastry-bento__order-label">Your next box is one click away.</p>
-						<span class="pastry-bento__order-link">Easily order with a click <span aria-hidden="true">&rarr;</span></span>
-					</a>
-				</div>
+				<article class="pastry-bento__testimonial" data-reveal>
+					<p class="pastry-bento__quote">"Gooey, freshly baked pastry is to die for."</p>
+					<p class="pastry-bento__attribution">Small batches, baked to order and delivered across Klang Valley.</p>
+				</article>
+
+				<a
+					class="pastry-bento__order"
+					href={orderHref}
+					target="_blank"
+					rel="noreferrer"
+					data-order-trigger
+					data-order-interest-preselect="Pastries"
+					data-reveal
+				>
+					<span class="pastry-bento__order-label">Ready for your next pastry box?</span>
+					<span class="pastry-bento__order-link">Order on WhatsApp <span aria-hidden="true">&rarr;</span></span>
+				</a>
 			</div>
 		</section>
 
@@ -142,6 +177,30 @@ const pastryImageAlt = category.signature.imageAlt;
 	</main>
 </Layout>
 
+<script>
+	const pastryGallery = document.querySelector<HTMLElement>('[data-pastry-gallery]');
+
+	if (pastryGallery) {
+		const slides = Array.from(pastryGallery.querySelectorAll<HTMLElement>('[data-pastry-slide]'));
+		const buttons = Array.from(pastryGallery.querySelectorAll<HTMLButtonElement>('[data-pastry-gallery-button]'));
+		const title = pastryGallery.querySelector<HTMLElement>('[data-pastry-gallery-title]');
+		const description = pastryGallery.querySelector<HTMLElement>('[data-pastry-gallery-description]');
+
+		buttons.forEach((button, index) => {
+			button.addEventListener('click', () => {
+				slides.forEach((slide, slideIndex) => {
+					slide.hidden = slideIndex !== index;
+				});
+				buttons.forEach((control, controlIndex) => {
+					control.setAttribute('aria-pressed', String(controlIndex === index));
+				});
+				if (title) title.textContent = button.dataset.pastryTitle ?? '';
+				if (description) description.textContent = button.dataset.pastryDescription ?? '';
+			});
+		});
+	}
+</script>
+
 <style>
 	.pastries-page {
 		background: var(--white-bg);
@@ -152,6 +211,7 @@ const pastryImageAlt = category.signature.imageAlt;
 		gap: var(--space-xl);
 		align-items: center;
 		padding-top: var(--space-2xl);
+		padding-bottom: var(--space-2xl);
 		background: var(--color-surface-soft);
 	}
 
@@ -241,101 +301,160 @@ const pastryImageAlt = category.signature.imageAlt;
 
 	.pastry-bento__grid {
 		display: grid;
-		gap: var(--space-md);
+		grid-template-areas:
+			"feature feature"
+			"selection selection"
+			"testimonial order";
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--space-xs);
 		margin-top: var(--space-2xl);
 	}
 
 	.pastry-bento__testimonial,
-	.pastry-bento__testimonial-image,
-	.pastry-bento__note,
 	.pastry-bento__order,
-	.pastry-bento__feature {
+	.pastry-bento__feature,
+	.pastry-bento__selection {
 		min-width: 0;
 		overflow: hidden;
 		border-radius: var(--radius-lg);
 	}
 
+	.pastry-bento__selection {
+		grid-area: selection;
+		display: flex;
+		min-height: 15rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-primary-strong);
+	}
+
+	.pastry-bento__selection-media {
+		flex: 0 0 50%;
+		min-width: 0;
+		aspect-ratio: 1;
+		background: var(--color-surface-soft);
+	}
+
+	.pastry-bento__slide {
+		height: 100%;
+	}
+
+	.pastry-bento__slide[hidden] {
+		display: none;
+	}
+
+	.pastry-bento__selection-media :global(img),
+	.pastry-bento__feature :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.pastry-bento__selection-copy {
+		display: flex;
+		min-width: 0;
+		flex: 1 1 auto;
+		flex-direction: column;
+		align-items: flex-start;
+		justify-content: flex-start;
+		gap: var(--space-md);
+		padding: var(--space-lg);
+	}
+
+	.pastry-bento__controls {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-xs);
+	}
+
+	.pastry-bento__control {
+		display: inline-flex;
+		min-width: 2.75rem;
+		min-height: 2.75rem;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		border: 1px solid var(--color-primary-strong);
+		border-radius: var(--radius-md);
+		background: transparent;
+		color: var(--color-primary-strong);
+		font-size: var(--step--1);
+		font-weight: 700;
+		transition: background-color var(--transition-base), color var(--transition-base), transform var(--transition-base);
+	}
+
+	.pastry-bento__control:hover,
+	.pastry-bento__control[aria-pressed="true"] {
+		background: var(--color-primary-strong);
+		color: var(--white-text);
+	}
+
+	.pastry-bento__control:hover {
+		transform: translateY(-1px);
+	}
+
+	.pastry-bento__selection-copy h3 {
+		font-size: var(--step-1);
+		line-height: 1.05;
+	}
+
+	.pastry-bento__selection-copy p {
+		font-size: var(--label-text-font-size);
+		color: var(--color-text-muted);
+	}
+
 	.pastry-bento__testimonial {
+		grid-area: testimonial;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		min-height: 16rem;
 		padding: var(--space-xl);
 		background: var(--color-surface-soft);
 		border: 1px solid var(--color-nav-border);
 	}
 
-	.pastry-bento__testimonial-image {
-		aspect-ratio: 1 / 1;
-		background: var(--color-surface-soft);
-	}
-
-	.pastry-bento__testimonial-image :global(img) {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-
 	.pastry-bento__quote {
-		max-width: 16ch;
+		max-width: 22ch;
 		font-family: var(--font-display);
-		font-size: clamp(1.8rem, 3vw, 2.75rem);
+		font-size: clamp(1.5rem, 2.5vw, 2.25rem);
 		line-height: 1;
 		letter-spacing: -0.04em;
 		color: var(--color-primary-strong);
 	}
 
+	.pastry-bento__attribution {
+		margin-top: var(--space-md);
+		font-size: var(--label-text-font-size);
+		color: var(--color-text-muted);
+	}
+
 	.pastry-bento__feature {
-		aspect-ratio: 1 / 1;
-	}
-
-	.pastry-bento__feature :global(img) {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		object-position: center;
-	}
-
-	.pastry-bento__side {
-		display: grid;
-		gap: var(--space-md);
-	}
-
-	.pastry-bento__note,
-	.pastry-bento__order {
-		padding: var(--space-xl);
-		aspect-ratio: 1 / 1;
-	}
-
-	.pastry-bento__note {
-		display: flex;
-		align-items: flex-end;
-		min-height: 12rem;
+		grid-area: feature;
+		aspect-ratio: 4 / 3;
 		background: var(--color-surface-soft);
-		color: var(--color-primary-strong);
-	}
-
-	.pastry-bento__note p {
-		font-size: var(--step-1);
-		line-height: 1.15;
 	}
 
 	.pastry-bento__order {
+		grid-area: order;
+		position: relative;
 		display: flex;
+		min-height: 12rem;
+		padding: var(--space-xl);
 		flex-direction: column;
 		align-items: flex-start;
 		justify-content: space-between;
-		gap: var(--space-xl);
-		min-height: 12rem;
+		gap: var(--space-md);
 		background: var(--pink-primary-bg);
 		color: var(--white-text);
 		text-decoration: none;
+		cursor: pointer;
+		box-shadow: var(--shadow-sm);
 		transition: transform var(--transition-base), box-shadow var(--transition-base);
 	}
 
-	.pastry-bento__order:hover {
+	.pastry-bento__order:hover,
+	.pastry-bento__order:focus-visible {
 		transform: translateY(-0.25rem);
-		box-shadow: var(--shadow-md);
+		box-shadow: var(--shadow-md), var(--focus-ring);
 	}
 
 	.pastry-bento__order-label,
@@ -347,6 +466,9 @@ const pastryImageAlt = category.signature.imageAlt;
 	}
 
 	.pastry-bento__order-link {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-xs);
 		max-width: none;
 		font-family: var(--font-body);
 		font-size: var(--label-text-font-size);
@@ -355,12 +477,49 @@ const pastryImageAlt = category.signature.imageAlt;
 
 	.pastry-bento__order-link span {
 		display: inline-block;
-		margin-left: var(--space-xs);
 		transition: transform var(--transition-base);
 	}
 
 	.pastry-bento__order:hover .pastry-bento__order-link span {
 		transform: translateX(0.25rem);
+	}
+
+	@keyframes pastry-order-arrow {
+		0%,
+		65%,
+		100% {
+			transform: translateX(0);
+		}
+		75%,
+		85% {
+			transform: translateX(0.3rem);
+		}
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.pastry-bento__order-link span {
+			animation: pastry-order-arrow 3.2s ease-in-out infinite;
+		}
+	}
+
+	@media (max-width: 35rem) {
+		.pastry-bento__grid {
+			grid-template-areas:
+				"feature"
+				"selection"
+				"testimonial"
+				"order";
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.pastry-bento__selection {
+			flex-direction: column;
+		}
+
+		.pastry-bento__selection-media {
+			flex-basis: auto;
+			aspect-ratio: 4 / 3;
+		}
 	}
 
 	.pastry-process {
@@ -456,30 +615,6 @@ const pastryImageAlt = category.signature.imageAlt;
 			padding-inline: var(--space-xl);
 		}
 
-		.pastry-bento__grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-
-		.pastry-bento__feature {
-			grid-column: span 2;
-			grid-row: 1;
-		}
-
-		.pastry-bento__testimonial {
-			grid-column: 1;
-			grid-row: 2;
-		}
-
-		.pastry-bento__testimonial-image {
-			grid-row: 3;
-		}
-
-		.pastry-bento__side {
-			grid-column: 2;
-			grid-row: 2 / span 2;
-			grid-template-columns: repeat(2, 1fr);
-		}
-
 		.pastry-process {
 			grid-template-columns: 1fr 1.15fr;
 			padding-inline: var(--side-space-section-md);
@@ -510,31 +645,24 @@ const pastryImageAlt = category.signature.imageAlt;
 		}
 
 		.pastry-bento__grid {
+			grid-template-areas:
+				"selection feature testimonial"
+				"selection feature order";
 			grid-template-columns: 3fr 6fr 3fr;
+			grid-template-rows: repeat(2, minmax(0, 1fr));
+			gap: var(--space-sm);
+			min-height: clamp(30rem, 40vw, 42rem);
 			align-items: stretch;
 		}
 
-		.pastry-bento__feature {
-			grid-column: auto;
-			grid-row: auto;
+		.pastry-bento__selection {
+			flex-direction: column;
+		}
+
+		.pastry-bento__selection-media {
+			flex: 1 1 auto;
+			min-height: 0;
 			aspect-ratio: auto;
-		}
-
-		.pastry-bento__testimonial {
-			grid-column: 1;
-			grid-row: 1;
-			aspect-ratio: 1 / 1;
-		}
-
-		.pastry-bento__testimonial-image {
-			grid-column: 1;
-			grid-row: 2;
-		}
-
-		.pastry-bento__side {
-			grid-column: 3;
-			grid-row: 1 / span 2;
-			grid-template-columns: 1fr;
 		}
 
 		.pastry-process {
@@ -552,15 +680,29 @@ const pastryImageAlt = category.signature.imageAlt;
 
 		.pastry-process__detail-images {
 			grid-template-columns: 1fr;
+		grid-template-rows: repeat(2, minmax(0, 1fr));
+			height: 100%;
+			min-height: 0;
 		}
 
 		.pastry-process__detail {
+			aspect-ratio: auto;
+			height: 100%;
 			min-height: 0;
 		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.pastry-hero__media :global(img) {
+		.pastry-hero__media :global(img),
+		.pastry-bento__control,
+		.pastry-bento__order,
+		.pastry-bento__order-link span {
+			transform: none;
+			transition: none;
+		}
+
+		.pastry-bento__order:hover,
+		.pastry-bento__order:focus-visible {
 			transform: none;
 		}
 	}
