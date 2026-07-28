@@ -322,7 +322,8 @@ const pastrySlides = [
 	.pastry-bento__selection {
 		grid-area: selection;
 		display: flex;
-		min-height: 15rem;
+		height: clamp(18rem, 50vw, 24rem);
+		min-height: 0;
 		background: var(--color-surface);
 		border: 1px solid var(--color-primary-strong);
 	}
@@ -352,6 +353,7 @@ const pastrySlides = [
 	.pastry-bento__selection-copy {
 		display: flex;
 		min-width: 0;
+		min-height: 0;
 		flex: 1 1 auto;
 		flex-direction: column;
 		align-items: flex-start;
@@ -393,13 +395,23 @@ const pastrySlides = [
 	}
 
 	.pastry-bento__selection-copy h3 {
+		display: -webkit-box;
+		min-height: 2.1em;
+		overflow: hidden;
 		font-size: var(--step-1);
 		line-height: 1.05;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
 	}
 
 	.pastry-bento__selection-copy p {
+		display: -webkit-box;
+		min-height: 4.8em;
+		overflow: hidden;
 		font-size: var(--label-text-font-size);
 		color: var(--color-text-muted);
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
 	}
 
 	.pastry-bento__testimonial {
@@ -513,6 +525,7 @@ const pastrySlides = [
 		}
 
 		.pastry-bento__selection {
+			height: clamp(27rem, 120vw, 36rem);
 			flex-direction: column;
 		}
 
@@ -648,11 +661,12 @@ const pastrySlides = [
 			grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr);
 			grid-template-rows: repeat(2, minmax(0, 1fr));
 			gap: var(--space-sm);
-			min-height: clamp(30rem, 40vw, 42rem);
+			min-height: clamp(15rem, 20vw, 21rem);
 			align-items: stretch;
 		}
 
 		.pastry-bento__selection {
+			height: 100%;
 			grid-column: 1;
 			grid-row: 1 / span 2;
 			flex-direction: column;
