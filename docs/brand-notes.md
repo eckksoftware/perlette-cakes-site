@@ -20,17 +20,15 @@ Internal reference for brand, copy, and launch constraints.
 - Product-first photography
 - Editorial type, not generic bakery UI
 - Warm cream base with rose-led accents
-- `Fraunces` for display, `Geist Sans` for body and UI
+- `Fraunces` for display, `Zarathustra` for body and UI in the current implementation
 - Keep the expressive wordmark treatment limited to the brand name
 
 ## Approved Images
 
 - Hero image 1: `src/assets/images/index/hero-cupcakes.JPG`
 - Hero image 2: `src/assets/images/index/hero-flowery-cake.JPG`
-- Custom Cakes: `src/assets/images/index/variety-cakes.JPG`
-- Cupcakes: `src/assets/images/index/variety-cupcakes.JPG`
-- Pastries: `src/assets/images/index/variety-pastries.JPG`
-- Cookies: `src/assets/images/index/variety-cookies.JPG`
+- Category pages currently reuse these approved landing images as marked placeholders:
+  `src/assets/images/index/variety-cakes.JPG`, `variety-cupcakes.JPG`, `variety-pastries.JPG`, and `variety-cookies.JPG`
 - Owner story image: `src/assets/images/index/owner-personal-handmade-gifts.JPG`
 
 ## Copy Constraints

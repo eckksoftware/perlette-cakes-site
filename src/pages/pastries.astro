@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
+import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 import { categoryBySlug } from '@data/catalogue';
 import { categoryJsonLd } from '@lib/schema';
 import { whatsappHref } from '@lib/whatsapp';
@@ -36,6 +37,7 @@ const pastrySlides = [
 	socialImageAlt={pastryImageAlt}
 >
 	<main class="pastries-page">
+		<Breadcrumbs trail={[{ name: 'Home', url: '/' }, { name: category.name, url: canonicalUrl }]} />
 		<section class="pastry-hero content-shell" aria-labelledby="pastry-hero-title">
 			<div class="pastry-hero__media">
 				<Image

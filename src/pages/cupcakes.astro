@@ -1,9 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
+import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 import CategoryCta from '@components/shared/CategoryCta.astro';
 import { categoryBySlug, type Variation } from '@data/catalogue';
-import { collectionPageSchema, itemListSchema } from '@lib/schema';
+import { categoryJsonLd } from '@lib/schema';
 
 const category = categoryBySlug('cupcakes');
 const url = 'https://perlettecakes.com/cupcakes/';
@@ -71,17 +72,7 @@ const instagramPosts = [
 	},
 ];
 
-const jsonLd = [
-	collectionPageSchema({ name: category.name, description: category.description, url }),
-	itemListSchema(
-		url,
-		[category.signature, ...category.variations].map((variation) => ({
-			name: variation.name,
-			description: variation.crave,
-			image: `https://perlettecakes.com${variation.image.src}`,
-		})),
-	),
-];
+const jsonLd = categoryJsonLd(category, url);
 ---
 
 <Layout
@@ -92,6 +83,7 @@ const jsonLd = [
 	jsonLd={jsonLd}
 >
 	<main class="cupcakes-page">
+		<Breadcrumbs trail={[{ name: 'Home', url: '/' }, { name: category.name, url }]} />
 		<section class="cupcake-hero content-shell">
 			<div class="cupcake-hero__images" data-reveal>
 				<div class="cupcake-hero__image cupcake-hero__image--tall">
@@ -109,7 +101,7 @@ const jsonLd = [
 					<Image
 						src={variationBySlug('classic-vanilla').image}
 						alt={variationBySlug('classic-vanilla').imageAlt}
-						loading="eager"
+						loading="lazy"
 						widths={[480, 720, 960]}
 						sizes="(min-width: 64rem) 22vw, 48vw"
 						quality={72}
@@ -320,7 +312,7 @@ const jsonLd = [
 
 	.cupcake-menu {
 		background: var(--pink-primary-bg);
-		color: var(--color-primary-strong);
+		color: var(--white-text);
 	}
 
 	.section-heading {

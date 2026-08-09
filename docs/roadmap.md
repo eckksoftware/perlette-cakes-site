@@ -1,40 +1,33 @@
 # Roadmap
 
-This file tracks what is next, what is blocked, and what is intentionally deferred.
+This file tracks what is implemented, what is blocked, and what is intentionally deferred.
 
 ## Current State
 
-- Stage 1 is deployed on Cloudflare Pages.
-- The public site is still a single homepage route with a shared WhatsApp inquiry modal.
-- The public CTA wording stays WhatsApp-specific until `app.perlettecakes` becomes the real primary order flow.
+- Stage 2 category browsing is implemented and statically builds five public pages.
+- The shared WhatsApp inquiry flow is used across the homepage and category pages.
+- Product-aware interest preselection and close-state reset are implemented.
+- The mobile navigation uses the rose surface and highlights the current category.
 
-## Cleanup Checklist
+## Remaining Stage 2 Hardening
 
-- [ ] Add a proper social share image and replace the favicon fallback used for OG and Twitter cards.
-- [ ] Strengthen the homepage hero with clearer answer-first entity copy: home-based baker, Klang Valley, delivery-only, WhatsApp ordering.
-- [ ] Expand owner trust content with clearer attribution for Amira Saifuddin and background details that can later support `/about`.
-- [ ] Add real testimonials only when approved source material exists, then add matching `Review` or `AggregateRating` schema.
-- [ ] Add analytics hooks for `whatsapp_cta_click`, `order_modal_open`, `order_modal_submit`, and `order_modal_validation_error` without sending personal data.
-- [ ] Re-check `llms.txt` after Stage 2 routes ship so it links to the main category pages, not only the homepage.
-- [ ] Keep `CONTEXT.md`, schema, visible copy, and `llms.txt` aligned whenever service facts change.
+- [ ] Replace placeholder category photography with approved real bake photography.
+- [ ] Review and approve category copy, claims, and product names.
+- [ ] Run final mobile, keyboard, contrast, and screen-reader QA on target devices.
+- [ ] Verify Cloudflare Pages project variable, secrets, domain, and DNS.
 
-## Stage 2
+## Stage 3
 
 - [ ] Add `/products/` as the browse-all hub.
-- [ ] Add `/custom-cakes/`, `/cupcakes/`, `/pastries/`, and `/cookies/` as hand-authored category pages.
-- [ ] Turn homepage featured-category cards into crawlable internal links.
-- [ ] Use category grids with real images, variation names, and short factual descriptions.
-- [ ] Keep product variations on category pages first; only create dedicated product URLs when a variation has enough unique copy, photos, or search intent.
-- [ ] Add page-specific metadata and schema for every new route.
-
-## Stage 3+
-
-- [ ] Decide whether the order funnel keeps a pre-WhatsApp redirect owned by the homelab or moves fully to `app.perlettecakes`.
-- [ ] Rename CTA copy from WhatsApp-specific wording only when the public order destination changes for real.
-- [ ] Add privacy policy coverage before storing any personal data or routing orders through a local server.
+- [ ] Add `/about/` with the approved Amira Saifuddin story.
+- [ ] Add `/delivery/` with Lalamove coverage, windows, fees, and no-pickup facts.
+- [ ] Add `/faq/` with approved long-tail answers and `FAQPage` schema.
+- [ ] Add analytics events without sending names, phone numbers, addresses, or free-text requests.
+- [ ] Add privacy coverage before any server-side capture or analytics requiring disclosure.
 
 ## Later Backlog
 
-- [ ] Review licensing, file quality, and readability tradeoffs before replacing the current body font with Zarathustra from `https://bestfreefonts.com/zarathustra`.
-- [ ] Consider a dedicated `/faq/` page once Stage 2 route coverage is live so FAQ answers can rank independently and carry page-specific `FAQPage` schema.
-- [ ] If the FAQ grows significantly, consider deep-link support to individual FAQ items.
+- [ ] Add seasonal `/occasions/*` pages when offers and photography are approved.
+- [ ] Add `/gallery/` when enough real photography exists.
+- [ ] Decide whether a dedicated `/order/` page is needed.
+- [ ] Review the current Zarathustra body font for readability and keep its SIL OFL licence with the project.

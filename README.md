@@ -4,10 +4,10 @@ Static Astro marketing site for Perlette Cakes, a home-based baker serving Klang
 
 ## Current Status
 
-- Stage 1 product scope is complete.
-- The site is a single homepage with a WhatsApp inquiry modal.
-- Stage 2 product/category pages have not started.
-- Launch hardening is still pending.
+- Stage 2 product browsing is implemented.
+- The site includes the homepage plus custom cakes, cupcakes, pastries, and cookies pages.
+- The shared WhatsApp inquiry modal is product-aware and clears state when closed.
+- Stage 3 support routes, analytics, and final content/photo approval are still pending.
 
 ## Canonical Facts
 
@@ -19,7 +19,7 @@ Static Astro marketing site for Perlette Cakes, a home-based baker serving Klang
 - Public WhatsApp: `+60 19-650 5050`
 - Canonical domain: `https://perlettecakes.com/`
 
-## Stage 1 Build
+## Stage 2 Build
 
 Implemented:
 
@@ -30,13 +30,16 @@ Implemented:
 - FAQ JSON-LD and Bakery JSON-LD
 - `robots.txt`, `llms.txt`, and sitemap support
 - Open Graph and Twitter metadata
+- Category-specific `CollectionPage`, `ItemList`, and `BreadcrumbList` schema
+- Visible breadcrumbs and active mobile navigation state
 - `astro-seo` layout integration for shared SEO tags
 - Optimized content images via `astro:assets`
+- Rose PC mark SVG for social metadata fallback
 
 Not done yet:
 
-- No analytics wiring or inquiry-intent tracking
-- No dedicated social share image yet
+- No analytics wiring or inquiry-intent tracking; this is Stage 3 work.
+- Product photography and some category copy still need owner approval.
 
 ## Project Structure
 
@@ -46,9 +49,12 @@ src/
   components/
     OrderInquiryModal.astro
     index/
+  data/catalogue.ts
   data/homeFaqs.ts
+  lib/
   layouts/Layout.astro
   pages/index.astro
+  pages/{custom-cakes,cupcakes,pastries,cookies}.astro
 public/
 docs/
 astro.config.mjs
@@ -71,13 +77,13 @@ Notes:
 - `npm run preview` is never required for routine work. It only helps when you specifically want to inspect the built site instead of the dev server.
 - The GitHub Actions deployment workflow does not run `npm run check:images`; that script is a local repo hygiene check.
 
-## Launch Blockers
+## Launch Hardening
 
 Resolve these before production:
 
-1. Add analytics events for CTA click, modal open, modal submit success, and validation failure.
-2. Add the repository variable `CLOUDFLARE_PAGES_PROJECT_NAME`.
-3. Add a proper social share image instead of the favicon fallback.
+1. Add the repository variable `CLOUDFLARE_PAGES_PROJECT_NAME`.
+2. Verify Cloudflare production domain and DNS configuration.
+3. Replace placeholder product photography and approve category copy.
 
 ## Deployment Next
 
@@ -90,9 +96,9 @@ Cloudflare Pages via GitHub Actions needs:
 5. The workflow at `.github/workflows/deploy-cloudflare-pages.yml` installs dependencies, runs `npm run astro check`, builds with `npm run build`, validates `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, and `CLOUDFLARE_PAGES_PROJECT_NAME`, then deploys `dist/` with `wrangler` on `ubuntu-24.04`. It intentionally does not run `npm run check:images`.
 6. Production domain setup for `perlettecakes.com` and DNS in Cloudflare.
 
-## Analytics Next
+## Stage 3 Analytics
 
-Recommended first pass:
+Analytics is deliberately deferred to Stage 3. Recommended first pass:
 
 1. Add Google Analytics 4.
 2. Track `whatsapp_cta_click`, `order_modal_open`, `order_modal_submit`, and `order_modal_validation_error`.

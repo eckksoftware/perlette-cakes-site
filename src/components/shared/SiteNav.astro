@@ -4,6 +4,7 @@ interface Props {
 }
 
 const { orderHref } = Astro.props;
+const currentPath = Astro.url.pathname;
 const productLinks = [
   { label: 'Custom Cakes', href: '/custom-cakes/' },
   { label: 'Cupcakes', href: '/cupcakes/' },
@@ -17,7 +18,15 @@ const productLinks = [
 		<div class="site-nav__left">
 			<a class="site-nav__brand" href="/">perlette cakes</a>
 			<nav class="site-nav__links" aria-label="Primary">
-				{productLinks.map((link) => <a class="site-nav__link" href={link.href}>{link.label}</a>)}
+				{productLinks.map((link) => (
+					<a
+						class:list={['site-nav__link', currentPath === link.href && 'site-nav__link--active']}
+						href={link.href}
+						aria-current={currentPath === link.href ? 'page' : undefined}
+					>
+						{link.label}
+					</a>
+				))}
 			</nav>
 		</div>
 
@@ -48,7 +57,15 @@ const productLinks = [
 			<ul class="mobile-nav__list">
 				<li><a class="mobile-nav__brand" href="/">perlette cakes</a></li>
 				{productLinks.map((link) => (
-					<li><a class="mobile-nav__link" href={link.href}>{link.label}</a></li>
+					<li>
+						<a
+							class:list={['mobile-nav__link', currentPath === link.href && 'mobile-nav__link--active']}
+							href={link.href}
+							aria-current={currentPath === link.href ? 'page' : undefined}
+						>
+							{link.label}
+						</a>
+					</li>
 				))}
 			</ul>
 		</nav>
@@ -140,6 +157,10 @@ const productLinks = [
 		color: var(--color-primary-strong);
 	}
 
+	.site-nav__link--active {
+		color: var(--color-primary-strong);
+	}
+
 	.site-nav__brand,
 	.mobile-nav__brand {
 		color: var(--color-primary-ink);
@@ -212,7 +233,7 @@ const productLinks = [
 		height: 100%;
 		flex-direction: column;
 		padding: var(--space-lg);
-		background: var(--color-surface);
+		background: var(--pink-primary-bg);
 		box-shadow: var(--shadow-md);
 		transform: translateX(-100%);
 		transition: transform var(--transition-base);
@@ -228,8 +249,8 @@ const productLinks = [
 		justify-content: space-between;
 		gap: var(--space-md);
 		padding-bottom: var(--space-lg);
-		border-bottom: 1px solid var(--color-nav-border);
-		color: var(--color-text-muted);
+		border-bottom: 1px solid rgba(255, 253, 251, 0.3);
+		color: var(--white-text);
 		font-size: var(--step--1);
 		font-weight: 700;
 		letter-spacing: 0.08em;
@@ -245,6 +266,12 @@ const productLinks = [
 		color: var(--color-primary-strong);
 		font-size: var(--step-1);
 		line-height: 1;
+		transition: background-color var(--transition-base), color var(--transition-base);
+	}
+
+	.mobile-nav__close:hover {
+		background: var(--color-primary-strong);
+		color: var(--white-text);
 	}
 
 	.mobile-nav__list {
@@ -259,11 +286,31 @@ const productLinks = [
 		font-size: var(--step-2);
 	}
 
+	.mobile-nav__panel .mobile-nav__brand {
+		color: var(--white-text);
+	}
+
 	.mobile-nav__link {
 		display: block;
 		padding-block: var(--space-xs);
 		font-family: var(--font-display);
 		font-size: var(--step-1);
+		color: var(--white-text);
+		border-radius: var(--radius-md);
+		transition: background-color var(--transition-base), color var(--transition-base);
+	}
+
+	.mobile-nav__panel .mobile-nav__link:hover:not(.mobile-nav__link--active),
+	.mobile-nav__panel .mobile-nav__link:focus-visible:not(.mobile-nav__link--active) {
+		background: var(--color-primary-strong);
+		color: var(--white-text);
+	}
+
+	.mobile-nav__link--active,
+	.mobile-nav__link--active:hover {
+		padding-inline: var(--space-sm);
+		background: var(--color-surface);
+		color: var(--color-primary-strong);
 	}
 
 	:global(body.mobile-nav-open) {

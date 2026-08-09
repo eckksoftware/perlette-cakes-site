@@ -26,7 +26,7 @@
   --color-surface: rgba(255, 253, 251, 0.92);
   --color-surface-soft: #f7f1eb;
   --color-text-muted: #473c38;
-  --color-primary-ink: #d8a8b3;
+  --color-primary-ink: #7a4a57;
   --color-primary-strong: #693f4a;
   --color-border: #050a30;
   --color-nav-surface: rgba(255, 253, 251, 0.92);
@@ -36,7 +36,8 @@
   --white-bg: rgba(255, 253, 251, 0.92);
   --white-text: rgba(255, 253, 251, 0.92);
   --color-text: #050a30;
-  --pink-primary-bg: #d6909e;
+  /* Keep the rose brand surface while meeting AA contrast with white text. */
+  --pink-primary-bg: #9f596a;
 
   --text-font-size: clamp(1.05rem, 0.98rem + 0.45vw, 1.35rem);
   --label-text-font-size: clamp(0.95rem, 0.92rem + 0.2vw, 1.1rem);

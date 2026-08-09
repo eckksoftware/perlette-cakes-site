@@ -322,6 +322,8 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 		const closeModal = () => {
 			modal.hidden = true;
 			document.body.classList.remove('modal-open');
+			form?.reset();
+			updateDateDisplay('');
 			setErrors([]);
 			if (lastTrigger instanceof HTMLElement) {
 				lastTrigger.focus();
@@ -407,8 +409,6 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 
 			const url = `${whatsappBaseUrl}?text=${encodeURIComponent(message)}`;
 			window.open(url, '_blank', 'noopener');
-			form.reset();
-			updateDateDisplay('');
 			closeModal();
 		});
 	}
@@ -483,6 +483,12 @@ const interestOptions = ['Cake', 'Cupcakes', 'Pastries', 'Cookies', 'Others'];
 		border-radius: 999px;
 		background: var(--pink-primary-bg);
 		color: var(--white-bg);
+		transition: background-color var(--transition-base), color var(--transition-base);
+	}
+
+	.order-modal__close:hover {
+		background: var(--color-primary-strong);
+		color: var(--white-text);
 	}
 
 	.order-modal__close span {

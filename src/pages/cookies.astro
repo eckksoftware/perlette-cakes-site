@@ -1,8 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
+import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 import { categoryBySlug, type Variation } from '@data/catalogue';
-import { collectionPageSchema, itemListSchema } from '@lib/schema';
+import { categoryJsonLd } from '@lib/schema';
 import { whatsappHref } from '@lib/whatsapp';
 
 const category = categoryBySlug('cookies');
@@ -81,17 +82,7 @@ const requestCookies = [
 	},
 ];
 
-const jsonLd = [
-	collectionPageSchema({ name: category.name, description: category.description, url }),
-	itemListSchema(
-		url,
-		[category.signature, ...category.variations].map((variation) => ({
-			name: variation.name,
-			description: variation.crave,
-			image: `https://perlettecakes.com${variation.image.src}`,
-		})),
-	),
-];
+const jsonLd = categoryJsonLd(category, url);
 ---
 
 <Layout
@@ -102,6 +93,7 @@ const jsonLd = [
 	jsonLd={jsonLd}
 >
 	<main class="cookies-page">
+		<Breadcrumbs trail={[{ name: 'Home', url: '/' }, { name: category.name, url }]} />
 		<section class="cookie-intro content-shell">
 			<div class="cookie-intro__image" data-reveal>
 				<Image

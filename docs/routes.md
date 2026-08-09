@@ -2,38 +2,41 @@
 
 This is the canonical route map for the public marketing site.
 
-## Current Route
+## Current Stage 2 Routes
 
 | URL | Purpose | Notes |
 | --- | --- | --- |
-| `/` | Homepage and stage-1 conversion page | Keeps the shared WhatsApp inquiry modal |
+| `/` | Homepage and conversion page | Shared WhatsApp inquiry modal and category links |
+| `/custom-cakes/` | Custom celebration cakes | Category-specific copy, imagery, schema, and inquiry CTA |
+| `/cupcakes/` | Cupcakes | Category-specific copy, imagery, schema, and inquiry CTA |
+| `/pastries/` | Pastries and pastry boxes | Category-specific copy, imagery, schema, and inquiry CTA |
+| `/cookies/` | Cookies and gift boxes | Category-specific copy, imagery, schema, and inquiry CTA |
 
-## Planned Stage 2 Routes
-
-| URL | Purpose | Notes |
-| --- | --- | --- |
-| `/products/` | Browse-all product hub | Links into all category pages |
-| `/custom-cakes/` | Main custom cakes landing page | Preferred over `/cake/` for clarity and search intent |
-| `/cupcakes/` | Cupcake category page | Variation grid first |
-| `/pastries/` | Pastry category page | Variation grid first |
-| `/cookies/` | Cookie category page | Variation grid first |
-
-## Planned Support Routes
+## Stage 3 Routes
 
 | URL | Purpose | Notes |
 | --- | --- | --- |
-| `/about/` | Trust and owner story | Name Amira Saifuddin clearly |
-| `/delivery/` | Delivery coverage and policy details | Reuse the canonical service facts from `CONTEXT.md` |
-| `/faq/` | Long-tail question capture | Add only when ready to maintain it as a full page |
+| `/products/` | Browse-all product hub | Links into all four current category pages |
+| `/about/` | Full owner story | Name Amira Saifuddin and document her baking background |
+| `/delivery/` | Delivery guide | Lalamove coverage, timing, fees, and no-pickup policy |
+| `/faq/` | Long-tail question page | Reuse the approved FAQ facts and add page-specific schema |
+
+## Later Backlog
+
+| URL | Purpose | Notes |
+| --- | --- | --- |
+| `/order/` | Dedicated product picker | Only if the WhatsApp flow needs a separate page |
+| `/occasions/*` | Seasonal landing pages | One authored page per approved seasonal offer |
+| `/gallery/` | Visual showcase | Add when enough real photography exists |
+| `/privacy/` | Privacy coverage | Add before server-side storage or analytics requiring disclosure |
 
 ## Variation Rule
 
-- Stage 2 category pages should show variations as grid cards with image, name, and short factual copy.
-- Do not create one page per variation by default.
-- Promote a variation to its own URL only when it has enough unique photos, copy, or search demand to avoid becoming a thin page.
+- Keep variations as cards on category pages first.
+- Create a dedicated variation URL only when it has enough unique photos, copy, or search demand to avoid a thin page.
 
 ## Schema Rule
 
-- `/` keeps the shared `Bakery` schema and homepage FAQ schema.
-- Category pages should use list-style schema such as `CollectionPage` or `ItemList` once they exist.
-- Only use `Product` schema on pages that truly represent a specific product or a tightly scoped product offer.
+- The homepage keeps the shared `Bakery` schema and homepage `FAQPage` schema.
+- Current category pages use `CollectionPage`, `ItemList`, and `BreadcrumbList` schema.
+- Stage 3 support pages must use page-specific schema that matches visible HTML.

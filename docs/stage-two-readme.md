@@ -1,56 +1,34 @@
 # Stage 2 Readme
 
-Stage 2 expands the site from a single homepage into dedicated browsing pages.
+Stage 2 expands the homepage into hand-authored category pages that help customers find a bake and start a WhatsApp inquiry.
 
-See also:
+## Implemented
 
-- `./roadmap.md`
-- `./routes.md`
-- `./stage-two-implementation-plan.md`
-- `./discoverability.md`
-- `./funnel.md`
+- Homepage with shared WhatsApp inquiry modal.
+- `/custom-cakes/`, `/cupcakes/`, `/pastries/`, and `/cookies/`.
+- Category-specific titles, descriptions, crawlable copy, imagery, and inquiry messages.
+- `CollectionPage`, `ItemList`, and `BreadcrumbList` schema for category pages.
+- Homepage category links, shared navigation, footer links, and active mobile navigation state.
+- Static `robots.txt`, `llms.txt`, sitemap support, and the rose PC mark SVG.
+- Modal product preselection, lightweight validation, and state reset on close.
 
-## Planned Pages
+## Still Pending
 
-- `/products`
-- `/custom-cakes`
-- `/cupcakes`
-- `/pastries`
-- `/cookies`
+- Replace marked placeholder photography with approved product photography.
+- Review category copy and confirm every product claim with the owner.
+- Complete final mobile, keyboard, contrast, and screen-reader QA on real devices.
 
-## Planned Goals
+## Deferred To Stage 3
 
-- Add a browseable menu/products page
-- Add dedicated category pages for cakes, pastries, cookies, and cupcakes
-- Improve product-specific SEO and internal linking
-- Make the WhatsApp inquiry flow more product-aware
-- Keep variation grids on category pages before creating product-detail routes
+- `/products/` browse-all hub.
+- `/about/`, `/delivery/`, and `/faq/` support pages.
+- Analytics events: `whatsapp_cta_click`, `order_modal_open`, `order_modal_submit`, and `order_modal_validation_error`.
+- Any server-side intent capture, checkout, payment integration, or accounts.
 
-## Analytics Plan
+## Checks
 
-Stage 2 should add Google Analytics 4 for high-level funnel tracking.
-
-Recommended events:
-
-- `whatsapp_cta_click`
-- `order_modal_open`
-- `order_modal_submit`
-- `order_modal_validation_error`
-
-Do not send names, phone numbers, delivery addresses, or free-text special requests to GA4.
-
-## Future Homelab Intent Capture
-
-Later, add a small pre-WhatsApp logging step owned by your homelab.
-
-Recommended shape:
-
-1. Capture summary intent before redirecting to `wa.me`.
-2. Log selected products, requested date, delivery area, and whether a special request exists.
-3. Avoid storing raw WhatsApp message text or personal data unless you add consent and privacy coverage.
-
-## Not In Stage 2 By Default
-
-- No backend checkout
-- No payment integration
-- No user accounts
+```bash
+npm run astro check
+npm run build
+npm run check:images
+```

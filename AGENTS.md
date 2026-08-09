@@ -75,14 +75,14 @@ src/
     index/                # homepage sections
   data/
     homeFaqs.ts
-  public/                   # static passthrough: favicon, robots.txt, og images
+  public/                   # static passthrough: favicon, robots.txt, llms.txt, social assets
 astro.config.mjs
 ```
 
 **Architectural rules**
 
 - **One `.astro` file per route.** No dynamic `[slug]` routing — pages are authored by hand for editorial control and SEO.
-- Stage one is currently a **single-page homepage** composed in `src/components/index/Landing.astro`.
+- Stage 2 currently includes the homepage and four hand-authored category pages: `/custom-cakes/`, `/cupcakes/`, `/pastries/`, and `/cookies/`.
 - The shared inquiry flow lives in `src/components/OrderInquiryModal.astro` and is mounted once from `src/layouts/Layout.astro`.
 - Keep the CSS refactor in `src/assets/styles/global.css` as the baseline; remove dead tokens before adding new ones.
 
@@ -92,13 +92,13 @@ astro.config.mjs
 
 | URL | Purpose | SEO/conversion note |
 |---|---|---|
-| `/` | Landing: hero, story, the baker (short), how bakes are made, real reviews, delivery teaser, contact + WhatsApp CTA | Primary entry; a WhatsApp CTA must be visible above the fold. |
-| `/about` | Full owner story: daily work, why cake, training/background | Builds trust + E-E-A-T. |
-| `/cake` | Cake/pastry types, flavours, customization | Core product/keyword page. |
-| `/delivery` | How Lalamove delivery works, areas served, lead time, packaging | Reduces WhatsApp back-and-forth; local SEO. |
-| `/order` | Future dedicated product picker if stage two needs it | The current stage-one conversion flow is the shared homepage modal (see §9). |
-| `/faq` | Lead time, deposits, allergens, customization, delivery zones | Long-tail SEO + fewer repetitive questions. |
-| `/occasions/*` | Seasonal pages (Hari Raya, CNY, weddings, birthdays) | High-intent seasonal SEO — keep one URL per occasion. |
+| `/` | Landing: hero, story, the baker (short), ordering steps, delivery facts, FAQ, contact + WhatsApp CTA | Primary entry; a WhatsApp CTA must be visible above the fold. |
+| `/custom-cakes/`, `/cupcakes/`, `/pastries/`, `/cookies/` | Current Stage 2 category pages | Product discovery, category-specific SEO, and WhatsApp inquiry. |
+| `/products/` | Stage 3 browse-all hub | Links to the four current category pages. |
+| `/about/` | Stage 3 owner story | Builds trust and E-E-A-T. |
+| `/delivery/` | Stage 3 delivery guide | Lalamove coverage, timing, and delivery policy. |
+| `/faq/` | Stage 3 question page | Long-tail SEO and fewer repetitive questions. |
+| `/order/`, `/occasions/*` | Later backlog | Add only when the dedicated use case is ready. |
 
 **Recommended additions:** a `/gallery` (visual showcase — strong for a cake brand), a `/privacy` page (trust + needed if any form data is handled), and a `404.astro`. A future `/journal` (blog) would help SEO but is optional.
 
@@ -129,7 +129,7 @@ astro.config.mjs
 
   /* ===== Typography ===== */
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-body:    "Geist Sans", system-ui, -apple-system, sans-serif;
+  --font-body:    "Zarathustra", Georgia, "Times New Roman", serif;
 
   /* Modular type scale (1.250 — minor third) */
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
@@ -156,7 +156,7 @@ astro.config.mjs
 ### Fonts — recommended pairing
 
 - **Headings / display: Fraunces** — a soft, characterful old-style serif with optical sizing. Warm and artisanal without losing elegance; widely used by craft/food brands. Suits "Perlette."
-- **Body: Geist Sans** — neutral, highly legible on screen.
+- **Body: Zarathustra** — the current self-hosted body/UI font; keep its bundled SIL OFL licence with the project.
 - **Accents:** use *Fraunces italic* for accent/quote text rather than adding a third font. If a decorative script is wanted for the wordmark only, *Pinyon Script* — used **once**, never for body or headings.
 - Self-host via `@fontsource`; set `font-display: swap`; subset to Latin. Two families max.
 
@@ -228,7 +228,7 @@ Site-wide `Bakery`/`LocalBusiness` in `Layout`, plus page-specific schema: `Prod
 
 ## 9. The order → WhatsApp funnel
 
-The current stage-one inquiry flow is a homepage-triggered modal that opens WhatsApp with a **pre-filled message**. This is the one place client-side JS is expected — keep it small and self-contained.
+The current inquiry flow is a shared modal mounted by the layout and opened from the homepage or category pages. It opens WhatsApp with a **pre-filled message**. This is the one place client-side JS is expected — keep it small and self-contained.
 
 - Build a `https://wa.me/<number>?text=<encoded>` link. **Always `encodeURIComponent` the message.**
 - Use native form controls where they cover the need cleanly. The delivery-date field should stay `type="date"` unless there is a real product requirement to replace it.
@@ -262,6 +262,7 @@ Name: <name>
 - Reuse existing tokens, components, and shared data files like `homeFaqs.ts`.
 - Keep pages static and JS-free unless interactivity is required.
 - Match the existing file/structure conventions.
+- Keep documentation aligned: after implementation, inspect `README.md` and every relevant `docs/*.md` file; update route maps, stage status, acceptance criteria, and deferred work in the same change.
 - Treat §8 (SEO + AI/LLM discoverability) as acceptance criteria — every new page ships with unique title/meta, valid JSON-LD, answer-first crawlable content, and descriptive alt text.
 - Keep entity facts (name, area served, contact, how to order) identical across pages, JSON-LD, `llms.txt`, and social.
 

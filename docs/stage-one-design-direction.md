@@ -6,7 +6,7 @@ Stage 1 is complete. This file records the current UI baseline to preserve while
 
 - One homepage route
 - One shared WhatsApp inquiry modal
-- No product pages yet
+- Stage 2 category pages now reuse this shell and token baseline.
 - No checkout, backend, or accounts
 
 ## Active Files
@@ -36,7 +36,7 @@ Stage 1 is complete. This file records the current UI baseline to preserve while
 ## Typography
 
 - Display: `Fraunces`
-- Body/UI: `Geist Sans`
+- Body/UI: `Zarathustra` (current implementation)
 - No third font
 
 Rules:
@@ -70,5 +70,5 @@ Rules:
 
 ## Current Gaps
 
-- Analytics hooks are still missing
-- A dedicated social share image is still missing
+- Product photography and final category copy approval are still pending.
+- Stage 3 support routes and analytics are still pending.
