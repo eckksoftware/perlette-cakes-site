@@ -30,21 +30,8 @@ export interface Category {
   title: string;
   description: string;
   h1: string;
-  introEyebrow: string;
-  intro: string[]; // answer-first: Perlette Cakes, Klang Valley, WhatsApp, Lalamove
-  // sections
-  signatureEyebrow: string;
-  signatureHeadline: string;
-  signatureCtaLabel: string;
   signature: Variation; // the cinematic full-bleed hero product
-  collageHeading: string;
-  collageIntro: string;
   variations: Variation[]; // the collage
-  useCasesTitle: string;
-  useCases: string[];
-  leadTimeNote: string;
-  ctaHeading: string;
-  ctaBody: string;
   // ordering
   whatsappMessage: string;
   modalInterest: string; // pre-checks a modal "Interested In" option
@@ -58,14 +45,6 @@ const customCakes: Category = {
   description:
     'Custom celebration cakes made to order by Perlette Cakes, a home-based baker in Klang Valley. Birthdays, gifting, and gatherings, delivered by Lalamove. Start your order on WhatsApp.',
   h1: 'Custom cakes delivered across Klang Valley',
-  introEyebrow: 'Custom cakes · Klang Valley',
-  intro: [
-    'Perlette Cakes is a home-based baker making custom celebration cakes to order across Klang Valley, Malaysia. Every cake is baked for one occasion — yours.',
-    'Tell us the date, the flavours, and the moment on WhatsApp, and we take it from there, right through to Lalamove delivery at your door.',
-  ],
-  signatureEyebrow: 'The one they remember',
-  signatureHeadline: 'The cake they photograph before they cut it',
-  signatureCtaLabel: 'Start your cake on WhatsApp',
   signature: {
     slug: 'signature-floral',
     name: 'Signature floral cake',
@@ -75,9 +54,6 @@ const customCakes: Category = {
     imageAlt: 'Flowery celebration cake with piped cream, edible flowers, and a white ribbon detail.',
     placeholderImage: true,
   },
-  collageHeading: 'Made to order, made to your moment',
-  collageIntro:
-    'A few of the cakes we are asked for most. Yours is baked fresh for one date — tell us the flavour and the finish, and we shape it around your celebration.',
   variations: [
     {
       slug: 'strawberry',
@@ -115,13 +91,6 @@ const customCakes: Category = {
       placeholderImage: true,
     },
   ],
-  useCasesTitle: 'One baker, every kind of celebration',
-  useCases: ['Birthdays', 'Gifting', 'Gatherings', 'Corporate & events', 'Small celebrations'],
-  leadTimeNote:
-    'Custom cakes are best ordered 3 to 5 days ahead, with larger or more detailed designs needing a little more notice. We deliver across Klang Valley by Lalamove — there is no pickup.',
-  ctaHeading: "Have a date and a vision? Let's make the cake.",
-  ctaBody:
-    "Tell us your date and your idea on WhatsApp — we'll confirm flavours, design, and Lalamove delivery from there.",
   whatsappMessage: "Hi Perlette Cakes! I'd like to enquire about a custom cake order.",
   modalInterest: 'Cake',
 };
@@ -134,14 +103,6 @@ const cupcakes: Category = {
   description:
     'Small-batch cupcakes made to order by Perlette Cakes, a home-based baker in Klang Valley. For dessert tables, office treats, and celebrations, delivered by Lalamove. Order on WhatsApp.',
   h1: 'Cupcakes delivered across Klang Valley',
-  introEyebrow: 'Cupcakes · Klang Valley',
-  intro: [
-    'Perlette Cakes bakes small-batch cupcakes to order across Klang Valley, Malaysia — piped fresh, boxed with care, and made for the day you need them.',
-    'Pick your flavours and quantity on WhatsApp, and we sort the rest, right through to Lalamove delivery.',
-  ],
-  signatureEyebrow: 'A dozen little reasons',
-  signatureHeadline: 'The cupcakes that disappear first',
-  signatureCtaLabel: 'Start your cupcake order',
   signature: {
     slug: 'signature-buttercream',
     name: 'Signature buttercream cupcakes',
@@ -151,9 +112,6 @@ const cupcakes: Category = {
     imageAlt: 'An assortment of cupcakes with piped frosting and decorative toppings.',
     placeholderImage: true,
   },
-  collageHeading: 'A flavour for everyone',
-  collageIntro:
-    'The cupcakes we are asked for most. Mix and match your box — tell us the flavours and we pipe them fresh for your date.',
   variations: [
     {
       slug: 'classic-vanilla',
@@ -188,13 +146,6 @@ const cupcakes: Category = {
       placeholderImage: true,
     },
   ],
-  useCasesTitle: 'Little bakes for every occasion',
-  useCases: ['Dessert tables', 'Office treats', 'Party favours', 'Gifting', 'Small celebrations'],
-  leadTimeNote:
-    'Cupcakes are best ordered 3 to 5 days ahead, with larger batches needing a little more notice. We deliver across Klang Valley by Lalamove — there is no pickup.',
-  ctaHeading: 'Know your flavours and your date?',
-  ctaBody:
-    "Tell us how many and which flavours on WhatsApp — we'll sort the box and Lalamove delivery from there.",
   whatsappMessage: "Hi Perlette Cakes! I'd like to enquire about a cupcake order.",
   modalInterest: 'Cupcakes',
 };
@@ -207,14 +158,6 @@ const pastries: Category = {
   description:
     'Freshly baked pastries and pastry boxes made to order by Perlette Cakes, a home-based baker in Klang Valley. For gifting, gatherings, and everyday treats, delivered by Lalamove. Order on WhatsApp.',
   h1: 'Pastries delivered across Klang Valley',
-  introEyebrow: 'Pastries · Klang Valley',
-  intro: [
-    'Perlette Cakes bakes pastries to order across Klang Valley, Malaysia — buttery, golden, and boxed to share the day they are baked.',
-    'Tell us the box and the occasion on WhatsApp, and we handle the rest, right through to Lalamove delivery.',
-  ],
-  signatureEyebrow: 'Warm from the oven',
-  signatureHeadline: 'Pastries worth reaching across the table for',
-  signatureCtaLabel: 'Start your pastry order',
   signature: {
     slug: 'signature-pastry-box',
     name: 'Signature pastry box',
@@ -224,9 +167,6 @@ const pastries: Category = {
     imageAlt: 'Mixed pastries grouped together for a pastry box.',
     placeholderImage: true,
   },
-  collageHeading: 'Baked fresh, boxed to share',
-  collageIntro:
-    'The pastries we are asked for most. Build your box — tell us what you love and we bake it the morning it goes out.',
   variations: [
     {
       slug: 'assorted-box',
@@ -261,13 +201,6 @@ const pastries: Category = {
       placeholderImage: true,
     },
   ],
-  useCasesTitle: 'A box for every table',
-  useCases: ['Gifting', 'Gatherings', 'Everyday treats', 'Add-on boxes', 'Corporate & events'],
-  leadTimeNote:
-    'Pastries are best ordered 3 to 5 days ahead, with larger boxes needing a little more notice. We deliver across Klang Valley by Lalamove — there is no pickup.',
-  ctaHeading: 'Craving a box of something buttery?',
-  ctaBody:
-    "Tell us the box and the occasion on WhatsApp — we'll handle the bake and Lalamove delivery from there.",
   whatsappMessage: "Hi Perlette Cakes! I'd like to enquire about a pastry order.",
   modalInterest: 'Pastries',
 };
@@ -280,14 +213,6 @@ const cookies: Category = {
   description:
     'Freshly baked cookies and cookie gift boxes made to order by Perlette Cakes, a home-based baker in Klang Valley. For festive gifting, snack trays, and sharing, delivered by Lalamove. Order on WhatsApp.',
   h1: 'Cookies delivered across Klang Valley',
-  introEyebrow: 'Cookies · Klang Valley',
-  intro: [
-    'Perlette Cakes bakes cookies to order across Klang Valley, Malaysia — baked fresh, boxed to gift, and made for sharing.',
-    'Tell us the box and the occasion on WhatsApp, and we take care of the rest, right through to Lalamove delivery.',
-  ],
-  signatureEyebrow: 'Made to gift',
-  signatureHeadline: 'The cookie box that gets remembered',
-  signatureCtaLabel: 'Start your cookie order',
   signature: {
     slug: 'signature-cookie-box',
     name: 'Signature cookie box',
@@ -297,9 +222,6 @@ const cookies: Category = {
     imageAlt: 'Assorted cookies displayed together for gifting and sharing.',
     placeholderImage: true,
   },
-  collageHeading: 'Boxed and ready to gift',
-  collageIntro:
-    'The cookies we are asked for most. Pick your box — tell us the occasion and we bake and package it to give.',
   variations: [
     {
       slug: 'chocolate-chip',
@@ -334,13 +256,6 @@ const cookies: Category = {
       placeholderImage: true,
     },
   ],
-  useCasesTitle: 'Made to gift, made to share',
-  useCases: ['Festive gifting', 'Snack trays', 'Corporate gifts', 'Sharing boxes', 'Small celebrations'],
-  leadTimeNote:
-    'Cookies are best ordered 3 to 5 days ahead, with larger boxes needing a little more notice. We deliver across Klang Valley by Lalamove — there is no pickup.',
-  ctaHeading: 'Got someone to treat?',
-  ctaBody:
-    "Tell us the box and the occasion on WhatsApp — we'll bake it fresh and send it by Lalamove.",
   whatsappMessage: "Hi Perlette Cakes! I'd like to enquire about a cookie order.",
   modalInterest: 'Cookies',
 };
@@ -352,6 +267,3 @@ export function categoryBySlug(slug: CategorySlug): Category {
   if (!found) throw new Error(`Unknown category: ${slug}`);
   return found;
 }
-
-export const categoryPath = (slug: CategorySlug): string => `/${slug}/`;
-export const categoryUrl = (slug: CategorySlug): string => `https://perlettecakes.com/${slug}/`;

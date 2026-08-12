@@ -4,7 +4,7 @@ import Layout from '@layouts/Layout.astro';
 import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 import CategoryCta from '@components/shared/CategoryCta.astro';
 import { categoryBySlug, type Variation } from '@data/catalogue';
-import { categoryJsonLd } from '@lib/schema';
+import { categoryJsonLd, type ListItemInput, SITE_ORIGIN } from '@lib/schema';
 
 const category = categoryBySlug('cupcakes');
 const url = 'https://perlettecakes.com/cupcakes/';
@@ -72,7 +72,12 @@ const instagramPosts = [
 	},
 ];
 
-const jsonLd = categoryJsonLd(category, url);
+const schemaItems: ListItemInput[] = cupcakeSelection.map((cupcake) => ({
+	name: cupcake.name,
+	description: cupcake.description,
+	image: `${SITE_ORIGIN}${cupcake.variation.image.src}`,
+}));
+const jsonLd = categoryJsonLd(category, url, schemaItems);
 ---
 
 <Layout
@@ -123,7 +128,7 @@ const jsonLd = categoryJsonLd(category, url);
 			</div>
 		</section>
 
-		<section class="cupcake-menu" aria-labelledby="cupcake-menu-title">
+		<section class="cupcake-menu section-space" aria-labelledby="cupcake-menu-title">
 			<div class="content-shell">
 				<div class="section-heading" data-reveal>
 					<div class="section-heading-text">
@@ -163,7 +168,7 @@ const jsonLd = categoryJsonLd(category, url);
 			</div>
 		</section>
 
-		<section class="cupcake-trio content-shell" aria-labelledby="cupcake-trio-title">
+		<section class="cupcake-trio content-shell section-space" aria-labelledby="cupcake-trio-title">
 			<header class="trio-heading" data-reveal>
 				<p class="eyebrow">Made for passing around</p>
 				<h2 id="cupcake-trio-title">More than one reason to bring a box</h2>
@@ -202,7 +207,7 @@ const jsonLd = categoryJsonLd(category, url);
 			</div>
 		</section>
 
-		<section class="instagram-section" aria-labelledby="instagram-title">
+		<section class="instagram-section section-space" aria-labelledby="instagram-title">
 			<div class="content-shell">
 				<div class="instagram-layout">
 					<div class="instagram-intro" data-reveal>
@@ -303,16 +308,9 @@ const jsonLd = categoryJsonLd(category, url);
 		line-height: 1.4;
 	}
 
-	.cupcake-menu,
-	.cupcake-trio,
-	.instagram-section {
-		padding-top: var(--top-space-section-md);
-		padding-bottom: var(--bottom-space-section-md);
-	}
-
 	.cupcake-menu {
-		background: var(--pink-primary-bg);
-		color: var(--white-text);
+		background: var(--color-primary);
+		color: var(--color-on-primary);
 	}
 
 	.section-heading {
@@ -332,7 +330,7 @@ const jsonLd = categoryJsonLd(category, url);
 
 	.cupcake-menu .eyebrow,
 	.cupcake-menu h2 {
-		color: var(--white-text);
+		color: var(--color-on-primary);
 	}
 
 	.carousel-controls {
@@ -359,7 +357,7 @@ const jsonLd = categoryJsonLd(category, url);
 	.carousel-button:hover {
 		transform: translateX(0.2rem);
 		background: var(--color-primary-strong);
-		color: var(--white-text);
+		color: var(--color-on-primary);
 	}
 
 	.carousel-button:first-child:hover {
@@ -482,10 +480,10 @@ const jsonLd = categoryJsonLd(category, url);
 		min-height: 3rem;
 		align-items: center;
 		padding-inline: var(--space-lg);
-		border: 1px solid var(--pink-primary-bg);
+		border: 1px solid var(--color-primary);
 		border-radius: 999px;
-		background: var(--pink-primary-bg);
-		color: var(--white-text);
+		background: var(--color-primary);
+		color: var(--color-on-primary);
 		font-size: var(--label-text-font-size);
 		font-weight: 700;
 		text-decoration: none;

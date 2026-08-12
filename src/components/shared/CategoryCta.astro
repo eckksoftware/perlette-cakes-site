@@ -23,7 +23,7 @@ const href = whatsappHref(whatsappMessage);
 ---
 
 {variant === 'panel' ? (
-	<section class="cta-panel">
+	<section class="cta-panel section-space">
 		<div class="content-shell">
 			<div class="cta-panel__inner" data-reveal>
 				<div class="cta-panel__copy">
@@ -58,8 +58,6 @@ const href = whatsappHref(whatsappMessage);
 
 <style>
 	.cta-panel {
-		padding-top: var(--top-space-section-md);
-		padding-bottom: var(--bottom-space-section-md);
 	}
 
 	.cta-panel__inner {
@@ -68,8 +66,8 @@ const href = whatsappHref(whatsappMessage);
 		gap: var(--space-xl);
 		padding: var(--space-2xl) var(--space-xl);
 		border-radius: var(--radius-xl);
-		background: var(--pink-primary-bg);
-		color: var(--white-text);
+		background: var(--color-primary);
+		color: var(--color-on-primary);
 		box-shadow: var(--shadow-md);
 	}
 
@@ -86,24 +84,24 @@ const href = whatsappHref(whatsappMessage);
 	}
 
 	.cta-panel__copy p {
-		color: var(--white-text);
+		color: var(--color-on-primary);
 	}
 
 	.cta-panel__button {
 		align-self: flex-start;
 		color: var(--color-primary-strong);
-		background: var(--white-bg);
+		background: var(--color-page);
 		box-shadow: none;
 	}
 
 	.cta-panel__button:hover {
-		color: var(--white-text);
+		color: var(--color-on-primary);
 		background: var(--color-primary-strong);
 	}
 
 	.cta-btn--inline {
-		color: var(--white-text);
-		background: var(--pink-primary-bg);
+		color: var(--color-on-primary);
+		background: var(--color-primary);
 		box-shadow: var(--shadow-md);
 	}
 
@@ -113,13 +111,13 @@ const href = whatsappHref(whatsappMessage);
 
 	.cta-btn--onImage {
 		color: var(--color-primary-strong);
-		background: var(--white-bg);
+		background: var(--color-page);
 		box-shadow: var(--shadow-md);
 	}
 
 	.cta-btn--onImage:hover {
-		color: var(--white-text);
-		background: var(--pink-primary-bg);
+		color: var(--color-on-primary);
+		background: var(--color-primary);
 	}
 
 	@media (min-width: 64rem) {

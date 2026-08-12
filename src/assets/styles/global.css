@@ -25,6 +25,8 @@
 :root {
   --color-surface: rgba(255, 253, 251, 0.92);
   --color-surface-soft: #f7f1eb;
+  --color-page: rgba(255, 253, 251, 0.92);
+  --color-on-primary: rgba(255, 253, 251, 0.92);
   --color-text-muted: #473c38;
   --color-primary-ink: #7a4a57;
   --color-primary-strong: #693f4a;
@@ -32,12 +34,9 @@
   --color-nav-surface: rgba(255, 253, 251, 0.92);
   --color-nav-border: rgba(122, 74, 87, 0.12);
 
-  /* CSS refactor */
-  --white-bg: rgba(255, 253, 251, 0.92);
-  --white-text: rgba(255, 253, 251, 0.92);
   --color-text: #050a30;
   /* Keep the rose brand surface while meeting AA contrast with white text. */
-  --pink-primary-bg: #9f596a;
+  --color-primary: #9f596a;
 
   --text-font-size: clamp(1.05rem, 0.98rem + 0.45vw, 1.35rem);
   --label-text-font-size: clamp(0.95rem, 0.92rem + 0.2vw, 1.1rem);
@@ -68,8 +67,6 @@
 
   --gap-space-md: var(--space-md);
   --gap-space-xl: var(--space-xl);
-  /* end refactor */
-
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
   --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
   --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
@@ -111,7 +108,7 @@ body {
   line-height: 1.6;
   font-weight: 400;
   color: var(--color-text);
-  background: var(--white-bg);
+  background: var(--color-page);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -193,6 +190,24 @@ p {
   letter-spacing: 0.12em;
 }
 
+.eyebrow,
+.section-kicker {
+  color: var(--color-primary-strong);
+  font-size: var(--label-text-font-size);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.text-muted {
+  color: var(--color-text-muted);
+}
+
+.section-space {
+  padding-block: var(--top-space-section-md) var(--bottom-space-section-md);
+}
+
 :focus-visible {
   outline: none;
   box-shadow: var(--focus-ring);
@@ -225,8 +240,8 @@ p {
 }
 
 .button--primary {
-  color: var(--white-text);
-  background: var(--pink-primary-bg);
+  color: var(--color-on-primary);
+  background: var(--color-primary);
   box-shadow: var(--shadow-md);
 }
 
@@ -248,7 +263,7 @@ p {
 /* Scroll reveal. Elements are visible by default; JS adds .is-visible on enter.
    Reduced-motion users skip the transition entirely and see everything at once. */
 @media (prefers-reduced-motion: no-preference) {
-  [data-reveal] {
+  .js-ready [data-reveal] {
     opacity: 0;
     transform: translateY(1.5rem);
     transition:
@@ -256,7 +271,7 @@ p {
       transform 700ms ease;
   }
 
-  [data-reveal].is-visible {
+  .js-ready [data-reveal].is-visible {
     opacity: 1;
     transform: none;
   }

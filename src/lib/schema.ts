@@ -70,17 +70,9 @@ export function breadcrumbSchema(trail: { name: string; url: string }[]) {
   };
 }
 
-// Convenience builder for a category page: CollectionPage + ItemList + BreadcrumbList,
-// generated from the same catalogue record the page renders.
-export function categoryJsonLd(category: Category, url: string) {
-  const listItems: ListItemInput[] = [category.signature, ...category.variations].map(
-    (variation) => ({
-      name: variation.name,
-      description: variation.crave,
-      image: `${SITE_ORIGIN}${variation.image.src}`,
-    }),
-  );
-
+// Category pages supply the same display data they render, preventing schema
+// entries from describing products that are not visible on the page.
+export function categoryJsonLd(category: Category, url: string, listItems: ListItemInput[]) {
   return [
     collectionPageSchema({ name: category.name, description: category.description, url }),
     itemListSchema(url, listItems),

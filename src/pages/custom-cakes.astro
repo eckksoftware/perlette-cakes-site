@@ -4,7 +4,7 @@ import Layout from '@layouts/Layout.astro';
 import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 import CategoryCta from '@components/shared/CategoryCta.astro';
 import { categoryBySlug, type Variation } from '@data/catalogue';
-import { categoryJsonLd } from '@lib/schema';
+import { categoryJsonLd, type ListItemInput, SITE_ORIGIN } from '@lib/schema';
 
 const category = categoryBySlug('custom-cakes');
 const url = 'https://perlettecakes.com/custom-cakes/';
@@ -94,7 +94,14 @@ const faqs = [
 	},
 ];
 
-const jsonLd = categoryJsonLd(category, url);
+const schemaItems: ListItemInput[] = [
+	...cakeCards.map((cake) => ({
+		name: cake.name,
+		description: cake.description,
+		image: `${SITE_ORIGIN}${cake.variation.image.src}`,
+	})),
+];
+const jsonLd = categoryJsonLd(category, url, schemaItems);
 ---
 
 <Layout
@@ -150,7 +157,7 @@ const jsonLd = categoryJsonLd(category, url);
 		</section>
 
 		<section class="cake-collection content-shell" aria-labelledby="cake-collection-title">
-			<div class="section-heading" data-reveal>
+			<div class="section-heading section-space" data-reveal>
 				<div>
 					<p class="text-header">OUR FAMOUS CAKES</p>
 					<h2 id="cake-collection-title">Cakes in demand</h2>
@@ -188,7 +195,7 @@ const jsonLd = categoryJsonLd(category, url);
 			</div>
 		</section>
 
-		<section class="how-it-works content-shell" aria-labelledby="how-it-works-title">
+		<section class="how-it-works content-shell section-space" aria-labelledby="how-it-works-title">
 			<div class="how-it-works__image" data-reveal>
 				<Image
 					src={variationBySlug('chocolate').image}
@@ -219,7 +226,7 @@ const jsonLd = categoryJsonLd(category, url);
 			</div>
 		</section>
 
-		<section class="cake-faq content-shell" aria-labelledby="cake-faq-title">
+		<section class="cake-faq content-shell section-space" aria-labelledby="cake-faq-title">
 			<div class="cake-faq__copy" data-reveal>
 				<p class="text-header">COMMON CAKE QUESTIONS</p>
 				<h2 id="cake-faq-title">Before choosing a cake</h2>
@@ -247,7 +254,7 @@ const jsonLd = categoryJsonLd(category, url);
 			</div>
 		</section>
 
-		<section class="occasions content-shell" aria-labelledby="occasions-title">
+		<section class="occasions content-shell section-space" aria-labelledby="occasions-title">
 			<div class="occasions__heading" data-reveal>
 				<p class="text-header">MADE TO ELEVATE THE MOMENTS</p>
 				<h2 id="occasions-title">As personal as the moment itself</h2>
@@ -329,15 +336,6 @@ const jsonLd = categoryJsonLd(category, url);
 </script>
 
 <style>
-	.custom-hero,
-	.section-heading,
-	.how-it-works,
-	.cake-faq,
-	.occasions {
-		padding-top: var(--top-space-section-md);
-		padding-bottom: var(--bottom-space-section-md);
-	}
-
 	.custom-hero {
 		display: grid;
 		gap: var(--space-xl);
@@ -361,7 +359,8 @@ const jsonLd = categoryJsonLd(category, url);
 	.custom-hero__image :global(img),
 	.how-it-works__image :global(img),
 	.cake-faq__image :global(img),
-	.occasion-card :global(img) {
+	.occasion-card :global(img),
+	.cake-card__media :global(img) {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
@@ -389,18 +388,19 @@ const jsonLd = categoryJsonLd(category, url);
 	}
 
 	.cake-collection {
+		padding-top: var(--top-space-section-md);
 		padding-bottom: var(--bottom-space-section-md);
-		background: var(--pink-primary-bg);
+		background: var(--color-primary);
 		color: var(--color-primary-strong);
 	}
 
 	.cake-collection .text-header,
 	.cake-collection .cake-filter {
-		color: var(--white-text);
+		color: var(--color-on-primary);
 	}
 
 	.cake-collection h2 {
-		color: var(--white-text);
+		color: var(--color-on-primary);
 	}
 
 	.section-heading > div {
@@ -540,7 +540,7 @@ const jsonLd = categoryJsonLd(category, url);
 		display: grid;
 		gap: var(--space-xs);
 		padding-left: var(--space-lg);
-		border-left: 2px solid var(--pink-primary-bg);
+		border-left: 2px solid var(--color-primary);
 	}
 
 	.steps strong {
@@ -624,12 +624,12 @@ const jsonLd = categoryJsonLd(category, url);
 
 	.occasions {
 		padding-bottom: var(--space-2xl);
-		background: var(--pink-primary-bg);
-		color: var(--white-text);
+		background: var(--color-primary);
+		color: var(--color-on-primary);
 	}
 
 	.occasions .text-header {
-		color: var(--white-text);
+		color: var(--color-on-primary);
 	}
 
 	.occasions__heading {
@@ -666,7 +666,7 @@ const jsonLd = categoryJsonLd(category, url);
 
 	.occasion-card div {
 		padding: var(--space-sm) 0 var(--space-sm) 0;
-		background-color: var(--white-bg);
+		background-color: var(--color-page);
 		color: var(--color-text);
 	}
 

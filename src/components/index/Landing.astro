@@ -5,17 +5,17 @@ import Hero from './Hero.astro';
 import HowOrderingWorks from './HowOrderingWorks.astro';
 import OwnerStory from './OwnerStory.astro';
 import WhatsAppCta from './WhatsAppCta.astro';
+import { DEFAULT_INQUIRY, whatsappHref } from '../../lib/whatsapp';
 
 const instagramHref = 'https://www.instagram.com/perlettecakes';
-const whatsappHref = `https://wa.me/60196505050?text=${encodeURIComponent("Hi Perlette Cakes! I'd like to enquire about a custom cake order.")}`;
+const orderHref = whatsappHref(DEFAULT_INQUIRY);
 ---
 
 <main>
-	<Hero whatsappHref={whatsappHref} instagramHref={instagramHref} />
+	<Hero whatsappHref={orderHref} instagramHref={instagramHref} />
 	<FeaturedCategories />
 	<OwnerStory />
-	<HowOrderingWorks whatsappHref={whatsappHref} />
-	<WhatsAppCta whatsappHref={whatsappHref} />
-	<Faq whatsappHref={whatsappHref} />
+	<HowOrderingWorks whatsappHref={orderHref} />
+	<WhatsAppCta whatsappHref={orderHref} />
+	<Faq whatsappHref={orderHref} />
 </main>
-

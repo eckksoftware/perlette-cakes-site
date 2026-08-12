@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
 import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 import { categoryBySlug, type Variation } from '@data/catalogue';
-import { categoryJsonLd } from '@lib/schema';
+import { categoryJsonLd, type ListItemInput, SITE_ORIGIN } from '@lib/schema';
 import { whatsappHref } from '@lib/whatsapp';
 
 const category = categoryBySlug('cookies');
@@ -82,7 +82,15 @@ const requestCookies = [
 	},
 ];
 
-const jsonLd = categoryJsonLd(category, url);
+const schemaCookies = [...bestSellers, ...cookieSpread, ...requestCookies].filter(
+	(cookie, index, items) => items.findIndex((item) => item.name === cookie.name) === index,
+);
+const schemaItems: ListItemInput[] = schemaCookies.map((cookie) => ({
+	name: cookie.name,
+	description: cookie.description,
+	image: `${SITE_ORIGIN}${cookie.variation.image.src}`,
+}));
+const jsonLd = categoryJsonLd(category, url, schemaItems);
 ---
 
 <Layout
@@ -116,7 +124,7 @@ const jsonLd = categoryJsonLd(category, url);
 			</div>
 		</section>
 
-		<section class="best-sellers" aria-labelledby="best-sellers-title">
+		<section class="best-sellers section-space" aria-labelledby="best-sellers-title">
 			<div class="content-shell">
 				<header class="section-heading" data-reveal>
 					<p class="eyebrow">THE ONES PEOPLE COME BACK FOR</p>
@@ -147,7 +155,7 @@ const jsonLd = categoryJsonLd(category, url);
 			</div>
 		</section>
 
-		<section class="cookie-spread" aria-labelledby="cookie-spread-title">
+		<section class="cookie-spread section-space" aria-labelledby="cookie-spread-title">
 			<div class="content-shell">
 				<header class="section-heading section-heading--center" data-reveal>
 					<p class="eyebrow">SMALL BATCH, BIG PULL</p>
@@ -176,7 +184,7 @@ const jsonLd = categoryJsonLd(category, url);
 			</div>
 		</section>
 
-		<section class="cookie-story" aria-labelledby="cookie-story-title">
+		<section class="cookie-story section-space" aria-labelledby="cookie-story-title">
 			<div class="content-shell">
 				<div class="cookie-story__media" data-reveal>
 					<div>
@@ -257,13 +265,6 @@ const jsonLd = categoryJsonLd(category, url);
 		background: var(--color-surface);
 	}
 
-	.best-sellers,
-	.cookie-spread,
-	.cookie-story {
-		padding-top: var(--top-space-section-md);
-		padding-bottom: var(--bottom-space-section-md);
-	}
-
 	.cookie-intro {
 		display: grid;
 		gap: var(--space-2xl);
@@ -296,19 +297,12 @@ const jsonLd = categoryJsonLd(category, url);
 		gap: var(--space-md);
 		max-width: 38rem;
 		padding: var(--space-xl);
-		background: var(--pink-primary-bg);
-		color: var(--white-text);
-	}
-
-	.eyebrow {
-		color: var(--color-primary-strong);
-		font-size: var(--label-text-font-size);
-		font-weight: 700;
-		letter-spacing: 0.12em;
+		background: var(--color-primary);
+		color: var(--color-on-primary);
 	}
 
 	.cookie-intro__copy .eyebrow {
-		color: var(--white-text);
+		color: var(--color-on-primary);
 	}
 
 	.cookie-intro h1,
@@ -357,12 +351,12 @@ const jsonLd = categoryJsonLd(category, url);
 		flex-direction: column;
 		gap: var(--space-xs);
 		padding: var(--space-lg);
-		background: var(--pink-primary-bg);
-		color: var(--white-text);
+		background: var(--color-primary);
+		color: var(--color-on-primary);
 	}
 
 	.best-seller__label {
-		color: var(--white-text);
+		color: var(--color-on-primary);
 		font-size: var(--step--1);
 		font-weight: 700;
 		text-transform: uppercase;
@@ -380,13 +374,13 @@ const jsonLd = categoryJsonLd(category, url);
 	}
 
 	.cookie-spread {
-		background: var(--pink-primary-bg);
-		color: var(--white-text);
+		background: var(--color-primary);
+		color: var(--color-on-primary);
 	}
 
 	.cookie-spread .eyebrow,
 	.cookie-spread .section-heading p {
-		color: var(--white-text);
+		color: var(--color-on-primary);
 	}
 
 	.cookie-spread .section-heading {
@@ -430,7 +424,7 @@ const jsonLd = categoryJsonLd(category, url);
 		align-items: center;
 		justify-content: flex-end;
 		padding: var(--space-sm);
-		color: var(--white-text);
+		color: var(--color-on-primary);
 		text-align: center;
 	}
 
@@ -473,12 +467,12 @@ const jsonLd = categoryJsonLd(category, url);
 		gap: var(--space-md);
 		padding: var(--space-xl);
 		background: rgba(5, 10, 48, 0.55);
-		color: var(--white-text);
+		color: var(--color-on-primary);
 		text-align: center;
 	}
 
 	.cookie-story__overlay .eyebrow {
-		color: var(--white-text);
+		color: var(--color-on-primary);
 	}
 
 	.cookie-story__overlay h2 {
@@ -517,15 +511,15 @@ const jsonLd = categoryJsonLd(category, url);
 	.request-card h3 {
 		margin: 0;
 		padding: var(--space-md) var(--space-sm) 0;
-		background: var(--pink-primary-bg);
-		color: var(--white-text);
+		background: var(--color-primary);
+		color: var(--color-on-primary);
 	}
 
 	.request-card p {
 		margin: 0;
 		padding: var(--space-xs) var(--space-sm) var(--space-md);
-		background: var(--pink-primary-bg);
-		color: var(--white-text);
+		background: var(--color-primary);
+		color: var(--color-on-primary);
 	}
 
 	.request-card--cta {
@@ -539,8 +533,8 @@ const jsonLd = categoryJsonLd(category, url);
 		gap: var(--space-sm);
 		padding: var(--space-lg);
 		border-radius: var(--radius-md);
-		background: var(--pink-primary-bg);
-		color: var(--white-text);
+		background: var(--color-primary);
+		color: var(--color-on-primary);
 		text-align: center;
 		text-decoration: none;
 		box-shadow: var(--shadow-sm);

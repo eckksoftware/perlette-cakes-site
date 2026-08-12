@@ -4,6 +4,7 @@
 // Fully skipped when the user prefers reduced motion (elements are visible by default in CSS).
 
 function init(): void {
+  document.documentElement.classList.add('js-ready');
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const revealEls = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));

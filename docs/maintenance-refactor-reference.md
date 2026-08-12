@@ -178,3 +178,34 @@ npm run check:images
 Manual verification is required at mobile and desktop widths for all five
 current routes, including navigation, modal behavior, page-specific controls,
 reveal behavior, responsive image crops, and reduced-motion behavior.
+
+## Refactor Results
+
+The first cleanup pass was measured against a clean build of the documented
+baseline commit before the code changes:
+
+| Measure | Baseline | Refactored |
+| --- | ---: | ---: |
+| Route CSS output files | 6 | 6 |
+| Total raw route CSS | 61,328 bytes | 60,336 bytes |
+| Total gzipped route CSS | 11,951 bytes | 11,739 bytes |
+
+The refactored build removed approximately 992 raw bytes and 212 gzipped
+bytes while preserving route-specific CSS output. The main benefit is reduced
+dead code and fewer duplicated sources of truth; the CSS byte reduction is
+intentionally modest.
+
+Completed in this pass:
+
+- Removed the unused generic category component tree.
+- Removed catalogue fields that only supported that tree.
+- Made category `ItemList` schema use the visible page product arrays.
+- Made scroll reveal opt in only after JavaScript is ready.
+- Replaced legacy white token aliases with semantic page/on-primary tokens.
+- Added and used the exact shared `.section-space`, `.eyebrow`, and
+  `.text-muted` primitives.
+
+Image-cover declarations remain local because their containers use different
+aspect ratios and crop behavior. Moving them to one global utility would save
+source repetition but increase regression risk without a meaningful payload
+benefit.
