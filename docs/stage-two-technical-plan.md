@@ -38,6 +38,13 @@ All content images use Astro `<Image />`, explicit responsive widths, sizes, alt
 - The modal uses native form controls, lightweight validation, focus restoration, a simple focus trap, product preselection, and state reset on close.
 - Scroll reveal and parallax remain CSS plus a small IntersectionObserver implementation with reduced-motion handling.
 
+## Maintenance Refactor Boundary
+
+The four category routes remain hand-authored because their layouts differ.
+Future cleanup must not replace them with a generic template or move all route
+CSS into `global.css`. The agreed sequence and measurement criteria are in
+[`maintenance-refactor-reference.md`](./maintenance-refactor-reference.md).
+
 ## Stage 3 Deferred Work
 
 - `/products/`, `/about/`, `/delivery/`, and `/faq/`.

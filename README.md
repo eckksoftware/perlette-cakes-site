@@ -120,3 +120,4 @@ Future homelab capture path:
 - Brand notes: `./docs/brand-notes.md`
 - Design direction: `./docs/stage-one-design-direction.md`
 - Stage 2 planning: `./docs/stage-two-readme.md`
+- Maintenance refactor reference: `./docs/maintenance-refactor-reference.md`

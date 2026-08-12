@@ -9,6 +9,21 @@ This file tracks what is implemented, what is blocked, and what is intentionally
 - Product-aware interest preselection and close-state reset are implemented.
 - The mobile navigation uses the rose surface and highlights the current category.
 
+## Maintenance Refactor
+
+The agreed cleanup sequence is documented in
+[`maintenance-refactor-reference.md`](./maintenance-refactor-reference.md).
+It preserves the hand-authored category layouts and focuses on dead code,
+single sources of truth, progressive enhancement, design tokens, and a small
+set of exact shared CSS primitives.
+
+- [ ] Remove the unused generic category component tree and its obsolete data fields.
+- [ ] Fix visible product data and structured data drift.
+- [ ] Fix scroll reveal so content remains visible without JavaScript.
+- [ ] Normalize the active design-token vocabulary.
+- [ ] Extract only exact, reusable CSS primitives; keep page compositions local.
+- [ ] Compare production CSS output before and after the refactor.
+
 ## Remaining Stage 2 Hardening
 
 - [ ] Replace placeholder category photography with approved real bake photography.
