@@ -2,9 +2,19 @@ import type { ImageMetadata } from 'astro';
 
 // Placeholder photography: reuse the landing images so bespoke layouts can be
 // visualised now. Swap per-variation shots later; grep `placeholderImage` to find them.
-import cakesImage from '../assets/images/index/variety-cakes.JPG';
+import layeredBerriesCakeImage from '../assets/images/custom-cakes/layered-berries-cake.JPG'
+import creamCakeImage from '../assets/images/custom-cakes/cream-cake.JPG'
+import berriesCakeImage from '../assets/images/custom-cakes/berries-cake.JPG'
 import flowerCake from '../assets/images/index/hero-flowery-cake.JPG';
-import ownerGifts from '../assets/images/index/owner-personal-handmade-gifts.JPG';
+import crunchyCake from '../assets/images/custom-cakes/crunchy-cake.JPG'
+import tiramisuCake from '../assets/images/custom-cakes/tiramisu-cake.JPG'
+import berryChocoCake from '../assets/images/custom-cakes/berry-choc-cake.JPG'
+import floweryCreamCake from '../assets/images/custom-cakes/flowery-cream-cake.JPG'
+import moltenChocCake from '../assets/images/custom-cakes/molten-cake.JPG'
+import lemonMiniCake from '../assets/images/custom-cakes/lemon-mini-cake.JPG'
+import orangeCake from '../assets/images/custom-cakes/orange-cake.JPG'
+import christmasCake from '../assets/images/custom-cakes/christmas-cake.JPG'
+import giftsCake from '../assets/images/custom-cakes/gifts-cake.JPG'
 import heroCupcakes from '../assets/images/index/hero-cupcakes.JPG';
 import varietyCupcakes from '../assets/images/index/variety-cupcakes.JPG';
 import varietyPastries from '../assets/images/index/variety-pastries.JPG';
@@ -56,38 +66,104 @@ const customCakes: Category = {
   },
   variations: [
     {
-      slug: 'strawberry',
-      name: 'Strawberry cake',
+      slug: 'cream-cake',
+      name: 'Cream cake',
       crave:
         'Vanilla sponge, fresh cream, and ripe strawberries layered tall — light enough to go back for a second slice.',
       detail: 'A birthday favourite.',
-      image: cakesImage,
-      imageAlt: 'An assortment of custom celebration cakes with different colours, sizes, and piped details.',
+      image: creamCakeImage,
+      imageAlt: 'An assortment of custom celebration cakes with different colours, sizes, and piped details.', // replace to best describe what the image is about 
+    },
+    {
+      slug: 'berries-cake',
+      name: 'Berries cake',
+      crave:
+        'Vanilla sponge, fresh cream, and ripe strawberries layered tall — light enough to go back for a second slice.',
+      detail: 'A birthday favourite.',
+      image: berriesCakeImage,
+      imageAlt: 'An assortment of custom celebration cakes with different colours, sizes, and piped details.', // replace to best describe what the image is about 
+    },
+    {
+      slug: 'layered-berries-cake',
+      name: 'Layered Berries cake',
+      crave:
+        'Vanilla sponge, fresh cream, and ripe strawberries layered tall — light enough to go back for a second slice.',
+      detail: 'A birthday favourite.',
+      image: layeredBerriesCakeImage,
+      imageAlt: 'An assortment of custom celebration cakes with different colours, sizes, and piped details.',  // replace to best describe what the image is about 
       placeholderImage: true,
     },
     {
-      slug: 'chocolate',
-      name: 'Chocolate fudge cake',
+      slug: 'crunchy-cake',
+      name: 'Chocolate Crunchy cake',
       crave: 'Dark, moist chocolate sponge and a fudge so rich the room goes quiet on the first bite.',
-      image: ownerGifts,
-      imageAlt: 'Handmade cakes and treats boxed as personal gifts by Perlette Cakes.',
+      image: crunchyCake,
+      imageAlt: 'Handmade cakes and treats boxed as personal gifts by Perlette Cakes.', // replace to best describe what the image is about 
       placeholderImage: true,
     },
     {
-      slug: 'vintage-heart',
-      name: 'Vintage heart cake',
+      slug: 'tiramisu-cake',
+      name: 'Tiramisu cake',
       crave:
         'Piped lambeth borders and a hand-written message — nostalgic, romantic, and made to be gifted.',
-      image: cakesImage,
-      imageAlt: 'An assortment of custom celebration cakes with piped borders and decorative finishes.',
+      image: tiramisuCake,
+      imageAlt: 'An assortment of custom celebration cakes with piped borders and decorative finishes.', // replace to best describe what the image is about 
       placeholderImage: true,
     },
     {
-      slug: 'bento',
-      name: 'Bento cake',
+      slug: 'berry-choc-cake',
+      name: 'Berry Chocolate cake',
       crave: 'A little cake for two, boxed and ready to surprise — small on size, big on the moment.',
-      image: flowerCake,
-      imageAlt: 'A small decorated celebration cake finished with piped cream and delicate detail.',
+      image: berryChocoCake,
+      imageAlt: 'A small decorated celebration cake finished with piped cream and delicate detail.', // replace to best describe what the image is about 
+      placeholderImage: true,
+    },
+    {
+      slug: 'flowery-symmetrical-cake',
+      name: 'Flowery Cream cake',
+      crave: 'A little cake for two, boxed and ready to surprise — small on size, big on the moment.',
+      image: floweryCreamCake,
+      imageAlt: 'A small decorated celebration cake finished with piped cream and delicate detail.', // replace to best describe what the image is about 
+      placeholderImage: true,
+    },
+    {
+      slug: 'molten-cake',
+      name: 'Molten Chocolate cake',
+      crave: 'A little cake for two, boxed and ready to surprise — small on size, big on the moment.',
+      image: moltenChocCake,
+      imageAlt: 'A small decorated celebration cake finished with piped cream and delicate detail.', // replace to best describe what the image is about 
+      placeholderImage: true,
+    },
+    {
+      slug: 'orange-cake',
+      name: 'Orange cake',
+      crave: 'A little cake for two, boxed and ready to surprise — small on size, big on the moment.',
+      image: orangeCake,
+      imageAlt: 'A small decorated celebration cake finished with piped cream and delicate detail.', // replace to best describe what the image is about 
+      placeholderImage: true,
+    },
+    {
+      slug: 'lemon-mini-cake',
+      name: 'Lemon Mini cake',
+      crave: 'A little cake for two, boxed and ready to surprise — small on size, big on the moment.',
+      image: lemonMiniCake,
+      imageAlt: 'A small decorated celebration cake finished with piped cream and delicate detail.', // replace to best describe what the image is about 
+      placeholderImage: true,
+    },
+    {
+      slug: 'christmas-cake',
+      name: 'Christmas cake',
+      crave: 'A little cake for two, boxed and ready to surprise — small on size, big on the moment.',
+      image: christmasCake,
+      imageAlt: 'A small decorated celebration cake finished with piped cream and delicate detail.', // replace to best describe what the image is about 
+      placeholderImage: true,
+    },
+    {
+      slug: 'gifts-cake',
+      name: 'GIfts cake',
+      crave: 'A little cake for two, boxed and ready to surprise — small on size, big on the moment.',
+      image: giftsCake,
+      imageAlt: 'A small decorated celebration cake finished with piped cream and delicate detail.', // replace to best describe what the image is about 
       placeholderImage: true,
     },
   ],
@@ -141,7 +217,7 @@ const cupcakes: Category = {
       slug: 'seasonal-cupcake',
       name: 'Seasonal flavour',
       crave: 'A rotating flavour we bake around the season — ask us what is fresh this week.',
-      image: ownerGifts,
+      image: crunchyCake,
       imageAlt: 'Handmade treats boxed as personal gifts by Perlette Cakes.',
       placeholderImage: true,
     },
@@ -180,7 +256,7 @@ const pastries: Category = {
       slug: 'butter-croissant',
       name: 'Butter croissant',
       crave: 'Slow-proofed and baked to a deep gold, with a crackle that gives way to soft, buttery layers.',
-      image: ownerGifts,
+      image: crunchyCake,
       imageAlt: 'Handmade baked treats boxed as personal gifts by Perlette Cakes.',
       placeholderImage: true,
     },
@@ -196,7 +272,7 @@ const pastries: Category = {
       slug: 'cinnamon-roll',
       name: 'Cinnamon roll',
       crave: 'Soft, spiralled, and glazed while warm — the smell alone gets everyone into the kitchen.',
-      image: ownerGifts,
+      image: crunchyCake,
       imageAlt: 'Freshly baked treats boxed for gifting by Perlette Cakes.',
       placeholderImage: true,
     },
@@ -235,7 +311,7 @@ const cookies: Category = {
       slug: 'festive-box',
       name: 'Festive gift box',
       crave: 'A seasonal assortment boxed for gifting — the easy yes for teachers, colleagues, and neighbours.',
-      image: ownerGifts,
+      image: crunchyCake,
       imageAlt: 'Handmade cookies and treats boxed as personal gifts by Perlette Cakes.',
       placeholderImage: true,
     },
@@ -251,7 +327,7 @@ const cookies: Category = {
       slug: 'double-chocolate',
       name: 'Double chocolate',
       crave: 'Cocoa dough loaded with chocolate chunks — deep, fudgy, and unapologetic.',
-      image: ownerGifts,
+      image: crunchyCake,
       imageAlt: 'Freshly baked cookies boxed for gifting by Perlette Cakes.',
       placeholderImage: true,
     },

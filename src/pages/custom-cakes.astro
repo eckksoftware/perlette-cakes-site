@@ -6,34 +6,37 @@ import CategoryCta from '@components/shared/CategoryCta.astro';
 import { categoryBySlug, type Variation } from '@data/catalogue';
 import { categoryJsonLd, type ListItemInput, SITE_ORIGIN } from '@lib/schema';
 
-const category = categoryBySlug('custom-cakes');
+const cakeCategory = categoryBySlug('custom-cakes');
 const url = 'https://perlettecakes.com/custom-cakes/';
 
 const variationBySlug = (slug: string): Variation => {
-	const variation = category.variations.find((item) => item.slug === slug);
+	const variation = cakeCategory.variations.find((item) => item.slug === slug);
 	if (!variation) throw new Error(`Unknown custom cake variation: ${slug}`);
 	return variation;
 };
 
+const creamCakeHeader = variationBySlug('cream-cake');
+const berriesCakeHeader = variationBySlug('berries-cake');
+
 const cakeCards = [
 	{
-		variation: variationBySlug('strawberry'),
-		name: '6" Birthday Cake',
-		size: '6-inch cake',
-		description: 'A bright, celebratory cake with soft sponge, fresh cream, and a finish made for the birthday table.',
+		variation: variationBySlug('layered-berries-cake'),
+		name: 'Layered Berries Cake',
+		size: 'Multi-layered cake',
+		description: 'A bright, celebratory cake with soft sponge, fresh cream, and a finish made for the birthday table.', // improve description as needed
 		badge: 'Popular',
 		collections: ['featured', 'favorites'],
 	},
 	{
-		variation: variationBySlug('bento'),
-		name: '6" Floral Celebration Cake',
+		variation: variationBySlug('crunchy-cake'),
+		name: 'Homemade Chocolate Cake',
 		size: '6-inch cake',
-		description: 'A delicate floral finish for birthdays, thank-yous, and the occasions that deserve something thoughtful.',
+		description: 'A delicate floral finish for birthdays, thank-yous, and the occasions that deserve something thoughtful.', // improve description as needed
 		badge: 'Favorite',
 		collections: ['featured', 'favorites', 'newest'],
 	},
 	{
-		variation: variationBySlug('chocolate'),
+		variation: variationBySlug('tiramisu-cake'),
 		name: '6" Chocolate Fudge Cake',
 		size: '6-inch cake',
 		description: 'Deep chocolate sponge with a rich fudge finish for celebrations that call for a more indulgent slice.',
@@ -41,7 +44,7 @@ const cakeCards = [
 		collections: ['featured', 'favorites'],
 	},
 	{
-		variation: variationBySlug('vintage-heart'),
+		variation: variationBySlug('berry-choc-cake'),
 		name: '6" Vintage Heart Cake',
 		size: '6-inch cake',
 		description: 'A nostalgic piped design with room for a personal message, made for gifting and romantic milestones.',
@@ -49,7 +52,7 @@ const cakeCards = [
 		collections: ['newest', 'favorites'],
 	},
 	{
-		variation: variationBySlug('bento'),
+		variation: variationBySlug('flowery-symmetrical-cake'),
 		name: '4" Bento Cake',
 		size: '4-inch cake',
 		description: 'A little cake for a small surprise, with a custom message and a finish shaped around your moment.',
@@ -57,7 +60,7 @@ const cakeCards = [
 		collections: ['newest'],
 	},
 	{
-		variation: variationBySlug('strawberry'),
+		variation: variationBySlug('molten-cake'),
 		name: 'Custom Message Cake',
 		size: 'Size discussed on WhatsApp',
 		description: 'Bring us your colours, words, and references, and we will confirm what can be made for your date.',
@@ -101,24 +104,24 @@ const schemaItems: ListItemInput[] = [
 		image: `${SITE_ORIGIN}${cake.variation.image.src}`,
 	})),
 ];
-const jsonLd = categoryJsonLd(category, url, schemaItems);
+const jsonLd = categoryJsonLd(cakeCategory, url, schemaItems);
 ---
 
 <Layout
-	title={category.title}
-	description={category.description}
+	title={cakeCategory.title}
+	description={cakeCategory.description}
 	canonicalUrl={url}
 	noIndex={false}
 	jsonLd={jsonLd}
 >
 	<main class="custom-cakes-page">
-		<Breadcrumbs trail={[{ name: 'Home', url: '/' }, { name: category.name, url }]} />
+		<Breadcrumbs trail={[{ name: 'Home', url: '/' }, { name: cakeCategory.name, url }]} />
 		<section class="custom-hero content-shell">
 			<div class="custom-hero__images" data-reveal>
 				<div class="custom-hero__image">
 					<Image
-						src={category.signature.image}
-						alt={category.signature.imageAlt}
+						src={creamCakeHeader.image}
+						alt={creamCakeHeader.imageAlt}
 						loading="eager"
 						fetchpriority="high"
 						widths={[480, 720, 960]}
@@ -128,8 +131,8 @@ const jsonLd = categoryJsonLd(category, url, schemaItems);
 				</div>
 				<div class="custom-hero__image">
 					<Image
-						src={variationBySlug('strawberry').image}
-						alt={variationBySlug('strawberry').imageAlt}
+						src={berriesCakeHeader.image}
+						alt={berriesCakeHeader.imageAlt}
 						loading="lazy"
 						widths={[480, 720, 960]}
 						sizes="(min-width: 64rem) 22vw, 48vw"
@@ -150,8 +153,8 @@ const jsonLd = categoryJsonLd(category, url, schemaItems);
 				<CategoryCta
 					variant="inline"
 					label="Start your cake on WhatsApp"
-					whatsappMessage={category.whatsappMessage}
-					interest={category.modalInterest}
+					whatsappMessage={cakeCategory.whatsappMessage}
+					interest={cakeCategory.modalInterest}
 				/>
 			</div>
 		</section>
@@ -198,8 +201,8 @@ const jsonLd = categoryJsonLd(category, url, schemaItems);
 		<section class="how-it-works content-shell section-space" aria-labelledby="how-it-works-title">
 			<div class="how-it-works__image" data-reveal>
 				<Image
-					src={variationBySlug('chocolate').image}
-					alt={variationBySlug('chocolate').imageAlt}
+					src={variationBySlug('lemon-mini-cake').image}
+					alt={variationBySlug('lemon-mini-cake').imageAlt}
 					loading="lazy"
 					widths={[600, 900, 1200]}
 					sizes="(min-width: 64rem) 48vw, 92vw"
@@ -244,8 +247,8 @@ const jsonLd = categoryJsonLd(category, url, schemaItems);
 			</div>
 			<div class="cake-faq__image" data-reveal>
 				<Image
-					src={variationBySlug('vintage-heart').image}
-					alt={variationBySlug('vintage-heart').imageAlt}
+					src={variationBySlug('orange-cake').image}
+					alt={variationBySlug('orange-cake').imageAlt}
 					loading="lazy"
 					widths={[600, 900, 1200]}
 					sizes="(min-width: 64rem) 42vw, 92vw"
@@ -262,21 +265,21 @@ const jsonLd = categoryJsonLd(category, url, schemaItems);
 			</div>
 			<div class="occasion-grid">
 				<article class="occasion-card" data-reveal>
-					<Image src={variationBySlug('strawberry').image} alt={variationBySlug('strawberry').imageAlt} loading="lazy" widths={[480, 720, 960]} sizes="(min-width: 64rem) 30vw, 92vw" quality={68} />
+					<Image src={variationBySlug('flowery-symmetrical-cake').image} alt={variationBySlug('flowery-symmetrical-cake').imageAlt} loading="lazy" widths={[480, 720, 960]} sizes="(min-width: 64rem) 30vw, 92vw" quality={68} />
 					<div>
 						<h3>Birthdays</h3>
 						<p>A cake with their favourite colours, flavours, and a message made just for them.</p>
 					</div>
 				</article>
 				<article class="occasion-card" data-reveal>
-					<Image src={variationBySlug('vintage-heart').image} alt={variationBySlug('vintage-heart').imageAlt} loading="lazy" widths={[480, 720, 960]} sizes="(min-width: 64rem) 30vw, 92vw" quality={68} />
+					<Image src={variationBySlug('christmas-cake').image} alt={variationBySlug('christmas-cake').imageAlt} loading="lazy" widths={[480, 720, 960]} sizes="(min-width: 64rem) 30vw, 92vw" quality={68} />
 					<div>
-						<h3>Anniversaries</h3>
-						<p>Romantic details, soft finishes, and a centrepiece for another year together.</p>
+						<h3>Festive</h3>
+						<p>Cakes fits in all occasions and festivities - we cater to any festive seasons</p>
 					</div>
 				</article>
 				<article class="occasion-card" data-reveal>
-					<Image src={category.signature.image} alt={category.signature.imageAlt} loading="lazy" widths={[480, 720, 960]} sizes="(min-width: 64rem) 30vw, 92vw" quality={68} />
+					<Image src={variationBySlug('gifts-cake').image} alt={variationBySlug('gifts-cake').imageAlt}  loading="lazy" widths={[480, 720, 960]} sizes="(min-width: 64rem) 30vw, 92vw" quality={68} />
 					<div>
 						<h3>New beginnings</h3>
 						<p>For gender reveals, new homes, promotions, and every occasion worth gathering for.</p>
@@ -290,8 +293,8 @@ const jsonLd = categoryJsonLd(category, url, schemaItems);
 			heading="Got the date? Let's make the cake."
 			body="Tell us what you are celebrating, and we will take it from there on WhatsApp."
 			label="Start your cake order"
-			whatsappMessage={category.whatsappMessage}
-			interest={category.modalInterest}
+			whatsappMessage={cakeCategory.whatsappMessage}
+			interest={cakeCategory.modalInterest}
 		/>
 	</main>
 </Layout>
