@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
-import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 import { categoryBySlug, type Variation } from '@data/catalogue';
 import { categoryJsonLd, type ListItemInput, SITE_ORIGIN } from '@lib/schema';
 import { whatsappHref } from '@lib/whatsapp';
@@ -101,7 +100,6 @@ const jsonLd = categoryJsonLd(category, url, schemaItems);
 	jsonLd={jsonLd}
 >
 	<main class="cookies-page">
-		<Breadcrumbs trail={[{ name: 'Home', url: '/' }, { name: category.name, url }]} />
 		<section class="cookie-intro content-shell">
 			<div class="cookie-intro__image" data-reveal>
 				<Image

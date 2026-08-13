@@ -57,28 +57,11 @@ export function faqPageSchema(items: { question: string; answer: string }[]) {
   };
 }
 
-export function breadcrumbSchema(trail: { name: string; url: string }[]) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: trail.map((crumb, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: crumb.name,
-      item: crumb.url,
-    })),
-  };
-}
-
 // Category pages supply the same display data they render, preventing schema
 // entries from describing products that are not visible on the page.
 export function categoryJsonLd(category: Category, url: string, listItems: ListItemInput[]) {
   return [
     collectionPageSchema({ name: category.name, description: category.description, url }),
     itemListSchema(url, listItems),
-    breadcrumbSchema([
-      { name: 'Home', url: `${SITE_ORIGIN}/` },
-      { name: category.name, url },
-    ]),
   ];
 }

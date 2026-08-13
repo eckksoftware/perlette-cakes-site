@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
-import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 import { categoryBySlug } from '@data/catalogue';
 import { categoryJsonLd, type ListItemInput, SITE_ORIGIN } from '@lib/schema';
 import { whatsappHref } from '@lib/whatsapp';
@@ -11,18 +10,23 @@ const canonicalUrl = 'https://perlettecakes.com/pastries/';
 const orderHref = whatsappHref(category.whatsappMessage);
 const pastryImage = category.signature.image;
 const pastryImageAlt = category.signature.imageAlt;
+const pastryDescriptions = [
+	'A curated mix of our best pastries in one box — variety for when you cannot choose just one.',
+	'Slow-proofed and baked to a deep gold, with a crackle that gives way to soft, buttery layers.',
+	'Flaky pastry cradling a sweet centre — the one you go back for with your coffee.',
+];
 const pastrySlides = [
 	{
 		image: category.signature.image,
 		imageAlt: category.signature.imageAlt,
 		title: 'Pastry boxes for every table',
-		description: category.signature.crave,
+		description: 'A box of buttery, golden pastries with layers that shatter softly — made to be shared, gone before you know it.',
 	},
-	...category.variations.slice(0, 3).map((variation) => ({
+	...category.variations.slice(0, 3).map((variation, index) => ({
 		image: variation.image,
 		imageAlt: variation.imageAlt,
 		title: variation.name,
-		description: variation.crave,
+		description: pastryDescriptions[index],
 	})),
 ];
 const schemaItems: ListItemInput[] = pastrySlides.map((slide) => ({
@@ -42,7 +46,6 @@ const jsonLd = categoryJsonLd(category, canonicalUrl, schemaItems);
 	socialImageAlt={pastryImageAlt}
 >
 	<main class="pastries-page">
-		<Breadcrumbs trail={[{ name: 'Home', url: '/' }, { name: category.name, url: canonicalUrl }]} />
 		<section class="pastry-hero content-shell" aria-labelledby="pastry-hero-title">
 			<div class="pastry-hero__media">
 				<Image

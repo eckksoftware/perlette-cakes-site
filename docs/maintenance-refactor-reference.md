@@ -27,7 +27,7 @@ The current public routes are five static Astro pages:
 
 The four category pages are intentionally hand-authored because their visual
 layouts and interactions differ. They already share the site shell, catalogue
-data, breadcrumbs, WhatsApp CTA behavior, metadata, and schema builders.
+data, WhatsApp CTA behavior, metadata, and schema builders.
 
 Current route-level style sizes are useful as a baseline, not as a reason to
 merge pages:

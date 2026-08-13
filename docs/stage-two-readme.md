@@ -7,7 +7,7 @@ Stage 2 expands the homepage into hand-authored category pages that help custome
 - Homepage with shared WhatsApp inquiry modal.
 - `/custom-cakes/`, `/cupcakes/`, `/pastries/`, and `/cookies/`.
 - Category-specific titles, descriptions, crawlable copy, imagery, and inquiry messages.
-- `CollectionPage`, `ItemList`, and `BreadcrumbList` schema for category pages.
+- `CollectionPage` and `ItemList` schema for category pages.
 - Homepage category links, shared navigation, footer links, and active mobile navigation state.
 - Static `robots.txt`, `llms.txt`, sitemap support, and the rose PC mark SVG.
 - Modal product preselection, lightweight validation, and state reset on close.

@@ -19,12 +19,12 @@ This is the working checklist for SEO and AI or LLM discoverability.
 - `llms.txt` exists and links to the current public pages.
 - Layout emits site-wide `Bakery` schema.
 - Homepage emits `FAQPage` schema.
-- Category pages emit `CollectionPage`, `ItemList`, and `BreadcrumbList` schema.
-- Category pages render visible breadcrumbs and use one eager hero image each.
+- Category pages emit `CollectionPage` and `ItemList` schema.
+- Category pages use one eager hero image each.
 
 ## Current Gaps
 
-- Category photography is still marked as placeholder data and must be replaced with real bake images.
+- Category photography and product image alternatives should be kept current as new bake images are approved.
 - Category copy and product claims need owner approval before final launch.
 - `/products/`, `/about/`, `/delivery/`, and `/faq/` are Stage 3 routes, not current Stage 2 requirements.
 

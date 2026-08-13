@@ -20,17 +20,17 @@ This document records the implementation that is currently in the repository. St
 - `/pastries/`
 - `/cookies/`
 
-The four category pages are intentionally hand-authored because their layouts differ. They share metadata, category data, schema builders, breadcrumbs, CTA behavior, and the site shell.
+The four category pages are intentionally hand-authored because their layouts differ. They share metadata, category data, schema builders, CTA behavior, and the site shell.
 
 ## Discoverability
 
-Every current page has a unique title, description, canonical URL, one H1, server-rendered copy, and a visible WhatsApp CTA. Category pages use `CollectionPage`, `ItemList`, and `BreadcrumbList` schema generated from the catalogue data.
+Every current page has a unique title, description, canonical URL, one H1, server-rendered copy, and a visible WhatsApp CTA. Category pages use `CollectionPage` and `ItemList` schema generated from the catalogue data.
 
 The homepage and category pages are linked through the homepage cards, navigation, and footer. `public/llms.txt`, `public/robots.txt`, and sitemap support describe the current public routes.
 
 ## Images
 
-All content images use Astro `<Image />`, explicit responsive widths, sizes, alt text, and lazy loading below the fold. Category entries currently carry `placeholderImage: true` because the existing landing photography is reused until approved product photography is supplied.
+All content images use Astro `<Image />`, explicit responsive widths, sizes, descriptive alt text, and lazy loading below the fold.
 
 ## Interaction
 

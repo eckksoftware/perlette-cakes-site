@@ -9,20 +9,19 @@ Stage 2 is the current implemented product-browsing scope. It keeps the site sta
 - `/pastries/`
 - `/cookies/`
 
-Each route has a hand-authored `.astro` page, unique metadata, one H1, crawlable category copy, `astro:assets` images, a product-aware WhatsApp CTA, and `CollectionPage` plus `ItemList` plus `BreadcrumbList` schema.
+Each route has a hand-authored `.astro` page, unique metadata, one H1, crawlable category copy, `astro:assets` images, a product-aware WhatsApp CTA, and `CollectionPage` plus `ItemList` schema.
 
 ## Shared Implementation
 
 - `src/data/catalogue.ts` is the category and variation data source.
 - `src/lib/whatsapp.ts` owns the WhatsApp number and encoded links.
 - `src/lib/schema.ts` owns shared JSON-LD builders.
-- `src/components/shared/Breadcrumbs.astro` renders the visible category trail.
 - `src/components/OrderInquiryModal.astro` handles validation, preselection, and client-side WhatsApp handoff.
 - `src/components/shared/SiteNav.astro` owns the responsive menu and active route state.
 
 ## Content Status
 
-Category layouts currently reuse approved landing photography as explicit placeholders. Replace those assets and approve sensory copy before treating the pages as final marketing content.
+Category layouts use approved bake photography. Continue approving category copy and replacing images as the catalogue grows.
 
 ## Deferred To Stage 3
 

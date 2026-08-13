@@ -30,8 +30,8 @@ Implemented:
 - FAQ JSON-LD and Bakery JSON-LD
 - `robots.txt`, `llms.txt`, and sitemap support
 - Open Graph and Twitter metadata
-- Category-specific `CollectionPage`, `ItemList`, and `BreadcrumbList` schema
-- Visible breadcrumbs and active mobile navigation state
+- Category-specific `CollectionPage` and `ItemList` schema
+- Active mobile navigation state
 - `astro-seo` layout integration for shared SEO tags
 - Optimized content images via `astro:assets`
 - Rose PC mark SVG for social metadata fallback

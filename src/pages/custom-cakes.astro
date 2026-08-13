@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '@layouts/Layout.astro';
-import Breadcrumbs from '@components/shared/Breadcrumbs.astro';
 import CategoryCta from '@components/shared/CategoryCta.astro';
 import { categoryBySlug, type Variation } from '@data/catalogue';
 import { categoryJsonLd, type ListItemInput, SITE_ORIGIN } from '@lib/schema';
@@ -115,7 +114,6 @@ const jsonLd = categoryJsonLd(cakeCategory, url, schemaItems);
 	jsonLd={jsonLd}
 >
 	<main class="custom-cakes-page">
-		<Breadcrumbs trail={[{ name: 'Home', url: '/' }, { name: cakeCategory.name, url }]} />
 		<section class="custom-hero content-shell">
 			<div class="custom-hero__images" data-reveal>
 				<div class="custom-hero__image">

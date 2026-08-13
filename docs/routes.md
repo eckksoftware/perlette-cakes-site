@@ -38,5 +38,5 @@ This is the canonical route map for the public marketing site.
 ## Schema Rule
 
 - The homepage keeps the shared `Bakery` schema and homepage `FAQPage` schema.
-- Current category pages use `CollectionPage`, `ItemList`, and `BreadcrumbList` schema.
+- Current category pages use `CollectionPage` and `ItemList` schema.
 - Stage 3 support pages must use page-specific schema that matches visible HTML.
