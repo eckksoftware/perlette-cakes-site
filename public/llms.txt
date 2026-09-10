@@ -2,6 +2,8 @@
 
 Perlette Cakes is a home-based baker in Klang Valley, Malaysia.
 
+The website is currently a work-in-progress page. Orders are still welcome through the central WhatsApp inquiry flow.
+
 ## Business Summary
 
 - Products: custom celebration cakes, cupcakes, pastries, and cookies
@@ -13,10 +15,6 @@ Perlette Cakes is a home-based baker in Klang Valley, Malaysia.
 
 ## Key Links
 
-- [Homepage](https://perlettecakes.com/)
-- [Custom Cakes](https://perlettecakes.com/custom-cakes/)
-- [Cupcakes](https://perlettecakes.com/cupcakes/)
-- [Pastries](https://perlettecakes.com/pastries/)
-- [Cookies](https://perlettecakes.com/cookies/)
+- [Work-in-progress page](https://perlettecakes.com/)
 - [Instagram](https://www.instagram.com/perlettecakes)
 - [WhatsApp Order Link](https://wa.me/60196505050)

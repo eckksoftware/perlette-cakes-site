@@ -1,28 +1,354 @@
 ---
-import Landing from '../components/index/Landing.astro';
-import { homeFaqs } from '../data/homeFaqs';
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
-
-const faqSchema = {
-	'@context': 'https://schema.org',
-	'@type': 'FAQPage',
-	mainEntity: homeFaqs.map((item) => ({
-		'@type': 'Question',
-		name: item.question,
-		acceptedAnswer: {
-			'@type': 'Answer',
-			text: item.answer,
-		},
-	})),
-};
-
+import cupcakes from '../assets/images/index/hero-cupcakes.JPG';
+import floweryCake from '../assets/images/index/hero-flowery-cake.JPG';
+import gifts from '../assets/images/index/owner-personal-handmade-gifts.JPG';
+import pastries from '../assets/images/index/variety-pastries.JPG';
+import cookies from '../assets/images/index/variety-cookies.JPG';
 ---
 
-<Layout 
-	title="Perlette Cakes | Home-based cakes and pastries in Klang Valley" 
-	description="Perlette Cakes makes homemade custom cakes, cupcakes, pastries, and cookies for delivery across Klang Valley, Malaysia." 
-	canonicalUrl="https://perlettecakes.com/" 
+<Layout
+	title="Perlette Cakes | A new home for homemade bakes"
+	description="Perlette Cakes is preparing a new home. Order homemade custom cakes, cupcakes, pastries, and cookies for Klang Valley delivery on WhatsApp."
+	canonicalUrl="https://perlettecakes.com/"
 	noIndex={false}
-	jsonLd={faqSchema} >
-	<Landing />
+>
+	<main class="wip-page">
+		<header class="wip-header content-shell">
+			<a class="wip-brand" href="/" aria-label="Perlette Cakes home">
+				<span>perlette</span> cakes
+			</a>
+			<p class="wip-header__location">Home-based baker / Klang Valley, Malaysia</p>
+		</header>
+
+		<section class="wip-stage content-shell" aria-labelledby="wip-title">
+			<div class="wip-gallery" aria-label="A selection of Perlette Cakes bakes">
+				<figure class="wip-photo wip-photo--cupcakes">
+					<Image
+						src={cupcakes}
+						alt="Assorted cupcakes with piped frosting and decorative toppings."
+						widths={[360, 540, 720]}
+						sizes="(min-width: 64rem) 18vw, 42vw"
+						loading="eager"
+						fetchpriority="high"
+						quality={68}
+					/>
+				</figure>
+				<figure class="wip-photo wip-photo--cake">
+					<Image
+						src={floweryCake}
+						alt="Cream-frosted celebration cake decorated with edible flowers and gold details."
+						widths={[360, 540, 720]}
+						sizes="(min-width: 64rem) 21vw, 46vw"
+						loading="lazy"
+						quality={68}
+					/>
+				</figure>
+				<figure class="wip-photo wip-photo--pastries">
+					<Image
+						src={pastries}
+						alt="An assortment of pastries grouped together for a pastry box."
+						widths={[320, 480, 640]}
+						sizes="(min-width: 64rem) 16vw, 38vw"
+						loading="lazy"
+						quality={68}
+					/>
+				</figure>
+				<figure class="wip-photo wip-photo--cookies">
+					<Image
+						src={cookies}
+						alt="Assorted cookies displayed together for gifting and sharing."
+						widths={[320, 480, 640]}
+						sizes="(min-width: 64rem) 16vw, 38vw"
+						loading="lazy"
+						quality={68}
+					/>
+				</figure>
+				<figure class="wip-photo wip-photo--gifts">
+					<Image
+						src={gifts}
+						alt="Handmade gift boxes prepared by Perlette Cakes for festive gifting."
+						widths={[280, 420, 560]}
+						sizes="(min-width: 64rem) 13vw, 34vw"
+						loading="lazy"
+						quality={68}
+					/>
+				</figure>
+			</div>
+
+			<div class="wip-message">
+				<p class="wip-message__kicker">A little patience, please</p>
+				<h1 id="wip-title">Something sweet is taking shape.</h1>
+				<p class="wip-message__copy">
+					We are preparing a new home for Perlette Cakes. Orders are still welcome on WhatsApp, with Lalamove delivery across Klang Valley.
+				</p>
+				<button class="button button--primary wip-message__button" type="button" data-order-trigger data-order-interest="Cake">
+					Order from Perlette
+				</button>
+				<p class="wip-message__note">Custom cakes, cupcakes, pastries, and cookies</p>
+			</div>
+		</section>
+
+		<footer class="wip-footer content-shell">
+			<p>Made with love, made with care.</p>
+			<a href="https://www.instagram.com/perlettecakes" target="_blank" rel="noreferrer">@perlettecakes <span aria-hidden="true">&rarr;</span></a>
+		</footer>
+	</main>
 </Layout>
+
+<style>
+	.wip-page {
+		min-height: 100vh;
+		overflow: hidden;
+		background: var(--color-page);
+	}
+
+	.wip-header,
+	.wip-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-md);
+	}
+
+	.wip-header {
+		padding-top: var(--space-lg);
+	}
+
+	.wip-brand {
+		color: var(--color-primary-ink);
+		font-family: var(--font-display);
+		font-size: var(--brand-font-size);
+		font-style: italic;
+		font-weight: 650;
+		letter-spacing: -0.05em;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.wip-brand span {
+		font-weight: 450;
+	}
+
+	.wip-header__location,
+	.wip-footer {
+		color: var(--color-text-muted);
+		font-size: var(--step--1);
+	}
+
+	.wip-header__location {
+		text-align: right;
+	}
+
+	.wip-stage {
+		position: relative;
+		display: grid;
+		min-height: calc(100svh - 8rem);
+		place-items: center;
+		padding-block: var(--space-xl);
+	}
+
+	.wip-gallery {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	.wip-photo {
+		position: absolute;
+		margin: 0;
+		overflow: hidden;
+		border: 0.4rem solid var(--color-surface);
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-md);
+		background: var(--color-surface-soft);
+	}
+
+	.wip-photo img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.wip-photo--cupcakes {
+		top: 7%;
+		left: 3%;
+		width: clamp(7rem, 16vw, 14rem);
+		aspect-ratio: 0.78;
+		transform: rotate(-7deg);
+	}
+
+	.wip-photo--cake {
+		top: 2%;
+		right: 7%;
+		width: clamp(8.5rem, 20vw, 18rem);
+		aspect-ratio: 0.8;
+		transform: rotate(6deg);
+	}
+
+	.wip-photo--pastries {
+		bottom: 5%;
+		left: 11%;
+		width: clamp(7rem, 15vw, 13rem);
+		aspect-ratio: 0.78;
+		transform: rotate(5deg);
+	}
+
+	.wip-photo--cookies {
+		right: 3%;
+		bottom: 7%;
+		width: clamp(7rem, 15vw, 13rem);
+		aspect-ratio: 0.8;
+		transform: rotate(-7deg);
+	}
+
+	.wip-photo--gifts {
+		top: 38%;
+		left: 20%;
+		width: clamp(5rem, 10vw, 9rem);
+		aspect-ratio: 0.8;
+		transform: rotate(-12deg);
+	}
+
+	.wip-message {
+		position: relative;
+		z-index: 1;
+		display: grid;
+		justify-items: center;
+		width: min(100%, 34rem);
+		padding: clamp(var(--space-lg), 5vw, var(--space-2xl));
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-lg);
+		background: var(--color-surface);
+		box-shadow: var(--shadow-md);
+		text-align: center;
+	}
+
+	.wip-message__kicker {
+		margin-bottom: var(--space-sm);
+		color: var(--color-primary-strong);
+		font-size: var(--step--1);
+		font-weight: 700;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+	}
+
+	.wip-message h1 {
+		max-width: 10ch;
+		font-size: clamp(2.8rem, 7vw, 5.25rem);
+		line-height: 0.94;
+		text-wrap: balance;
+	}
+
+	.wip-message__copy {
+		max-width: 29rem;
+		margin-top: var(--space-lg);
+		color: var(--color-text-muted);
+		font-size: var(--step-0);
+		line-height: 1.5;
+	}
+
+	.wip-message__button {
+		margin-top: var(--space-xl);
+		min-width: 13rem;
+	}
+
+	.wip-message__note {
+		margin-top: var(--space-md);
+		color: var(--color-text-muted);
+		font-size: var(--step--1);
+	}
+
+	.wip-footer {
+		padding-bottom: var(--space-lg);
+	}
+
+	.wip-footer a {
+		color: var(--color-primary-ink);
+		font-weight: 700;
+		text-underline-offset: 0.25em;
+	}
+
+	@media (max-width: 47.99rem) {
+		.wip-header {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+
+		.wip-header__location {
+			text-align: left;
+		}
+
+		.wip-stage {
+			min-height: auto;
+			padding-block: var(--space-xl) var(--space-2xl);
+		}
+
+		.wip-gallery {
+			position: relative;
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: var(--space-md);
+			width: 100%;
+			padding-bottom: var(--space-xl);
+		}
+
+		.wip-photo {
+			position: relative;
+			top: auto;
+			right: auto;
+			bottom: auto;
+			left: auto;
+			width: 100%;
+			transform: none;
+		}
+
+		.wip-photo--cake {
+			grid-row: span 2;
+			aspect-ratio: 0.78;
+		}
+
+		.wip-photo--gifts {
+			display: none;
+		}
+
+		.wip-message {
+			order: -1;
+		}
+
+		.wip-footer {
+			align-items: flex-start;
+			flex-direction: column;
+		}
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.wip-photo {
+			animation: wip-arrive 800ms ease both;
+		}
+
+		.wip-photo--cake {
+			animation-delay: 80ms;
+		}
+
+		.wip-photo--pastries {
+			animation-delay: 160ms;
+		}
+
+		.wip-photo--cookies {
+			animation-delay: 240ms;
+		}
+
+		.wip-photo--gifts {
+			animation-delay: 320ms;
+		}
+
+		@keyframes wip-arrive {
+			from {
+				opacity: 0;
+				transform: translateY(1rem) rotate(0deg);
+			}
+		}
+	}
+</style>

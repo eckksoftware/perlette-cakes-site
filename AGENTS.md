@@ -67,14 +67,11 @@ src/
     styles/
       global.css            # active design tokens + base styles
   pages/                  # routes — hardcoded .astro pages, one file per URL
-    index.astro           # landing (multi-section)
+    index.astro           # single work-in-progress page
   layouts/
-    Layout.astro          # <head>, meta/SEO, fonts, header, modal mount
+    Layout.astro          # <head>, meta/SEO, fonts, and modal mount
   components/
-    OrderInquiryModal.astro
-    index/                # homepage sections
-  data/
-    homeFaqs.ts
+    OrderInquiryModal.astro # shared WhatsApp inquiry modal
   public/                   # static passthrough: favicon, robots.txt, llms.txt, social assets
 astro.config.mjs
 ```
@@ -82,7 +79,7 @@ astro.config.mjs
 **Architectural rules**
 
 - **One `.astro` file per route.** No dynamic `[slug]` routing — pages are authored by hand for editorial control and SEO.
-- Stage 2 currently includes the homepage and four hand-authored category pages: `/custom-cakes/`, `/cupcakes/`, `/pastries/`, and `/cookies/`.
+- The current site includes one hand-authored work-in-progress homepage.
 - The shared inquiry flow lives in `src/components/OrderInquiryModal.astro` and is mounted once from `src/layouts/Layout.astro`.
 - Keep the CSS refactor in `src/assets/styles/global.css` as the baseline; remove dead tokens before adding new ones.
 
@@ -92,12 +89,8 @@ astro.config.mjs
 
 | URL | Purpose | SEO/conversion note |
 |---|---|---|
-| `/` | Landing: hero, story, the baker (short), ordering steps, delivery facts, FAQ, contact + WhatsApp CTA | Primary entry; a WhatsApp CTA must be visible above the fold. |
-| `/custom-cakes/`, `/cupcakes/`, `/pastries/`, `/cookies/` | Current Stage 2 category pages | Product discovery, category-specific SEO, and WhatsApp inquiry. |
-| `/products/` | Stage 3 browse-all hub | Links to the four current category pages. |
-| `/about/` | Stage 3 owner story | Builds trust and E-E-A-T. |
-| `/delivery/` | Stage 3 delivery guide | Lalamove coverage, timing, and delivery policy. |
-| `/faq/` | Stage 3 question page | Long-tail SEO and fewer repetitive questions. |
+| `/` | Work-in-progress page with real bake photography and a WhatsApp CTA | Only current public route; the order CTA must remain visible in the central page message. |
+| `/products/`, `/about/`, `/delivery/`, `/faq/` | Paused future routes | Add only after the owner approves the replacement site direction. |
 | `/order/`, `/occasions/*` | Later backlog | Add only when the dedicated use case is ready. |
 
 **Recommended additions:** a `/gallery` (visual showcase — strong for a cake brand), a `/privacy` page (trust + needed if any form data is handled), and a `404.astro`. A future `/journal` (blog) would help SEO but is optional.
@@ -228,7 +221,7 @@ Site-wide `Bakery`/`LocalBusiness` in `Layout`, plus page-specific schema: `Prod
 
 ## 9. The order → WhatsApp funnel
 
-The current inquiry flow is a shared modal mounted by the layout and opened from the homepage or category pages. It opens WhatsApp with a **pre-filled message**. This is the one place client-side JS is expected — keep it small and self-contained.
+The current inquiry flow is a shared modal mounted by the layout and opened from the work-in-progress homepage. It opens WhatsApp with a **pre-filled message**. This is the one place client-side JS is expected — keep it small and self-contained.
 
 - Build a `https://wa.me/<number>?text=<encoded>` link. **Always `encodeURIComponent` the message.**
 - Use native form controls where they cover the need cleanly. The delivery-date field should stay `type="date"` unless there is a real product requirement to replace it.
@@ -259,7 +252,7 @@ Name: <name>
 ## 11. Do / Don't for agents
 
 **Do**
-- Reuse existing tokens, components, and shared data files like `homeFaqs.ts`.
+- Reuse existing tokens and the shared `OrderInquiryModal.astro` component.
 - Keep pages static and JS-free unless interactivity is required.
 - Match the existing file/structure conventions.
 - Keep documentation aligned: after implementation, inspect `README.md` and every relevant `docs/*.md` file; update route maps, stage status, acceptance criteria, and deferred work in the same change.

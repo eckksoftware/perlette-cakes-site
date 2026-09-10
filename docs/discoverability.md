@@ -12,21 +12,18 @@ This is the working checklist for SEO and AI or LLM discoverability.
 - Matching structured data.
 - Internal links from at least one stronger page.
 
-## Stage 2 Status
+## Current Status
 
-- Public routes: `/`, `/custom-cakes/`, `/cupcakes/`, `/pastries/`, and `/cookies/`.
+- Public route: `/`.
 - Sitemap is configured and `robots.txt` allows the approved AI crawlers.
-- `llms.txt` exists and links to the current public pages.
+- `llms.txt` exists and describes the current work-in-progress page and business.
 - Layout emits site-wide `Bakery` schema.
-- Homepage emits `FAQPage` schema.
-- Category pages emit `CollectionPage` and `ItemList` schema.
-- Category pages use one eager hero image each.
+- The homepage uses one eager image and lazy-loads supporting collage images.
 
 ## Current Gaps
 
-- Category photography and product image alternatives should be kept current as new bake images are approved.
-- Category copy and product claims need owner approval before final launch.
-- `/products/`, `/about/`, `/delivery/`, and `/faq/` are Stage 3 routes, not current Stage 2 requirements.
+- The replacement page and future product copy need owner approval.
+- `/products/`, `/about/`, `/delivery/`, and `/faq/` are paused future routes.
 
 ## Entity Facts To Keep Consistent
 

@@ -27,8 +27,8 @@ Internal reference for brand, copy, and launch constraints.
 
 - Hero image 1: `src/assets/images/index/hero-cupcakes.JPG`
 - Hero image 2: `src/assets/images/index/hero-flowery-cake.JPG`
-- Category pages currently reuse these approved landing images as marked placeholders:
-  `src/assets/images/index/variety-cakes.JPG`, `variety-cupcakes.JPG`, `variety-pastries.JPG`, and `variety-cookies.JPG`
+- The work-in-progress page uses approved landing images as a surrounding collage:
+  `src/assets/images/index/variety-pastries.JPG` and `variety-cookies.JPG`
 - Owner story image: `src/assets/images/index/owner-personal-handmade-gifts.JPG`
 
 ## Copy Constraints

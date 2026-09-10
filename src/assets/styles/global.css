@@ -23,54 +23,26 @@
 }
 
 :root {
-  --color-surface: rgba(255, 253, 251, 0.92);
-  --color-surface-soft: #f7f1eb;
-  --color-page: rgba(255, 253, 251, 0.92);
-  --color-on-primary: rgba(255, 253, 251, 0.92);
-  --color-text-muted: #473c38;
-  --color-primary-ink: #7a4a57;
-  --color-primary-strong: #693f4a;
-  --color-border: #050a30;
-  --color-nav-surface: rgba(255, 253, 251, 0.92);
-  --color-nav-border: rgba(122, 74, 87, 0.12);
-
-  --color-text: #050a30;
-  /* Keep the rose brand surface while meeting AA contrast with white text. */
+  --color-page: #fbf7f2;
+  --color-surface: #fffdfb;
+  --color-surface-soft: #f2e6e0;
+  --color-text: #302a32;
+  --color-text-muted: #5f5558;
   --color-primary: #9f596a;
+  --color-primary-ink: #6f3f4d;
+  --color-primary-strong: #7f4657;
+  --color-on-primary: #fffaf7;
+  --color-border: #d9c8c3;
+  --color-shadow: rgba(73, 47, 52, 0.15);
 
-  --text-font-size: clamp(1.05rem, 0.98rem + 0.45vw, 1.35rem);
-  --label-text-font-size: clamp(0.95rem, 0.92rem + 0.2vw, 1.1rem);
   --brand-font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.7rem);
-  --header-one-font-size: clamp(2.5rem, 5.25vw, 4.25rem);
-  --header-two-font-size: clamp(2rem, 4.75vw, 3.75rem);
-  --header-three-font-size: clamp(1.8rem, 4.25vw, 3.25rem);
 
   --font-display: "Fraunces Variable", Georgia, "Times New Roman", serif;
   --font-body: "Zarathustra", Georgia, "Times New Roman", serif;
 
-  --side-space-content-md: var(--space-xl);
-
-  --side-space-section-sm: clamp(1rem, 4vw, 2rem);
-  --side-space-section-md: clamp(2.5rem, 5vw, 4rem);
-  --panel-space: clamp(1.5rem, 4vw, 3rem);
-
-  --top-space-media-md-mobile: clamp(2rem, 8vw, 3.125rem);
-
-  --top-space-section-md: clamp(5rem, 10vw, 10rem);
-
-  --bottom-space-section-s: clamp(3rem, 6vw, 5rem);
-  --bottom-space-section-md: clamp(5rem, 10vw, 10rem);
-
-  --bottom-space-header-md: var(--space-sm);
-
-  --bottom-space-text-md: var(--space-xs);
-
-  --gap-space-md: var(--space-md);
-  --gap-space-xl: var(--space-xl);
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
   --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
   --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
-  --step-2: clamp(1.56rem, 1.4rem + 0.8vw, 2rem);
   --space-xs: 0.5rem;
   --space-sm: 0.75rem;
   --space-md: 1rem;
@@ -82,15 +54,15 @@
   --radius-lg: 20px;
   --radius-xl: 32px;
 
-  --shadow-sm: 0 1px 3px rgba(43, 38, 34, 0.08);
-  --shadow-md: 0 8px 24px rgba(43, 38, 34, 0.1);
+  --shadow-sm: 0 1px 3px var(--color-shadow);
+  --shadow-md: 0 12px 28px var(--color-shadow);
 
-  --focus-ring: 0 0 0 3px rgba(201, 139, 154, 0.35);
+  --focus-ring: 0 0 0 3px rgba(159, 89, 106, 0.35);
   --transition-base: 180ms ease;
 }
 
 html {
-  scroll-behavior: smooth;
+  background: var(--color-page);
 }
 
 *, *::before, *::after {
@@ -164,50 +136,6 @@ h3 {
   letter-spacing: -0.04em;
 }
 
-h1 {
-  font-size: var(--header-one-font-size);
-  line-height: 0.92;
-}
-
-h2 {
-  font-size: var(--header-two-font-size);
-  line-height: 0.95;
-}
-
-h3 {
-  font-size: var(--header-three-font-size);
-  line-height: 1;
-}
-
-p {
-  color: inherit;
-  font-size: var(--text-font-size);
-}
-
-.text-header {
-  font-size: var(--label-text-font-size);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-}
-
-.eyebrow,
-.section-kicker {
-  color: var(--color-primary-strong);
-  font-size: var(--label-text-font-size);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
-
-.text-muted {
-  color: var(--color-text-muted);
-}
-
-.section-space {
-  padding-block: var(--top-space-section-md) var(--bottom-space-section-md);
-}
-
 :focus-visible {
   outline: none;
   box-shadow: var(--focus-ring);
@@ -251,28 +179,11 @@ p {
 
 .content-shell {
   width: 100%;
-  padding-inline: var(--side-space-section-sm);
+  padding-inline: var(--space-md);
 }
 
 @media (min-width: 48rem) {
   .content-shell {
-    padding-inline: var(--side-space-section-md);
-  }
-}
-
-/* Scroll reveal. Elements are visible by default; JS adds .is-visible on enter.
-   Reduced-motion users skip the transition entirely and see everything at once. */
-@media (prefers-reduced-motion: no-preference) {
-  .js-ready [data-reveal] {
-    opacity: 0;
-    transform: translateY(1.5rem);
-    transition:
-      opacity 700ms ease,
-      transform 700ms ease;
-  }
-
-  .js-ready [data-reveal].is-visible {
-    opacity: 1;
-    transform: none;
+    padding-inline: clamp(var(--space-xl), 6vw, var(--space-2xl));
   }
 }

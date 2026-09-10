@@ -1,18 +1,18 @@
 # Stage 1 Design Direction
 
-Stage 1 is complete. This file records the current UI baseline to preserve while launch hardening and deployment work continue.
+This file records the current work-in-progress page direction while the owner reviews the replacement site.
 
 ## Scope
 
-- One homepage route
-- One shared WhatsApp inquiry modal
-- Stage 2 category pages now reuse this shell and token baseline.
+- One work-in-progress homepage route
+- One shared WhatsApp inquiry modal, opened by the central `Order from Perlette` button
+- No category or support routes while the replacement direction is under review
 - No checkout, backend, or accounts
 
 ## Active Files
 
 - `src/layouts/Layout.astro`
-- `src/components/index/Landing.astro`
+- `src/pages/index.astro`
 - `src/components/OrderInquiryModal.astro`
 - `src/assets/styles/global.css`
 
@@ -23,15 +23,12 @@ Stage 1 is complete. This file records the current UI baseline to preserve while
 - Editorial typography with simple composition
 - Rose accents used for CTAs, not everywhere
 
-## Section Order
+## Page Composition
 
-1. Hero
-2. Owner story
-3. Featured categories
-4. How ordering works
-5. WhatsApp CTA
-6. FAQ
-7. Factual footer
+- Quiet brand header
+- Asymmetrical real-bake photo collage
+- Central work-in-progress message and order CTA
+- Small Instagram footer link
 
 ## Typography
 
@@ -70,5 +67,5 @@ Rules:
 
 ## Current Gaps
 
-- Product photography and final category copy approval are still pending.
-- Stage 3 support routes and analytics are still pending.
+- Owner approval of the replacement visual direction is still pending.
+- Product browsing, support routes, and analytics remain deferred.

@@ -2,10 +2,10 @@
 
 This file records the public order funnel so future stages do not blur what is live versus what is only planned.
 
-## Stage 1 and Stage 2
+## Current Flow
 
 - Public CTA wording stays WhatsApp-specific.
-- Users open the shared modal from the homepage or a category page.
+- Users open the shared modal from the single work-in-progress page.
 - The modal validates lightweight order details.
 - Submission opens `wa.me` with a pre-filled message.
 - No backend, no checkout, no account system.
@@ -14,7 +14,7 @@ This file records the public order funnel so future stages do not blur what is l
 
 - Option A: redirect through a small local or homelab service before forwarding to WhatsApp.
 - Option B: move the primary order flow to `app.perlettecakes`.
-- Do not change public CTA wording to generic `Order` until one of those options is the real production flow.
+- Keep the primary public CTA wording as `Order from Perlette`.
 - Add analytics hooks around CTA click, modal open, validation failure, and submit success without sending personal data.
 
 ## Data Rules
