@@ -17,7 +17,7 @@ import cookies from '../assets/images/index/variety-cookies.JPG';
 	<main class="wip-page">
 		<header class="wip-header content-shell">
 			<a class="wip-brand" href="/" aria-label="Perlette Cakes home">
-				<span>perlette</span> cakes
+				<img class="wip-brand__logo" src="/perlette-logo.svg" alt="Perlette Cakes" width="96" height="96" />
 			</a>
 			<p class="wip-header__location">Home-based baker / Klang Valley, Malaysia</p>
 		</header>
@@ -83,7 +83,7 @@ import cookies from '../assets/images/index/variety-cookies.JPG';
 				<p class="wip-message__copy">
 					We are preparing a new home for Perlette Cakes. Orders are still welcome on WhatsApp, with Lalamove delivery across Klang Valley.
 				</p>
-				<button class="button button--primary wip-message__button" type="button" data-order-trigger data-order-interest="Cake">
+				<button class="button button--primary wip-message__button" type="button" data-order-trigger>
 					Order from Perlette
 				</button>
 				<p class="wip-message__note">Custom cakes, cupcakes, pastries, and cookies</p>
@@ -117,18 +117,17 @@ import cookies from '../assets/images/index/variety-cookies.JPG';
 	}
 
 	.wip-brand {
-		color: var(--color-primary-ink);
-		font-family: var(--font-display);
-		font-size: var(--brand-font-size);
-		font-style: italic;
-		font-weight: 650;
-		letter-spacing: -0.05em;
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-sm);
 		text-decoration: none;
 		white-space: nowrap;
 	}
 
-	.wip-brand span {
-		font-weight: 450;
+	.wip-brand__logo {
+		width: clamp(4rem, 7vw, 6rem);
+		height: auto;
+		border-radius: var(--radius-md);
 	}
 
 	.wip-header__location,
@@ -288,9 +287,10 @@ import cookies from '../assets/images/index/variety-cookies.JPG';
 		.wip-gallery {
 			position: relative;
 			display: grid;
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+			grid-template-columns: minmax(0, 1fr);
 			gap: var(--space-md);
 			width: 100%;
+			margin-top: var(--space-xl);
 			padding-bottom: var(--space-xl);
 		}
 
@@ -302,15 +302,6 @@ import cookies from '../assets/images/index/variety-cookies.JPG';
 			left: auto;
 			width: 100%;
 			transform: none;
-		}
-
-		.wip-photo--cake {
-			grid-row: span 2;
-			aspect-ratio: 0.78;
-		}
-
-		.wip-photo--gifts {
-			display: none;
 		}
 
 		.wip-message {

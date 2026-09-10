@@ -22,6 +22,7 @@ Internal reference for brand, copy, and launch constraints.
 - Warm cream base with rose-led accents
 - `Fraunces` for display, `Zarathustra` for body and UI in the current implementation
 - Keep the expressive wordmark treatment limited to the brand name
+- Active logo asset: `public/perlette-logo.svg`
 
 ## Approved Images
 

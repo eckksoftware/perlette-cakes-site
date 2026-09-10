@@ -28,10 +28,10 @@
   --color-surface-soft: #f2e6e0;
   --color-text: #302a32;
   --color-text-muted: #5f5558;
-  --color-primary: #9f596a;
+  --color-primary: #e2bfc6;
   --color-primary-ink: #6f3f4d;
   --color-primary-strong: #7f4657;
-  --color-on-primary: #fffaf7;
+  --color-on-primary: #302a32;
   --color-border: #d9c8c3;
   --color-shadow: rgba(73, 47, 52, 0.15);
 
@@ -42,7 +42,6 @@
 
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
   --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
-  --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
   --space-xs: 0.5rem;
   --space-sm: 0.75rem;
   --space-md: 1rem;
@@ -54,7 +53,6 @@
   --radius-lg: 20px;
   --radius-xl: 32px;
 
-  --shadow-sm: 0 1px 3px var(--color-shadow);
   --shadow-md: 0 12px 28px var(--color-shadow);
 
   --focus-ring: 0 0 0 3px rgba(159, 89, 106, 0.35);
@@ -175,6 +173,7 @@ h3 {
 
 .button--primary:hover {
   background: var(--color-primary-strong);
+  color: var(--color-surface);
 }
 
 .content-shell {

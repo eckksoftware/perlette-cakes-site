@@ -36,10 +36,10 @@ B and C are not afterthoughts bolted on at the end. Because there is no storefro
 | Styling | **Vanilla CSS** | One global `src/assets/styles/global.css` with design tokens; split into scoped/component styles only when it gets unwieldy (see §6). **No Tailwind, no CSS frameworks.** |
 | Images | **`astro:assets`** (`<Image />`) | Mandatory for all content images (see §8). |
 | Fonts | **`@fontsource` (self-hosted)** | No external Google Fonts CDN — better perf/SEO. |
-| Client JS | **Minimal** | Use JS when needed. Use Astro islands only where interactivity is unavoidable (the order page; see §9). |
+| Client JS | **Minimal** | Use JS when needed. The shared inquiry modal is the only current interactive surface (see §9). |
 | Hosting | Static host (Cloudflare Pages) | Build output is `./dist`. |
-| Node | **20 LTS+** | |
-| Package manager | **npm** | (pnpm is fine — match the lockfile present.) |
+| Node | **22 LTS+** | |
+| Package manager | **npm** | Use the repository's npm lockfile. |
 
 > **Assumptions to confirm:** static SSG, English as primary language with Malay keywords on seasonal pages. If a bilingual (BM/EN) site is wanted, flag it — it changes routing and SEO.
 
@@ -55,7 +55,7 @@ npm run preview      # preview the built site
 npm run astro check  # type-check (run before committing)
 ```
 
-Recommended integrations: `@astrojs/sitemap`, `sharp` (image compression, default in Astro), `@fontsource-variable/fraunces`, `@fontsource/geist-sans`.
+Recommended integrations: `@astrojs/sitemap`, `sharp` (image compression, default in Astro), and `@fontsource-variable/fraunces`.
 
 ---
 
@@ -110,15 +110,17 @@ astro.config.mjs
 
 ```css
 :root {
-  /* ===== Brand palette — REPLACE hex values with Perlette's actual brand colors ===== */
-  --color-bg:          #FFFDFB; /* page background (soft cream) */
-  --color-surface:     #FFFFFF; /* cards / raised areas       */
-  --color-text:        #2B2622; /* primary text (warm charcoal)*/
-  --color-text-muted:  #6E655E;
-  --color-primary:     #C98B9A; /* brand rose — buttons, links */
-  --color-primary-ink: #7A4A57; /* darker brand — hover/active */
-  --color-accent:      #C9A24B; /* gold — use sparingly        */
-  --color-border:      #ECE5DE;
+  --color-page:         #FBF7F2; /* page background */
+  --color-surface:      #FFFDFB; /* cards / raised areas */
+  --color-surface-soft: #F2E6E0;
+  --color-text:         #302A32;
+  --color-text-muted:   #5F5558;
+  --color-primary:      #E2BFC6; /* primary CTA surface */
+  --color-primary-ink:  #6F3F4D; /* readable brand ink */
+  --color-primary-strong: #7F4657;
+  --color-on-primary:   #302A32;
+  --color-border:       #D9C8C3;
+  --color-shadow:       rgba(73, 47, 52, 0.15);
 
   /* ===== Typography ===== */
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
@@ -127,22 +129,14 @@ astro.config.mjs
   /* Modular type scale (1.250 — minor third) */
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
   --step-0:  clamp(1rem,    0.95rem + 0.25vw, 1.125rem);
-  --step-1:  clamp(1.25rem, 1.15rem + 0.5vw,  1.5rem);
-  --step-2:  clamp(1.56rem, 1.4rem + 0.8vw,   2rem);
-  --step-3:  clamp(1.95rem, 1.7rem + 1.25vw,  2.75rem);
-  --step-4:  clamp(2.44rem, 2rem + 2.2vw,     3.75rem);
 
   /* ===== Spacing scale ===== */
   --space-xs: 0.5rem;  --space-sm: 0.75rem; --space-md: 1rem;
   --space-lg: 1.5rem;  --space-xl: 2.5rem;  --space-2xl: 4rem;
 
   /* ===== Radius / elevation ===== */
-  --radius-sm: 6px;  --radius-md: 12px;  --radius-lg: 20px;
-  --shadow-sm: 0 1px 3px rgba(43,38,34,.08);
-  --shadow-md: 0 8px 24px rgba(43,38,34,.10);
-
-  /* Layout */
-  --content-max: 110rem;   /* max content width */
+  --radius-md: 12px;  --radius-lg: 20px;  --radius-xl: 32px;
+  --shadow-md: 0 12px 28px var(--color-shadow);
 }
 ```
 
