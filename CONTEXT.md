@@ -1,6 +1,6 @@
 # Perlette Cakes
 
-This context defines the core business language for Perlette Cakes, a home-based baking business whose website exists to attract inquiries and convert them into WhatsApp orders.
+This context defines the core business language for Perlette Cakes, a home-based baking business whose website lets customers make menu-based order requests for owner review.
 
 ## Language
 
@@ -29,12 +29,12 @@ Cupcakes, pastries, and cookies offered alongside custom celebration cakes.
 _Avoid_: add-ons, side items
 
 **Featured product categories**:
-The stage-one homepage categories are Custom Cakes, Cupcakes, Pastries, and Cookies.
+The landing-page categories are Custom Cakes, Cupcakes, Pastries, and Cookies.
 _Avoid_: muffins as a core category
 
-**Products**:
-The canonical customer-facing name for the future browse-all page at `/products`, which will list the full catalogue across categories.
-_Avoid_: menu, catalogue as the primary page name
+**Menu**:
+The canonical customer-facing name for `/menu`, where customers browse approved products and prepare an order request.
+_Avoid_: products as the primary page name, catalogue as the primary page name
 
 **Service area**:
 Klang Valley, Malaysia, the canonical place name used across page copy, metadata, and schema.
@@ -60,21 +60,25 @@ _Avoid_: self-pickup, collection
 Standard delivery windows are 12pm to 4pm, 4pm to 8pm, and 8pm to 10pm. Exact arrival times are not guaranteed because timing depends on traffic, weather, and Lalamove driver availability.
 _Avoid_: exact-time delivery promises unless explicitly confirmed
 
-**WhatsApp order inquiry**:
-The primary conversion action where a visitor contacts Perlette Cakes on WhatsApp to discuss or place an order.
-_Avoid_: checkout, cart, online order form
+**Order request**:
+The customer action at `/menu` that sends selected items and delivery details for owner review. Stage 1 sends this request to WhatsApp; Stage 2 submits it to the on-prem API. An order request is not accepted until Perlette Cakes confirms feasibility, final pricing, delivery, and payment terms.
+_Avoid_: confirmed order, instant acceptance
+
+**Checkout**:
+The customer-facing `/menu` sequence for selecting products and supplying order-request details. It opens WhatsApp in Stage 1 and submits to the on-prem API in Stage 2.
+_Avoid_: implying that payment or availability is confirmed in the browser
+
+**Admin service**:
+The future on-prem service at `admin.perlettecakes.com`. It provides a private owner dashboard and the public `/api` boundary used by `/menu` to submit order requests.
+_Avoid_: treating the public API as a private dashboard route
+
+**WhatsApp**:
+The public customer contact channel for questions and order conversation. It is the Stage 1 transport for `/menu` order requests and becomes optional after Stage 2.
+_Avoid_: presenting WhatsApp as the future system of record
 
 **WhatsApp number**:
 The public customer contact number is +60 19-650 5050, while technical links and schema should use the normalized number 60196505050 where formatting must be numeric only.
 _Avoid_: inconsistent number formatting across copy, schema, and links
-
-**Qualified WhatsApp inquiry**:
-A WhatsApp message from a visitor who understands what Perlette Cakes sells and includes enough intent to start a real order conversation.
-_Avoid_: empty click, vague message, accidental tap
-
-**Vendor-neutral event hooks**:
-The site should define meaningful analytics events in the UI flow without hard-coding a specific analytics provider into the core implementation. These hooks are planned, not implemented yet.
-_Avoid_: provider-specific tracking baked into core UI
 
 **Dietary claim policy**:
 Perlette Cakes does not claim halal certification or allergen-free products unless those claims are verified, and customers should discuss dietary needs directly on WhatsApp.
@@ -92,10 +96,6 @@ _Avoid_: presenting all flavours as automatically eggless or vegan
 Custom orders are accepted subject to availability and design requirements.
 _Avoid_: unconditional custom-order promises
 
-**Order inquiry modal**:
-The work-in-progress page CTA opens a lightweight modal where visitors enter receiver name, contact number, interested products, delivery date, delivery time range, delivery address, and any optional special request before continuing to WhatsApp. The current validation requires at least 3 days lead time.
-_Avoid_: full checkout form, server-side order form
-
 **Lead time**:
 The public ordering guidance that custom celebration cakes should be ordered at least 3 to 5 days in advance, with larger or more customised orders needing more notice.
 _Avoid_: instant order, same-day guarantee
@@ -108,8 +108,8 @@ _Avoid_: promising automatic refunds or date changes
 Customers who need an official invoice for claims purposes should request it on WhatsApp.
 _Avoid_: implying automated invoice generation on the website
 
-**Stage-one voice**:
-Use we / our in public launch copy for now, while keeping the tone personal enough to reflect a home-based business. This can be revisited later if the owner prefers I / my.
+**Public voice**:
+Use we / our in public copy for now, while keeping the tone personal enough to reflect a home-based business. This can be revisited later if the owner prefers I / my.
 _Avoid_: switching pronouns back and forth within the same published section
 
 **Instagram**:

@@ -2,7 +2,7 @@
 
 Perlette Cakes is a home-based baker in Klang Valley, Malaysia.
 
-The website is currently a work-in-progress page. Orders are still welcome through the central WhatsApp inquiry flow.
+The public website is being developed to include a menu-based order-request flow. Customers can currently contact Perlette Cakes on WhatsApp with order questions.
 
 ## Business Summary
 
@@ -10,11 +10,11 @@ The website is currently a work-in-progress page. Orders are still welcome throu
 - Delivery: across Klang Valley via Lalamove
 - Pickup: not offered
 - Lead time: usually 3 to 5 days, with more notice needed for larger or more detailed orders
-- Ordering: customers order by WhatsApp
+- Ordering: menu-based order requests are in development; WhatsApp remains available for questions
 - WhatsApp: +60 19-650 5050
 
 ## Key Links
 
-- [Work-in-progress page](https://perlettecakes.com/)
+- [Perlette Cakes](https://perlettecakes.com/)
 - [Instagram](https://www.instagram.com/perlettecakes)
 - [WhatsApp Order Link](https://wa.me/60196505050)

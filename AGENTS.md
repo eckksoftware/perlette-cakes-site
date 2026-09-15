@@ -6,14 +6,14 @@ Guidance for AI agents and contributors working in this repository. Read this be
 
 ## 1. What this is
 
-Perlette Cakes is a **homemade baker** in the Klang Valley, Malaysia. There is **no physical storefront** — cakes and pastries are baked to order and delivered to clients via **Lalamove**. Orders are taken through **WhatsApp**, not an online checkout.
+Perlette Cakes is a **homemade baker** in the Klang Valley, Malaysia. There is **no physical storefront** — cakes and pastries are baked to order and delivered to clients via **Lalamove**.
 
 The site exists to:
 
-1. **Tell the brand story** — who the baker is, how the bakes are made, build trust, allow customers to scroll through products and easily place an order for owner.
-2. **Funnel visitors into a WhatsApp order** — the primary conversion action where a standardized message is created based on the products chosen by customers.
+1. **Tell the brand story** — who the baker is, how the bakes are made, build trust, and let customers browse approved products.
+2. **Funnel visitors into an order request** — Stage 1 `/menu/` sends approved product and delivery details to WhatsApp; Stage 2 submits them to the owner-review API.
 
-There is no backend, no database, and no user accounts. Keep it that way unless explicitly told otherwise.
+The public app remains a static Astro site. A future on-prem service in this repository will run the private owner dashboard at `admin.perlettecakes.com` and the public order-request API at `admin.perlettecakes.com/api`. Do not add service behavior to the Astro app or expose provider credentials to the browser.
 
 ### Core priorities — treat these as co-equal
 
@@ -36,7 +36,7 @@ B and C are not afterthoughts bolted on at the end. Because there is no storefro
 | Styling | **Vanilla CSS** | One global `src/assets/styles/global.css` with design tokens; split into scoped/component styles only when it gets unwieldy (see §6). **No Tailwind, no CSS frameworks.** |
 | Images | **`astro:assets`** (`<Image />`) | Mandatory for all content images (see §8). |
 | Fonts | **`@fontsource` (self-hosted)** | No external Google Fonts CDN — better perf/SEO. |
-| Client JS | **Minimal** | Use JS when needed. The shared inquiry modal is the only current interactive surface (see §9). |
+| Client JS | **Minimal** | Use it only for necessary public UI, such as the future `/menu/` selection and checkout flow. |
 | Hosting | Static host (Cloudflare Pages) | Build output is `./dist`. |
 | Node | **22 LTS+** | |
 | Package manager | **npm** | Use the repository's npm lockfile. |
@@ -67,11 +67,11 @@ src/
     styles/
       global.css            # active design tokens + base styles
   pages/                  # routes — hardcoded .astro pages, one file per URL
-    index.astro           # single work-in-progress page
+    index.astro           # current work-in-progress page
   layouts/
-    Layout.astro          # <head>, meta/SEO, fonts, and modal mount
+    Layout.astro          # <head>, metadata, and shared public UI
   components/
-    OrderInquiryModal.astro # shared WhatsApp inquiry modal
+    OrderInquiryModal.astro # current `/` inquiry flow
   public/                   # static passthrough: favicon, robots.txt, llms.txt, social assets
 astro.config.mjs
 ```
@@ -79,8 +79,9 @@ astro.config.mjs
 **Architectural rules**
 
 - **One `.astro` file per route.** No dynamic `[slug]` routing — pages are authored by hand for editorial control and SEO.
-- The current site includes one hand-authored work-in-progress homepage.
-- The shared inquiry flow lives in `src/components/OrderInquiryModal.astro` and is mounted once from `src/layouts/Layout.astro`.
+- `/home/` is a temporary, `noindex` owner-demo route. Promote approved content to `/` and redirect `/home/` when ready.
+- `/menu/` owns the future customer order-request flow. Do not extend the current inquiry modal for it.
+- The on-prem service is a separate deployment boundary. Choose its directory structure when service implementation starts; do not create it speculatively.
 - Keep the CSS refactor in `src/assets/styles/global.css` as the baseline; remove dead tokens before adding new ones.
 
 ---
@@ -89,11 +90,11 @@ astro.config.mjs
 
 | URL | Purpose | SEO/conversion note |
 |---|---|---|
-| `/` | Work-in-progress page with real bake photography and a WhatsApp CTA | Only current public route; the order CTA must remain visible in the central page message. |
-| `/products/`, `/about/`, `/delivery/`, `/faq/` | Paused future routes | Add only after the owner approves the replacement site direction. |
-| `/order/`, `/occasions/*` | Later backlog | Add only when the dedicated use case is ready. |
-
-**Recommended additions:** a `/gallery` (visual showcase — strong for a cake brand), a `/privacy` page (trust + needed if any form data is handled), and a `404.astro`. A future `/journal` (blog) would help SEO but is optional.
+| `/` | Current work-in-progress landing page | Remains live while the owner reviews `/home/`. |
+| `/home/` | Temporary landing-page demo | Keep `noindex` and out of the sitemap; replace `/` with its approved content. |
+| `/menu/` | Product selection and order-request checkout UI | Stage 1 opens WhatsApp with selected products and delivery details; Stage 2 submits the request to the API. Never promise acceptance, final pricing, or delivery availability. |
+| `admin.perlettecakes.com` | Future private owner dashboard | Not an Astro route. |
+| `admin.perlettecakes.com/api` | Future public order-request API | Called cross-origin by `/menu/`; never grant dashboard access. |
 
 ---
 
@@ -182,15 +183,15 @@ This section is load-bearing. Treat its checklist as acceptance criteria for eve
 LLMs and AI search (ChatGPT, Claude, Perplexity, Gemini, Google AI Overviews) recommend businesses by extracting **clear, self-contained, factual statements** from crawlable pages. Optimize for being *quoted and cited*, not just ranked.
 
 - **Answer-first content.** Lead each section with a direct, factual answer, then elaborate. State delivery areas, lead time, price ranges, and how to order in plain declarative sentences an assistant can lift verbatim. Avoid burying facts in marketing fluff.
-- **Entity clarity & consistency.** State *who* (Perlette Cakes), *what* (homemade custom cakes & pastries), *where* (Klang Valley, Malaysia), *how to order* (WhatsApp) explicitly and identically across pages, schema, and social. Inconsistent name/area/contact confuses entity resolution.
-- **Question-shaped headings + FAQ.** Use real user questions as `<h2>`/`<h3>` ("How long does a custom cake take to order?", "Which areas do you deliver to?"). Back the FAQ page with `FAQPage` schema.
+- **Entity clarity & consistency.** State *who* (Perlette Cakes), *what* (homemade custom cakes & pastries), *where* (Klang Valley, Malaysia), and *how to order* (the approved public request flow) explicitly and identically across pages, schema, and social. Inconsistent name/area/contact confuses entity resolution.
+- **Question-shaped headings.** Use real user questions as `<h2>`/`<h3>` ("How long does a custom cake take to order?", "Which areas do you deliver to?") when they are supported by approved business facts.
 - **Structured data is the priority signal for AEO.** Ship rich JSON-LD (see 8d). LLMs and AI search lean heavily on it.
 - **Self-contained pages.** Each page should make sense quoted in isolation — don't rely on context only available by reading other pages.
 - **Real, attributable content.** Genuine reviews (with `Review`/`AggregateRating` schema), specific bake names, real provenance (training, location) — concrete facts get cited; vague claims don't.
 - **Crawlability for AI bots** (see 8e). If the content isn't fetchable, it can't be recommended.
 
 ### 8d. Structured data (JSON-LD) — required
-Site-wide `Bakery`/`LocalBusiness` in `Layout`, plus page-specific schema: `Product` (+ `Offer`) on `/cake`, `FAQPage` on `/faq`, `Review`/`AggregateRating` for testimonials, `Event`/seasonal `Product` on `/occasions/*`, `BreadcrumbList` where nested. Keep schema values in sync with the visible HTML — mismatches are penalized.
+Keep site-wide `Bakery`/`LocalBusiness` schema in `Layout`. Add `Product` and `Offer` schema to `/menu/` only for approved, visibly matching product facts. Keep schema values in sync with the visible HTML — mismatches are penalized.
 
 ```html
 <!-- Site-wide LocalBusiness JSON-LD — include in Layout, fill real values -->
@@ -207,30 +208,21 @@ Site-wide `Bakery`/`LocalBusiness` in `Layout`, plus page-specific schema: `Prod
 ```
 
 ### 8e. `llms.txt` + AI crawler policy
-- **Ship a `/llms.txt`** (Markdown at the site root via `public/`): a short plain-language summary of the business — what Perlette Cakes is, areas served, product types, lead time, how to order (WhatsApp), and links to key pages. This is the emerging convention for giving LLMs a clean, authoritative source.
+- **Ship a `/llms.txt`** (Markdown at the site root via `public/`): a short plain-language summary of the business — what Perlette Cakes is, areas served, product types, lead time, how to order, and links to public pages. Never list the admin host or API. This is the emerging convention for giving LLMs a clean, authoritative source.
 - **`robots.txt` must explicitly allow reputable AI crawlers** if the goal is to be recommended by them — e.g. `GPTBot`, `OAI-SearchBot`, `ClaudeBot`, `anthropic-ai`, `PerplexityBot`, `Google-Extended`. (Allowing these is a deliberate choice — confirm the owner is comfortable with it; for a marketing site that *wants* to be cited, allow.)
 - Keep `llms.txt` and the on-page facts in agreement with the JSON-LD and reality.
 
 ---
 
-## 9. The order → WhatsApp funnel
+## 9. The order-request flow
 
-The current inquiry flow is a shared modal mounted by the layout and opened from the work-in-progress homepage. It opens WhatsApp with a **pre-filled message**. This is the one place client-side JS is expected — keep it small and self-contained.
-
-- Build a `https://wa.me/<number>?text=<encoded>` link. **Always `encodeURIComponent` the message.**
-- Use native form controls where they cover the need cleanly. The delivery-date field should stay `type="date"` unless there is a real product requirement to replace it.
-- Keep the current client-side validation lightweight: strip digits from names, strip non-digits from contact numbers, and require at least 3 days lead time for delivery dates.
-- Standardize the message shape (refine later — treat as iterative):
-
-```
-Hi Perlette Cakes! I'd like to order:
-• <product> × <qty> — <options>
-Delivery date: <date>
-Delivery area: <area>
-Name: <name>
-```
-
-- No form submission to a server, no payment integration. Astro `<form>` POST is not used; assemble the link client-side from the selection state.
+- The current `/` WhatsApp inquiry modal remains only until the `/home/` and `/menu/` replacement flow is ready. Do not extend it for the new checkout.
+- Build Stage 1 `/menu/` as the customer-facing selection and WhatsApp order flow. It collects selected products, quantities, name, contact, delivery date, time window, and address. Use native controls where they cover the need cleanly; the delivery-date field stays `type="date"` unless there is a product requirement to change it.
+- Encode the Stage 1 WhatsApp message before creating its `wa.me` URL. It must list the selected items and delivery details.
+- Client-side validation is a usability aid. The future API must validate every request independently.
+- In Stage 2, `/menu/` will send requests directly to `https://admin.perlettecakes.com/api`, replacing the WhatsApp handoff. This is a cross-origin browser request: allow only the intended public origin, but do not mistake CORS for authorization or abuse protection.
+- Stage 2 adds only private owner review. Stripe webhook handling, email delivery, and Lalamove calls are later on-prem service work, with provider credentials server-side.
+- An order request does not imply availability, final price, delivery fee, payment, or acceptance.
 
 ---
 
@@ -246,15 +238,15 @@ Name: <name>
 ## 11. Do / Don't for agents
 
 **Do**
-- Reuse existing tokens and the shared `OrderInquiryModal.astro` component.
+- Reuse existing tokens and public-site patterns; retire the current inquiry modal when `/menu/` replaces its purpose.
 - Keep pages static and JS-free unless interactivity is required.
 - Match the existing file/structure conventions.
-- Keep documentation aligned: after implementation, inspect `README.md` and every relevant `docs/*.md` file; update route maps, stage status, acceptance criteria, and deferred work in the same change.
+- Keep documentation aligned: after implementation, inspect `README.md` and every relevant `docs/*.md` file; update routes, the implementation plan, and canonical business facts in the same change.
 - Treat §8 (SEO + AI/LLM discoverability) as acceptance criteria — every new page ships with unique title/meta, valid JSON-LD, answer-first crawlable content, and descriptive alt text.
 - Keep entity facts (name, area served, contact, how to order) identical across pages, JSON-LD, `llms.txt`, and social.
 
 **Don't**
-- Add Tailwind, a CSS framework, a backend, or a JS framework.
+- Add Tailwind, a CSS framework, or a JS framework. Do not add backend logic to the static Astro app.
 - Hardcode colours/spacing/fonts outside the tokens.
 - Add dependencies without need — every package is a perf/maintenance cost.
 - Duplicate product or content data across files.
