@@ -37,8 +37,12 @@ The canonical customer-facing name for `/menu`, where customers browse approved 
 _Avoid_: products as the primary page name, catalogue as the primary page name
 
 **Service area**:
-Klang Valley, Malaysia, the canonical place name used across page copy, metadata, and schema.
-_Avoid_: KL only, Klang Valley area, KL and Selangor
+Klang, Selangor, Malaysia, the canonical delivery area used across page copy, metadata, and schema.
+_Avoid_: Klang Valley-wide delivery, KL delivery, nationwide delivery
+
+**Business location**:
+Perlette Cakes is a home-based baker in Kuala Lumpur, Malaysia, with no physical storefront.
+_Avoid_: implying that the kitchen is in Klang or that customers can visit the kitchen
 
 **Canonical domain**:
 https://perlettecakes.com/ is the single production URL used for metadata, structured data, sitemap entries, and deployment configuration.
@@ -49,8 +53,8 @@ Lalamove, the third-party delivery method used to send orders to customers.
 _Avoid_: in-house delivery, shipping
 
 **Delivery reach**:
-Perlette Cakes delivers across Klang Valley and anywhere reachable by Lalamove Car from Mont Kiara.
-_Avoid_: promising nationwide shipping or areas outside practical Lalamove coverage
+Perlette Cakes delivers from Kuala Lumpur to approved addresses in Klang via Lalamove Car.
+_Avoid_: promising delivery across the full Klang Valley or outside approved Klang zones
 
 **No pickup**:
 Perlette Cakes does not offer customer pickup; orders are fulfilled through delivery only.
@@ -68,9 +72,13 @@ _Avoid_: confirmed order, instant acceptance
 The customer-facing `/menu` sequence for selecting products and supplying order-request details. It opens WhatsApp in Stage 1 and submits to the on-prem API in Stage 2.
 _Avoid_: implying that payment or availability is confirmed in the browser
 
+**Customer contact**:
+Stage 2 requires the customer's name, email address, and telephone number. A receiver telephone may be collected separately when the approved delivery rules require it.
+_Avoid_: using a transactional email address for marketing without separate consent
+
 **Admin service**:
-The future on-prem service at `admin.perlettecakes.com`. It provides a private owner dashboard and the public `/api` boundary used by `/menu` to submit order requests.
-_Avoid_: treating the public API as a private dashboard route
+The future on-prem Go service. `admin.perlettecakes.com` provides the Cloudflare Access-protected owner dashboard, while `api.perlettecakes.com` provides public order intake and provider callbacks.
+_Avoid_: putting public intake under the admin hostname or exposing provider credentials to the browser
 
 **WhatsApp**:
 The public customer contact channel for questions and order conversation. It is the Stage 1 transport for `/menu` order requests and becomes optional after Stage 2.

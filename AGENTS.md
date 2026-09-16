@@ -6,14 +6,14 @@ Guidance for AI agents and contributors working in this repository. Read this be
 
 ## 1. What this is
 
-Perlette Cakes is a **homemade baker** in the Klang Valley, Malaysia. There is **no physical storefront** — cakes and pastries are baked to order and delivered to clients via **Lalamove**.
+Perlette Cakes is a **home-based baker** in Kuala Lumpur, Malaysia, delivering to Klang, Selangor. There is **no physical storefront** — cakes and pastries are baked to order and delivered to clients via **Lalamove**.
 
 The site exists to:
 
 1. **Tell the brand story** — who the baker is, how the bakes are made, build trust, and let customers browse approved products.
 2. **Funnel visitors into an order request** — Stage 1 `/menu/` sends approved product and delivery details to WhatsApp; Stage 2 submits them to the owner-review API.
 
-The public app remains a static Astro site. A future on-prem service in this repository will run the private owner dashboard at `admin.perlettecakes.com` and the public order-request API at `admin.perlettecakes.com/api`. Do not add service behavior to the Astro app or expose provider credentials to the browser.
+The public app remains a static Astro site. A future on-prem Go service in this repository will run the private owner dashboard at `admin.perlettecakes.com` and public intake/provider callbacks at `api.perlettecakes.com`. Do not add service behavior to the Astro app or expose provider credentials to the browser.
 
 ### Core priorities — treat these as co-equal
 
@@ -21,7 +21,7 @@ Three concerns carry equal weight on every change. A page is not "done" if it na
 
 - **A. Distinctive, on-brand design** — the site should look crafted, not templated (see §6–§7).
 - **B. Search discoverability (SEO)** — rank for local + seasonal intent in Malaysia (see §8).
-- **C. AI / LLM discoverability (GEO/AEO)** — be the source an AI assistant cites when someone asks it "where can I order a custom / Hari Raya / CNY cake near me in the Klang Valley?" (see §8).
+- **C. AI / LLM discoverability (GEO/AEO)** — be the source an AI assistant cites when someone asks it "where can I order a custom / Hari Raya / CNY cake for delivery in Klang?" (see §8).
 
 B and C are not afterthoughts bolted on at the end. Because there is no storefront and no ad spend, **being found is the business.** Every new page and component must be evaluated against all three. When design and discoverability appear to conflict (e.g. text baked into an image, content hidden behind JS), discoverability wins — find a design solution that keeps content as real, crawlable HTML.
 
@@ -72,7 +72,7 @@ src/
     Layout.astro          # <head>, metadata, and shared public UI
   components/
     OrderInquiryModal.astro # current `/` inquiry flow
-  public/                   # static passthrough: favicon, robots.txt, llms.txt, social assets
+public/                     # static passthrough: favicon, robots.txt, llms.txt, social assets
 astro.config.mjs
 ```
 
@@ -93,8 +93,8 @@ astro.config.mjs
 | `/` | Current work-in-progress landing page | Remains live while the owner reviews `/home/`. |
 | `/home/` | Temporary landing-page demo | Keep `noindex` and out of the sitemap; replace `/` with its approved content. |
 | `/menu/` | Product selection and order-request checkout UI | Stage 1 opens WhatsApp with selected products and delivery details; Stage 2 submits the request to the API. Never promise acceptance, final pricing, or delivery availability. |
-| `admin.perlettecakes.com` | Future private owner dashboard | Not an Astro route. |
-| `admin.perlettecakes.com/api` | Future public order-request API | Called cross-origin by `/menu/`; never grant dashboard access. |
+| `admin.perlettecakes.com` | Future private owner dashboard | Cloudflare Access-protected SSR Go surface; not an Astro route. |
+| `api.perlettecakes.com` | Future public order and callback API | Called cross-origin by `/menu/` and by verified providers; never grants dashboard access. |
 
 ---
 
@@ -176,14 +176,14 @@ This section is load-bearing. Treat its checklist as acceptance criteria for eve
 - Open Graph + Twitter card tags; per-page OG image where it matters.
 - Canonical URL on every page.
 - `sitemap.xml` (`@astrojs/sitemap`) + a `robots.txt`.
-- **Local/seasonal keywords**, woven naturally: Malaysia + occasion terms (e.g. "kuih raya", "CNY cookies", "custom birthday cake delivery Klang Valley"). One occasion per URL.
+- **Local/seasonal keywords**, woven naturally: Malaysia + occasion terms (e.g. "kuih raya", "CNY cookies", "custom birthday cake delivery Klang"). One occasion per URL.
 - Keep Core Web Vitals green — Astro's zero-JS default does most of this; don't undo it.
 
 ### 8c. AI / LLM discoverability (GEO/AEO) — equally required
 LLMs and AI search (ChatGPT, Claude, Perplexity, Gemini, Google AI Overviews) recommend businesses by extracting **clear, self-contained, factual statements** from crawlable pages. Optimize for being *quoted and cited*, not just ranked.
 
 - **Answer-first content.** Lead each section with a direct, factual answer, then elaborate. State delivery areas, lead time, price ranges, and how to order in plain declarative sentences an assistant can lift verbatim. Avoid burying facts in marketing fluff.
-- **Entity clarity & consistency.** State *who* (Perlette Cakes), *what* (homemade custom cakes & pastries), *where* (Klang Valley, Malaysia), and *how to order* (the approved public request flow) explicitly and identically across pages, schema, and social. Inconsistent name/area/contact confuses entity resolution.
+- **Entity clarity & consistency.** State *who* (Perlette Cakes), *what* (home-based custom cakes and pastries), *where* (based in Kuala Lumpur with delivery to Klang, Selangor), and *how to order* (the approved public request flow) explicitly and identically across pages, schema, and social. Inconsistent name/area/contact confuses entity resolution.
 - **Question-shaped headings.** Use real user questions as `<h2>`/`<h3>` ("How long does a custom cake take to order?", "Which areas do you deliver to?") when they are supported by approved business facts.
 - **Structured data is the priority signal for AEO.** Ship rich JSON-LD (see 8d). LLMs and AI search lean heavily on it.
 - **Self-contained pages.** Each page should make sense quoted in isolation — don't rely on context only available by reading other pages.
@@ -198,8 +198,8 @@ Keep site-wide `Bakery`/`LocalBusiness` schema in `Layout`. Add `Product` and `O
 <script type="application/ld+json">
 { "@context":"https://schema.org", "@type":"Bakery",
   "name":"Perlette Cakes",
-  "description":"Homemade custom cakes and pastries, delivered across the Klang Valley via Lalamove.",
-  "areaServed":"Klang Valley, Malaysia",
+  "description":"Home-based custom cakes and pastries, delivered to Klang, Selangor via Lalamove.",
+  "areaServed":"Klang, Selangor, Malaysia",
   "servesCuisine":"Cakes, Pastries",
   "url":"https://<domain>/",
   "telephone":"+60<whatsapp-number>",
@@ -217,11 +217,12 @@ Keep site-wide `Bakery`/`LocalBusiness` schema in `Layout`. Add `Product` and `O
 ## 9. The order-request flow
 
 - The current `/` WhatsApp inquiry modal remains only until the `/home/` and `/menu/` replacement flow is ready. Do not extend it for the new checkout.
-- Build Stage 1 `/menu/` as the customer-facing selection and WhatsApp order flow. It collects selected products, quantities, name, contact, delivery date, time window, and address. Use native controls where they cover the need cleanly; the delivery-date field stays `type="date"` unless there is a product requirement to change it.
+- Build Stage 1 `/menu/` as the customer-facing selection and WhatsApp order flow. Minimal browser-side TypeScript manages adding, removing, and modifying selected products and quantities. It collects selected products, name, email address, telephone number, delivery date, time window, and address; receiver telephone is optional until owner rules require it. Use native controls where they cover the need cleanly; the delivery-date field stays `type="date"` unless there is a product requirement to change it.
 - Encode the Stage 1 WhatsApp message before creating its `wa.me` URL. It must list the selected items and delivery details.
 - Client-side validation is a usability aid. The future API must validate every request independently.
-- In Stage 2, `/menu/` will send requests directly to `https://admin.perlettecakes.com/api`, replacing the WhatsApp handoff. This is a cross-origin browser request: allow only the intended public origin, but do not mistake CORS for authorization or abuse protection.
-- Stage 2 adds only private owner review. Stripe webhook handling, email delivery, and Lalamove calls are later on-prem service work, with provider credentials server-side.
+- In Stage 2, `/menu/` will send requests directly to `https://api.perlettecakes.com`, replacing the WhatsApp handoff. This is a cross-origin browser request: allow only the intended public origin, but do not mistake CORS or Malaysia IP filtering for authorization or delivery-address validation.
+- `admin.perlettecakes.com` is protected by Cloudflare Access. The Go service validates the Access JWT on every admin route and keeps public intake and provider callbacks on the API hostname.
+- Stage 2 adds only private owner review. Billplz callback handling, Resend email, and Lalamove calls are later on-prem service work, with provider credentials server-side.
 - An order request does not imply availability, final price, delivery fee, payment, or acceptance.
 
 ---

@@ -1,27 +1,29 @@
 # Perlette Cakes Site
 
-Static Astro marketing site for Perlette Cakes, a home-based baker serving Klang Valley, Malaysia. This repository will also contain the future on-prem order service and owner dashboard.
+Static Astro marketing site for Perlette Cakes, a Kuala Lumpur-based home baker delivering to Klang, Selangor, Malaysia. This repository will also contain the future on-prem order service and owner dashboard.
 
 ## Current Status
 
 - `/` is the current work-in-progress public page with a WhatsApp inquiry CTA.
 - `/home/` is the temporary, `noindex` demo route for the future landing page; its approved content will replace `/`.
 - `/menu/` will first send selected products and delivery details to WhatsApp; a later stage will submit the same request to the on-prem API.
-- `admin.perlettecakes.com` and its `/api` are planned on-prem service surfaces. They are not implemented yet.
+- `admin.perlettecakes.com` and `api.perlettecakes.com` are planned on-prem service surfaces. They are not implemented yet.
 
 ## Architecture
 
 - `perlettecakes.com` is a static Astro site deployed to Cloudflare Pages.
-- `admin.perlettecakes.com` will host the private owner dashboard on-prem.
-- Stage 1 `/menu/` opens WhatsApp with the selected order and delivery details. Stage 2 replaces that handoff with direct browser submission to `https://admin.perlettecakes.com/api`.
-- Stripe webhooks, email delivery, and Lalamove calls belong to the on-prem service. They never run in Astro or expose provider credentials to the browser.
-- The two hosts are separate browser origins. The service must expose only the required public API routes while keeping the dashboard private.
+- `admin.perlettecakes.com` will host the Cloudflare Access-protected owner dashboard on-prem.
+- `api.perlettecakes.com` will host public order intake and verified provider callbacks from the same Go service.
+- Stage 1 `/menu/` opens WhatsApp with selected order and delivery details. Stage 2 replaces that handoff with direct browser submission to `https://api.perlettecakes.com`.
+- Billplz callbacks, Resend email, and Lalamove calls belong to the on-prem service. They never run in Astro or expose provider credentials to the browser.
+- Cloudflare Tunnel routes both on-prem hosts without exposing application ports directly.
 
 ## Canonical Facts
 
 - Business: `Perlette Cakes`
 - Owner: `Amira Saifuddin`
-- Service area: `Klang Valley, Malaysia`
+- Business location: `Kuala Lumpur, Malaysia`
+- Delivery area: `Klang, Selangor, Malaysia`
 - Delivery: `Lalamove`
 - Customer request flow: `/menu/` to WhatsApp in Stage 1, then the API in Stage 2
 - Customer conversation: `WhatsApp`
@@ -100,4 +102,7 @@ Cloudflare Pages via GitHub Actions needs:
 - Business language: `./CONTEXT.md`
 - System surfaces and routes: `./docs/routes.md`
 - Delivery plan: `./docs/implementation-plan.md`
+- Order-system architecture: `./docs/order-system-spec.md`
+- Owner decisions: `./docs/owner-decisions.md`
+- Architecture decisions: `./docs/decisions/`
 - Brand notes: `./docs/brand-notes.md`
