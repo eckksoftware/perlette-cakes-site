@@ -1,125 +1,83 @@
-# Perlette Cakes
+# Perlette Cakes Business Context
 
-This context defines the core business language for Perlette Cakes, a home-based baking business whose website lets customers make menu-based order requests for owner review.
+This file is the canonical source for public business facts and wording.
 
-## Language
+## Identity
 
-**Perlette Cakes**:
-The business name used everywhere on the site, in metadata, and in structured data.
-_Avoid_: Perlete Cakes, Perlette, the bakery
+- **Business:** Perlette Cakes
+- **Owner:** Amira Saifuddin
+- **Business type:** Home-based baker
+- **Location:** Mont Kiara, Kuala Lumpur, Malaysia
+- **Storefront:** No physical storefront or customer pickup
+- **Public voice:** Use `we / our` consistently while keeping the tone personal
+- **Canonical domain:** https://perlettecakes.com/
+- **Instagram:** https://www.instagram.com/perlettecakes
+- **WhatsApp:** +60 19-650 5050; use `60196505050` in numeric links
 
-**Owner**:
-Amira Saifuddin, the named baker behind Perlette Cakes.
-_Avoid_: founder, team, staff
+Do not describe Perlette Cakes as a storefront, walk-in bakery, team, or
+nationwide delivery business.
 
-**Home-based baker**:
-The business type for Perlette Cakes, indicating that products are made to order from a home kitchen rather than sold from a storefront.
-_Avoid_: cake shop, storefront bakery
+## Products
 
-**No physical storefront**:
-Perlette Cakes does not operate a retail shop or walk-in location.
-_Avoid_: in-store visit, walk-in bakery
+- Primary focus: custom celebration cakes
+- Supporting products: cupcakes, pastries, and cookies
+- Landing-page categories: Custom Cakes, Cupcakes, Pastries, and Cookies
+- Custom orders are subject to availability and design requirements.
 
-**Custom celebration cakes**:
-The primary product focus for launch and the main order type the site should attract first.
-_Avoid_: general cakes, standard cakes
+Publish only products, prices, options, and availability approved by Amira.
 
-**Supporting products**:
-Cupcakes, pastries, and cookies offered alongside custom celebration cakes.
-_Avoid_: add-ons, side items
+## Delivery
 
-**Featured product categories**:
-The landing-page categories are Custom Cakes, Cupcakes, Pastries, and Cookies.
-_Avoid_: muffins as a core category
+- Delivery is available throughout Klang Valley and anywhere reachable via
+  Lalamove Car from Mont Kiara.
+- Orders are delivered through Lalamove; pickup is not offered.
+- Standard requested windows are 12pm to 4pm, 4pm to 8pm, and 8pm to 10pm.
+- Exact arrival times are not guaranteed because traffic, weather, and driver
+  availability can affect delivery.
+- A short-lived Lalamove quotation is pricing input for Amira, not a guaranteed
+  future delivery fee or driver reservation.
 
-**Menu**:
-The canonical customer-facing name for `/menu`, where customers browse approved products and prepare an order request.
-_Avoid_: products as the primary page name, catalogue as the primary page name
+Do not promise nationwide delivery, exact arrival times, or service where
+Lalamove Car is unavailable.
 
-**Service area**:
-Klang, Selangor, Malaysia, the canonical delivery area used across page copy, metadata, and schema.
-_Avoid_: Klang Valley-wide delivery, KL delivery, nationwide delivery
+## Ordering
 
-**Business location**:
-Perlette Cakes is a home-based baker in Kuala Lumpur, Malaysia, with no physical storefront.
-_Avoid_: implying that the kitchen is in Klang or that customers can visit the kitchen
+The Menu at `/menu/` lets customers browse approved products and prepare an
+order request.
 
-**Canonical domain**:
-https://perlettecakes.com/ is the single production URL used for metadata, structured data, sitemap entries, and deployment configuration.
-_Avoid_: www.perlettecakes.com, preview URLs as canonicals
+Stage 1 sends selected items and delivery details through WhatsApp. Stage 2
+stores the request in the on-prem system for Amira's review and may optionally
+prompt the customer to begin a WhatsApp conversation.
 
-**Delivery method**:
-Lalamove, the third-party delivery method used to send orders to customers.
-_Avoid_: in-house delivery, shipping
+An order request is not accepted until Amira confirms feasibility, final
+products and customisation, delivery pricing, and payment terms. Verified full
+payment confirms an owner-approved order.
 
-**Delivery reach**:
-Perlette Cakes delivers from Kuala Lumpur to approved addresses in Klang via Lalamove Car.
-_Avoid_: promising delivery across the full Klang Valley or outside approved Klang zones
+The future customer request requires name, email address, telephone number,
+requested delivery date, time window, and address. Separate receiver details
+are collected only when approved rules require them.
 
-**No pickup**:
-Perlette Cakes does not offer customer pickup; orders are fulfilled through delivery only.
-_Avoid_: self-pickup, collection
+Custom celebration cakes should usually be requested at least 3 to 5 days in
+advance. Larger or more customised orders need more notice.
 
-**Delivery timing**:
-Standard delivery windows are 12pm to 4pm, 4pm to 8pm, and 8pm to 10pm. Exact arrival times are not guaranteed because timing depends on traffic, weather, and Lalamove driver availability.
-_Avoid_: exact-time delivery promises unless explicitly confirmed
+## Payment And Customer Communication
 
-**Order request**:
-The customer action at `/menu` that sends selected items and delivery details for owner review. Stage 1 sends this request to WhatsApp; Stage 2 submits it to the on-prem API. An order request is not accepted until Perlette Cakes confirms feasibility, final pricing, delivery, and payment terms.
-_Avoid_: confirmed order, instant acceptance
+- Payment automation begins only after Amira approves an immutable final quote.
+- Confirmed orders are non-refundable.
+- Changes or postponements are handled case by case, usually with at least 10
+  days notice and a new date within 6 months, subject to availability.
+- Customers who need an official invoice should request it on WhatsApp until a
+  later system explicitly supports invoices.
+- WhatsApp remains the public channel for questions and exceptions.
+- Resend will be used only for approved transactional email. Transactional
+  addresses are not marketing subscribers without separate consent.
 
-**Checkout**:
-The customer-facing `/menu` sequence for selecting products and supplying order-request details. It opens WhatsApp in Stage 1 and submits to the on-prem API in Stage 2.
-_Avoid_: implying that payment or availability is confirmed in the browser
+## Dietary Claims
 
-**Customer contact**:
-Stage 2 requires the customer's name, email address, and telephone number. A receiver telephone may be collected separately when the approved delivery rules require it.
-_Avoid_: using a transactional email address for marketing without separate consent
-
-**Admin service**:
-The future on-prem Go service. `admin.perlettecakes.com` provides the Cloudflare Access-protected owner dashboard, while `api.perlettecakes.com` provides public order intake and provider callbacks.
-_Avoid_: putting public intake under the admin hostname or exposing provider credentials to the browser
-
-**WhatsApp**:
-The public customer contact channel for questions and order conversation. It is the Stage 1 transport for `/menu` order requests and becomes optional after Stage 2.
-_Avoid_: presenting WhatsApp as the future system of record
-
-**WhatsApp number**:
-The public customer contact number is +60 19-650 5050, while technical links and schema should use the normalized number 60196505050 where formatting must be numeric only.
-_Avoid_: inconsistent number formatting across copy, schema, and links
-
-**Dietary claim policy**:
-Perlette Cakes does not claim halal certification or allergen-free products unless those claims are verified, and customers should discuss dietary needs directly on WhatsApp.
-_Avoid_: unverified food claims, blanket allergen-free promises
-
-**Halal position**:
-Perlette Cakes is not halal-certified, but publicly states that it uses halal ingredients and operates from a Muslim household with no pets.
-_Avoid_: calling the business halal-certified or making broader certification claims
-
-**Eggless and vegan availability**:
-Eggless and vegan cakes are available on request for selected flavours, with pricing discussed on WhatsApp.
-_Avoid_: presenting all flavours as automatically eggless or vegan
-
-**Customisation availability**:
-Custom orders are accepted subject to availability and design requirements.
-_Avoid_: unconditional custom-order promises
-
-**Lead time**:
-The public ordering guidance that custom celebration cakes should be ordered at least 3 to 5 days in advance, with larger or more customised orders needing more notice.
-_Avoid_: instant order, same-day guarantee
-
-**Payment and refund policy**:
-Confirmed orders are non-refundable. Changes or postponements are handled case by case, usually when the customer gives at least 10 days notice and requests a new date within 6 months of the original delivery date, subject to availability.
-_Avoid_: promising automatic refunds or date changes
-
-**Invoice availability**:
-Customers who need an official invoice for claims purposes should request it on WhatsApp.
-_Avoid_: implying automated invoice generation on the website
-
-**Public voice**:
-Use we / our in public copy for now, while keeping the tone personal enough to reflect a home-based business. This can be revisited later if the owner prefers I / my.
-_Avoid_: switching pronouns back and forth within the same published section
-
-**Instagram**:
-The secondary trust and discovery channel for Perlette Cakes at https://www.instagram.com/perlettecakes.
-_Avoid_: socials, gallery link
+- Perlette Cakes is not halal-certified.
+- Public copy may state that halal ingredients are used and the business
+  operates from a Muslim household with no pets.
+- Eggless and vegan cakes are available on request for selected flavours, with
+  pricing discussed on WhatsApp.
+- Do not claim halal certification or allergen-free products unless verified.
+- Ask customers to discuss dietary needs directly on WhatsApp.

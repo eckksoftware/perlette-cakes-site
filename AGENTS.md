@@ -1,255 +1,155 @@
-# AGENTS.md — Perlette Cakes
+# AGENTS.md - Perlette Cakes
 
-Guidance for AI agents and contributors working in this repository. Read this before generating or editing code. Keep changes consistent with the conventions below.
+Guidance for contributors working in this repository. Read this before editing
+code or documentation.
 
----
+## Project Scope
 
-## 1. What this is
+Perlette Cakes is a home-based baker in Mont Kiara, Kuala Lumpur, Malaysia.
+Orders are delivered throughout Klang Valley and anywhere reachable via
+Lalamove Car from Mont Kiara. There is no physical storefront and no pickup.
 
-Perlette Cakes is a **home-based baker** in Kuala Lumpur, Malaysia, delivering to Klang, Selangor. There is **no physical storefront** — cakes and pastries are baked to order and delivered to clients via **Lalamove**.
+The current delivery sequence is defined only in
+`docs/implementation-plan.md`:
 
-The site exists to:
+1. Demonstrate a minimal landing page at `/home/` and a simple `/menu/`
+   WhatsApp request flow.
+2. Add on-prem order intake and a private dashboard for Amira and Eric.
+3. Add transactional email and Lalamove quotation, with booking as an optional
+   follow-up.
+4. Add owner-approved quote and payment automation.
 
-1. **Tell the brand story** — who the baker is, how the bakes are made, build trust, and let customers browse approved products.
-2. **Funnel visitors into an order request** — Stage 1 `/menu/` sends approved product and delivery details to WhatsApp; Stage 2 submits them to the owner-review API.
+Do not implement later-stage behavior while an earlier stage is active unless
+the implementation plan is updated and approved first.
 
-The public app remains a static Astro site. A future on-prem Go service in this repository will run the private owner dashboard at `admin.perlettecakes.com` and public intake/provider callbacks at `api.perlettecakes.com`. Do not add service behavior to the Astro app or expose provider credentials to the browser.
+## Sources Of Truth
 
-### Core priorities — treat these as co-equal
+- `docs/implementation-plan.md`: scope, sequence, and acceptance criteria
+- `CONTEXT.md`: canonical business facts and public wording
+- `docs/owner-decisions.md`: accepted decisions and unresolved owner choices
+- `docs/decisions/0001-on-prem-service-boundaries.md`: durable deployment and
+  security boundaries
+- `docs/brand-notes.md`: visual and copy direction
 
-Three concerns carry equal weight on every change. A page is not "done" if it nails one and neglects the others:
+`README.md` describes the current repository state; it does not define future
+scope.
 
-- **A. Distinctive, on-brand design** — the site should look crafted, not templated (see §6–§7).
-- **B. Search discoverability (SEO)** — rank for local + seasonal intent in Malaysia (see §8).
-- **C. AI / LLM discoverability (GEO/AEO)** — be the source an AI assistant cites when someone asks it "where can I order a custom / Hari Raya / CNY cake for delivery in Klang?" (see §8).
+## Technology
 
-B and C are not afterthoughts bolted on at the end. Because there is no storefront and no ad spend, **being found is the business.** Every new page and component must be evaluated against all three. When design and discoverability appear to conflict (e.g. text baked into an image, content hidden behind JS), discoverability wins — find a design solution that keeps content as real, crawlable HTML.
+| Concern | Choice |
+| --- | --- |
+| Public site | Astro static site on Cloudflare Pages |
+| Language | TypeScript and Astro |
+| Styling | Vanilla CSS |
+| Images | `astro:assets` for content photography |
+| Fonts | Self-hosted `@fontsource` packages |
+| Package manager | npm with the committed lockfile |
+| Future service | On-prem Go, server-rendered HTML, PostgreSQL |
 
----
+Do not add a CSS framework, JavaScript framework, CMS, or backend behavior to
+Astro. Add dependencies only for an approved, current requirement.
 
-## 2. Tech stack
-
-| Concern | Choice | Notes |
-|---|---|---|
-| Framework | **Astro** (SSG / `output: 'static'`) | All pages pre-rendered to static HTML. |
-| Language | **TypeScript** | Use `.astro` + `.ts`. Avoid loose `any`. |
-| Styling | **Vanilla CSS** | One global `src/assets/styles/global.css` with design tokens; split into scoped/component styles only when it gets unwieldy (see §6). **No Tailwind, no CSS frameworks.** |
-| Images | **`astro:assets`** (`<Image />`) | Mandatory for all content images (see §8). |
-| Fonts | **`@fontsource` (self-hosted)** | No external Google Fonts CDN — better perf/SEO. |
-| Client JS | **Minimal** | Use it only for necessary public UI, such as the future `/menu/` selection and checkout flow. |
-| Hosting | Static host (Cloudflare Pages) | Build output is `./dist`. |
-| Node | **22 LTS+** | |
-| Package manager | **npm** | Use the repository's npm lockfile. |
-
-> **Assumptions to confirm:** static SSG, English as primary language with Malay keywords on seasonal pages. If a bilingual (BM/EN) site is wanted, flag it — it changes routing and SEO.
-
----
-
-## 3. Commands
+## Commands
 
 ```bash
-npm install          # install deps
-npm run dev          # dev server → http://localhost:4321
-npm run build        # production build → ./dist
-npm run preview      # preview the built site
-npm run astro check  # type-check (run before committing)
+npm install
+npm run dev
+npm run astro check
+npm run check:images
+npm run build
+npm run preview
 ```
 
-Recommended integrations: `@astrojs/sitemap`, `sharp` (image compression, default in Astro), and `@fontsource-variable/fraunces`.
+Run `npm run astro check` and `npm run build` before completing a public-site
+change.
 
----
+## Public Routes
 
-## 4. Project structure
+| URL | Purpose |
+| --- | --- |
+| `/` | Current work-in-progress page and inquiry modal |
+| `/home/` | Temporary `noindex` owner demo; exclude it from the sitemap |
+| `/menu/` | Product selection and order-request flow |
 
-```
-src/
-  assets/
-    styles/
-      global.css            # active design tokens + base styles
-  pages/                  # routes — hardcoded .astro pages, one file per URL
-    index.astro           # current work-in-progress page
-  layouts/
-    Layout.astro          # <head>, metadata, and shared public UI
-  components/
-    OrderInquiryModal.astro # current `/` inquiry flow
-public/                     # static passthrough: favicon, robots.txt, llms.txt, social assets
-astro.config.mjs
-```
+Use one hand-authored `.astro` file per public route. Do not add dynamic product
+or campaign routes without an approved need.
 
-**Architectural rules**
+The current inquiry modal belongs to `/` only. Keep it while the work-in-progress
+page is live, but do not extend it into the `/menu/` customer flow. When new
+routes use the shared layout, ensure they do not inherit the legacy modal.
 
-- **One `.astro` file per route.** No dynamic `[slug]` routing — pages are authored by hand for editorial control and SEO.
-- `/home/` is a temporary, `noindex` owner-demo route. Promote approved content to `/` and redirect `/home/` when ready.
-- `/menu/` owns the future customer order-request flow. Do not extend the current inquiry modal for it.
-- The on-prem service is a separate deployment boundary. Choose its directory structure when service implementation starts; do not create it speculatively.
-- Keep the CSS refactor in `src/assets/styles/global.css` as the baseline; remove dead tokens before adding new ones.
+## Public-Site Implementation Rules
 
----
+- Start shared styles and tokens in `src/assets/styles/global.css`.
+- Use existing design tokens instead of hardcoded colours, type sizes, spacing,
+  radius, or shadows.
+- Build mobile-first with semantic HTML, CSS Grid, and Flexbox.
+- Keep the interface minimal and straightforward; define detailed UI direction
+  with Amira while each demo is developed.
+- Use real Perlette Cakes photography. Do not use stock images.
+- Use `<Image />` from `astro:assets` for content images and provide accurate,
+  descriptive alternative text.
+- Keep important copy, prices, and product facts as crawlable HTML rather than
+  text inside images.
+- Use `we / our` consistently in public copy.
+- Do not publish unapproved prices, testimonials, dietary claims, product facts,
+  or delivery promises.
 
-## 5. Pages & their job
+## Baseline SEO And Accessibility
 
-| URL | Purpose | SEO/conversion note |
-|---|---|---|
-| `/` | Current work-in-progress landing page | Remains live while the owner reviews `/home/`. |
-| `/home/` | Temporary landing-page demo | Keep `noindex` and out of the sitemap; replace `/` with its approved content. |
-| `/menu/` | Product selection and order-request checkout UI | Stage 1 opens WhatsApp with selected products and delivery details; Stage 2 submits the request to the API. Never promise acceptance, final pricing, or delivery availability. |
-| `admin.perlettecakes.com` | Future private owner dashboard | Cloudflare Access-protected SSR Go surface; not an Astro route. |
-| `api.perlettecakes.com` | Future public order and callback API | Called cross-origin by `/menu/` and by verified providers; never grants dashboard access. |
+SEO is a technical baseline, not a separate content program. Every public page
+must have:
 
----
+- An accurate title, description, canonical URL, and robots setting
+- Exactly one `<h1>` and logical heading order
+- Open Graph and Twitter metadata
+- Correct sitemap inclusion or exclusion
+- Accurate structured data that matches visible content
+- Responsive images and acceptable Core Web Vitals
+- Keyboard access, visible focus states, and WCAG AA colour contrast
 
-## 6. Styling rules (vanilla CSS)
+Do not add campaign pages, crawler-specific content, or a separate
+discoverability program unless approved in a future plan.
 
-- **Start in `src/assets/styles/global.css`.** It holds: design tokens (`:root`), a small reset, base element styles, and shared utility classes. Split a component's CSS into its own `<style>` block (scoped) **only** when global.css becomes hard to scan — not preemptively.
-- **Use design tokens, never raw values.** No hardcoded hex colours, px font sizes, or magic spacing in components — reference the CSS custom properties below.
-- **Mobile-first.** Write base styles for small screens; layer `min-width` media queries up.
-- **Class naming:** simple, low-specificity, BEM-lite (`.card`, `.card__title`, `.card--featured`). Avoid deep selector nesting and `!important`.
-- **Layout** via CSS Grid / Flexbox. No layout libraries.
-- Prefer **semantic HTML** (`<header>`, `<main>`, `<section>`, `<article>`, `<nav>`, `<footer>`) over `<div>` soup.
+## Order-Request Rules
 
-### Design tokens (put in `:root` in `global.css`)
+- An order request does not imply availability, final price, delivery fee,
+  payment, or acceptance.
+- Stage 1 `/menu/` uses minimal browser TypeScript and an encoded WhatsApp
+  message. It has no API, persistence, payment, or customer account.
+- Do not store names, email addresses, telephone numbers, delivery addresses, or
+  special requests in browser storage.
+- Stage 2 replaces WhatsApp as the system of record with server-validated order
+  intake. A post-submission WhatsApp prompt may remain as an optional
+  communication convenience.
+- Client-side validation helps the customer; the future server must independently
+  validate every request.
 
-```css
-:root {
-  --color-page:         #FBF7F2; /* page background */
-  --color-surface:      #FFFDFB; /* cards / raised areas */
-  --color-surface-soft: #F2E6E0;
-  --color-text:         #302A32;
-  --color-text-muted:   #5F5558;
-  --color-primary:      #E2BFC6; /* primary CTA surface */
-  --color-primary-ink:  #6F3F4D; /* readable brand ink */
-  --color-primary-strong: #7F4657;
-  --color-on-primary:   #302A32;
-  --color-border:       #D9C8C3;
-  --color-shadow:       rgba(73, 47, 52, 0.15);
+## Future Service Boundaries
 
-  /* ===== Typography ===== */
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-body:    "Zarathustra", Georgia, "Times New Roman", serif;
+- `api.perlettecakes.com` is for public intake and verified provider callbacks.
+- `admin.perlettecakes.com` is for the private owner/developer dashboard.
+- Cloudflare Access protects the admin hostname for Amira Saifuddin and Eric
+  Cheong. The Go service validates and authorizes every Access assertion.
+- Enforce exact-host routing so public and admin handlers cannot be served on the
+  wrong hostname.
+- Keep provider credentials and authoritative price, acceptance, payment, and
+  delivery state on the server.
+- Verify provider signatures, deduplicate events, and reconcile uncertain
+  provider outcomes instead of blindly retrying them.
+- Payment begins only from an immutable owner-approved quote. A browser redirect
+  never proves payment.
+- Keep request, payment, and fulfilment status separate and retain a history of
+  consequential changes.
+- Lalamove quotation informs Amira's pricing. Booking remains owner-triggered
+  and optional until its workflow is proven.
+- Never include customer PII or provider secrets in logs or metric labels.
 
-  /* Modular type scale (1.250 — minor third) */
-  --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
-  --step-0:  clamp(1rem,    0.95rem + 0.25vw, 1.125rem);
+## Repository Discipline
 
-  /* ===== Spacing scale ===== */
-  --space-xs: 0.5rem;  --space-sm: 0.75rem; --space-md: 1rem;
-  --space-lg: 1.5rem;  --space-xl: 2.5rem;  --space-2xl: 4rem;
-
-  /* ===== Radius / elevation ===== */
-  --radius-md: 12px;  --radius-lg: 20px;  --radius-xl: 32px;
-  --shadow-md: 0 12px 28px var(--color-shadow);
-}
-```
-
-### Fonts — recommended pairing
-
-- **Headings / display: Fraunces** — a soft, characterful old-style serif with optical sizing. Warm and artisanal without losing elegance; widely used by craft/food brands. Suits "Perlette."
-- **Body: Zarathustra** — the current self-hosted body/UI font; keep its bundled SIL OFL licence with the project.
-- **Accents:** use *Fraunces italic* for accent/quote text rather than adding a third font. If a decorative script is wanted for the wordmark only, *Pinyon Script* — used **once**, never for body or headings.
-- Self-host via `@fontsource`; set `font-display: swap`; subset to Latin. Two families max.
-
-> Type usage: headings → `--font-display`; everything else → `--font-body`. Don't introduce new fonts or font weights without updating the tokens.
-
----
-
-## 7. Brand & voice
-
-- **Tone:** warm, personal, homemade-but-premium. First person ("I bake…") is fine — this is one person's craft, not a faceless brand.
-- **Imagery:** real photos of the actual bakes. No generic stock cake photos.
-- Avoid overusing the gold accent — it loses its effect. Rose (`--color-primary`) drives CTAs; gold is a garnish.
-
----
-
-## 8. Discoverability — SEO + AI/LLM (a core goal, equal to design)
-
-This section is load-bearing. Treat its checklist as acceptance criteria for every page, not optional polish. The static-HTML + semantic-markup foundation here serves traditional search engines and AI answer engines at the same time.
-
-### 8a. Images
-- Always use `<Image />` from `astro:assets` for content images; import from `src/assets/`. Never drop raw `<img>` for content photos.
-- Provide `width`/`height` (prevents layout shift) and **descriptive `alt`** text — e.g. `alt="Two-tier ondeh-ondeh cake with pandan buttercream"`. Alt text is read by both search crawlers and multimodal LLMs, so describe the actual bake.
-- Let Astro emit WebP/AVIF; keep source files reasonable. `loading="lazy"` below the fold; hero may be eager.
-- **Never put load-bearing text inside an image** (prices, key claims, descriptions) — it's invisible to crawlers and LLMs. Use real HTML over the image instead.
-
-### 8b. Traditional SEO (every page)
-- Unique `<title>` and `<meta name="description">` per page via `Layout` props.
-- Exactly one `<h1>`; logical heading order (no skipped levels). Headings should mirror real search phrasing.
-- Open Graph + Twitter card tags; per-page OG image where it matters.
-- Canonical URL on every page.
-- `sitemap.xml` (`@astrojs/sitemap`) + a `robots.txt`.
-- **Local/seasonal keywords**, woven naturally: Malaysia + occasion terms (e.g. "kuih raya", "CNY cookies", "custom birthday cake delivery Klang"). One occasion per URL.
-- Keep Core Web Vitals green — Astro's zero-JS default does most of this; don't undo it.
-
-### 8c. AI / LLM discoverability (GEO/AEO) — equally required
-LLMs and AI search (ChatGPT, Claude, Perplexity, Gemini, Google AI Overviews) recommend businesses by extracting **clear, self-contained, factual statements** from crawlable pages. Optimize for being *quoted and cited*, not just ranked.
-
-- **Answer-first content.** Lead each section with a direct, factual answer, then elaborate. State delivery areas, lead time, price ranges, and how to order in plain declarative sentences an assistant can lift verbatim. Avoid burying facts in marketing fluff.
-- **Entity clarity & consistency.** State *who* (Perlette Cakes), *what* (home-based custom cakes and pastries), *where* (based in Kuala Lumpur with delivery to Klang, Selangor), and *how to order* (the approved public request flow) explicitly and identically across pages, schema, and social. Inconsistent name/area/contact confuses entity resolution.
-- **Question-shaped headings.** Use real user questions as `<h2>`/`<h3>` ("How long does a custom cake take to order?", "Which areas do you deliver to?") when they are supported by approved business facts.
-- **Structured data is the priority signal for AEO.** Ship rich JSON-LD (see 8d). LLMs and AI search lean heavily on it.
-- **Self-contained pages.** Each page should make sense quoted in isolation — don't rely on context only available by reading other pages.
-- **Real, attributable content.** Genuine reviews (with `Review`/`AggregateRating` schema), specific bake names, real provenance (training, location) — concrete facts get cited; vague claims don't.
-- **Crawlability for AI bots** (see 8e). If the content isn't fetchable, it can't be recommended.
-
-### 8d. Structured data (JSON-LD) — required
-Keep site-wide `Bakery`/`LocalBusiness` schema in `Layout`. Add `Product` and `Offer` schema to `/menu/` only for approved, visibly matching product facts. Keep schema values in sync with the visible HTML — mismatches are penalized.
-
-```html
-<!-- Site-wide LocalBusiness JSON-LD — include in Layout, fill real values -->
-<script type="application/ld+json">
-{ "@context":"https://schema.org", "@type":"Bakery",
-  "name":"Perlette Cakes",
-  "description":"Home-based custom cakes and pastries, delivered to Klang, Selangor via Lalamove.",
-  "areaServed":"Klang, Selangor, Malaysia",
-  "servesCuisine":"Cakes, Pastries",
-  "url":"https://<domain>/",
-  "telephone":"+60<whatsapp-number>",
-  "sameAs":["https://www.instagram.com/perlettecakes/"] }
-</script>
-```
-
-### 8e. `llms.txt` + AI crawler policy
-- **Ship a `/llms.txt`** (Markdown at the site root via `public/`): a short plain-language summary of the business — what Perlette Cakes is, areas served, product types, lead time, how to order, and links to public pages. Never list the admin host or API. This is the emerging convention for giving LLMs a clean, authoritative source.
-- **`robots.txt` must explicitly allow reputable AI crawlers** if the goal is to be recommended by them — e.g. `GPTBot`, `OAI-SearchBot`, `ClaudeBot`, `anthropic-ai`, `PerplexityBot`, `Google-Extended`. (Allowing these is a deliberate choice — confirm the owner is comfortable with it; for a marketing site that *wants* to be cited, allow.)
-- Keep `llms.txt` and the on-page facts in agreement with the JSON-LD and reality.
-
----
-
-## 9. The order-request flow
-
-- The current `/` WhatsApp inquiry modal remains only until the `/home/` and `/menu/` replacement flow is ready. Do not extend it for the new checkout.
-- Build Stage 1 `/menu/` as the customer-facing selection and WhatsApp order flow. Minimal browser-side TypeScript manages adding, removing, and modifying selected products and quantities. It collects selected products, name, email address, telephone number, delivery date, time window, and address; receiver telephone is optional until owner rules require it. Use native controls where they cover the need cleanly; the delivery-date field stays `type="date"` unless there is a product requirement to change it.
-- Encode the Stage 1 WhatsApp message before creating its `wa.me` URL. It must list the selected items and delivery details.
-- Client-side validation is a usability aid. The future API must validate every request independently.
-- In Stage 2, `/menu/` will send requests directly to `https://api.perlettecakes.com`, replacing the WhatsApp handoff. This is a cross-origin browser request: allow only the intended public origin, but do not mistake CORS or Malaysia IP filtering for authorization or delivery-address validation.
-- `admin.perlettecakes.com` is protected by Cloudflare Access. The Go service validates the Access JWT on every admin route and keeps public intake and provider callbacks on the API hostname.
-- Stage 2 adds only private owner review. Billplz callback handling, Resend email, and Lalamove calls are later on-prem service work, with provider credentials server-side.
-- An order request does not imply availability, final price, delivery fee, payment, or acceptance.
-
----
-
-## 10. Accessibility & quality bar
-
-- Colour contrast ≥ WCAG AA (verify the rose/gold against backgrounds once real hex values are set).
-- All interactive elements keyboard-reachable with visible `:focus-visible` styles.
-- Meaningful `alt` text; decorative images get `alt=""`.
-- Run `npm run astro check` and `npm run build` clean before committing.
-
----
-
-## 11. Do / Don't for agents
-
-**Do**
-- Reuse existing tokens and public-site patterns; retire the current inquiry modal when `/menu/` replaces its purpose.
-- Keep pages static and JS-free unless interactivity is required.
-- Match the existing file/structure conventions.
-- Keep documentation aligned: after implementation, inspect `README.md` and every relevant `docs/*.md` file; update routes, the implementation plan, and canonical business facts in the same change.
-- Treat §8 (SEO + AI/LLM discoverability) as acceptance criteria — every new page ships with unique title/meta, valid JSON-LD, answer-first crawlable content, and descriptive alt text.
-- Keep entity facts (name, area served, contact, how to order) identical across pages, JSON-LD, `llms.txt`, and social.
-
-**Don't**
-- Add Tailwind, a CSS framework, or a JS framework. Do not add backend logic to the static Astro app.
-- Hardcode colours/spacing/fonts outside the tokens.
-- Add dependencies without need — every package is a perf/maintenance cost.
-- Duplicate product or content data across files.
-- Put load-bearing text/prices inside images, or hide content behind JS — it's invisible to search crawlers and LLMs.
-- Ship a page that looks good but has no title, meta, schema, or crawlable copy — design without discoverability is an incomplete page here.
+- Make the smallest change that satisfies the active stage.
+- Do not scaffold future modules, service directories, abstractions, or
+  infrastructure.
+- Keep documentation aligned when business facts, routes, or stage scope change.
+- Do not revert unrelated worktree changes.
+- Do not expose the future admin or API hosts in public crawler-facing content.

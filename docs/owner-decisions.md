@@ -1,91 +1,73 @@
 # Owner Decisions
 
-This register separates accepted business decisions from questions that Amira
-must resolve before the corresponding order-system module is implemented.
+This register contains accepted direction and only the unresolved choices that
+block an upcoming stage. Review each section with Amira when that stage becomes
+active rather than resolving every future detail now.
 
 ## Accepted
 
 | Decision | Current answer |
 | --- | --- |
-| Delivery area | Delivery addresses in Klang, Selangor, Malaysia only |
-| Kitchen location | Kuala Lumpur, Malaysia |
-| Fulfilment | Lalamove delivery only; no customer pickup |
-| Order confirmation | An owner-approved request becomes confirmed after verified full payment |
-| Customer contact | Name, email address, and telephone number are required |
-| Receiver contact | Receiver telephone may be collected separately when needed |
-| Payment direction | Evaluate Billplz first; use Stripe only if Billplz fails an approved requirement |
+| Delivery area | Klang Valley and anywhere reachable via Lalamove Car from Mont Kiara |
+| Fulfilment | Lalamove delivery only; no pickup |
+| Order confirmation | Verified full payment confirms an owner-approved order |
+| Customer contact | Name, email address, and telephone number |
+| Stage 1 request | Encoded WhatsApp handoff from `/menu/` |
+| Stage 2 request | On-prem API and dashboard become the system of record |
+| Dashboard access | Cloudflare Access for Amira Saifuddin and Eric Cheong |
+| Payment direction | Billplz payment link created only after Amira approves the quote |
 | Email direction | Resend for transactional email only |
+| Lalamove sequence | Quotation first; owner-triggered booking is an optional follow-up |
 | Hosting | On-prem service on `home-mini-pc-1` |
-| Dashboard access | Cloudflare Access in front of `admin.perlettecakes.com` |
-| Delivery automation | Owner-triggered Lalamove booking; no automatic booking at launch |
-| Delivery pricing direction | Fixed-zone fee, pending the detailed rules below |
 
-## Delivery Pricing
+## Stage 1: Public Demos
 
-Resolve before approving `SPEC-delivery.md` or accepting payment:
+- Build `/home/` first, carry its visual direction into `/menu/`, and present
+  both together for feedback rather than requiring separate approval between
+  the demos.
+- [ ] Approve `/home/` general feel, design, structure, copy, photography, and
+  primary action.
+- [ ] Verify that the Instagram-derived draft catalogue includes every item
+  currently published as part of the menu.
+- [ ] Approve `/menu/` grouping, presentation, product wording, displayed
+  prices, quantities, and explicit published options.
+- [ ] Approve required customer and receiver fields.
+- [ ] Approve request/disclaimer wording and the generated WhatsApp message.
 
-- [ ] Define the supported Klang zones, postcodes, or coordinate boundaries.
-- [ ] Set the customer-facing fee for each zone.
-- [ ] Decide who absorbs the difference when the actual Lalamove price is
-  higher or lower than the fixed fee.
-- [ ] Decide how tolls, parking, peak surcharges, and priority fees are handled.
-- [ ] Decide whether an address outside the configured zones is rejected or sent
-  for manual review.
-- [ ] Decide what happens when no driver accepts the delivery.
-- [ ] Decide who pays for failed delivery or redelivery.
-- [ ] Set a review interval for zone boundaries and fees.
+Open-ended workflow question for Amira:
 
-Lalamove quotations are valid for five minutes and do not reserve a driver.
-They cannot be used as a guaranteed fee for an order placed days ahead.
+> When deciding whether to accept an order, what do you need to check beyond
+> the expected delivery date, ingredient availability, and whether you want to
+> take the order?
 
-## Quote And Payment
+## Stage 2: Intake And Dashboard
 
-Resolve before approving `SPEC-payments.md`:
-
-- [ ] Set the quote/payment-link expiry period.
-- [ ] Decide what happens if a customer pays after the requested production slot
-  is no longer available.
-- [ ] Define owner-cancellation and duplicate-payment refund rules.
-- [ ] Define any exceptions to the current non-refundable policy.
-- [ ] Confirm which Billplz payment methods the owner can activate.
-- [ ] Confirm whether Billplz settlement timing is acceptable.
-- [ ] Approve the customer wording that full payment confirms the order.
-
-## Customer And Receiver Details
-
-Resolve before approving `SPEC-public-intake.md`:
-
-- [ ] Decide when receiver name and telephone are required instead of optional.
-- [ ] Decide whether the purchaser can also be the receiver by default.
-- [ ] Approve the format and validation rules for Malaysian and international
-  telephone numbers.
-- [ ] Approve the privacy notice shown before submission.
+- [ ] Approve the privacy notice shown before API submission.
 - [ ] Set retention periods for declined, expired, completed, and refunded
   requests.
+- [ ] Confirm the exact Cloudflare Access identities for Amira and Eric.
+- [ ] Approve which dashboard actions require an audit-history entry.
+- [ ] Approve outage handling, local backup frequency, retention, and restore
+  checks before real customer data is stored.
+- [ ] Decide whether the known single-host loss risk is acceptable until
+  off-site backups are added.
 
-## Transactional Email
+## Stage 3: Email And Lalamove
 
-Resolve before approving `SPEC-notifications.md`:
+- [ ] Approve which Lalamove quotation details Amira needs while pricing.
+- [ ] Decide how quotation expiry, tolls, parking, peak charges, and price
+  changes are reflected in the customer delivery fee.
+- [ ] Approve request, quote, payment, rejection, and delivery email triggers.
+- [ ] Select the transactional sender name, sending address, and reply-to.
+- [ ] Decide when WhatsApp or email is the primary customer update channel.
+- [ ] After quotation usage is understood, decide whether API booking provides
+  enough value to implement.
 
-- [ ] Approve request-received email.
-- [ ] Approve quote and payment-request email.
-- [ ] Approve verified-payment confirmation email.
-- [ ] Approve rejection and expiry emails.
-- [ ] Approve delivery-booked and tracking emails.
-- [ ] Select the sender name, sending address, and reply-to address.
-- [ ] Decide whether WhatsApp or email is authoritative for each customer update.
+## Stage 4: Payment
 
-Transactional addresses must not be added to a marketing list without separate,
-explicit consent.
-
-## Operations
-
-Resolve before production launch:
-
-- [ ] Approve the outage procedure when the home Internet connection, power, or
-  Mini PC is unavailable.
-- [ ] Approve local backup frequency and retention.
-- [ ] Acknowledge that off-site backups are deferred and a single host/storage
-  loss can destroy local order records until they are added.
-- [ ] Decide who receives monitoring alerts and through which channel.
-- [ ] Approve how long security and owner-action audit records are retained.
+- [ ] Set quote and payment-link expiry.
+- [ ] Confirm the Billplz payment methods Amira can activate.
+- [ ] Confirm settlement timing is acceptable.
+- [ ] Approve wording that verified full payment confirms the order.
+- [ ] Define owner cancellation, duplicate payment, refund, dispute, and late
+  payment handling.

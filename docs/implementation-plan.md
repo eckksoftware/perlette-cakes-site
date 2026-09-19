@@ -1,142 +1,202 @@
 # Implementation Plan
 
-The public Astro site and on-prem service remain separate deployments in this
-repository. `docs/order-system-spec.md` defines the capability map. Each module
-must receive an approved focused specification before its implementation phase.
+This is the current source of truth for project scope and delivery order. Build
+only the active stage. Later stages record direction and safety constraints, not
+permission to scaffold speculative code.
 
-## Scope And Sequence
+The public Astro site and future on-prem service remain separate deployments in
+this repository.
 
-### 1. Resolve Owner Decisions And Module Contracts
+**Active stage:** Stage 1
 
-- Review `docs/owner-decisions.md` with Amira.
-- Approve the initiative capability map in `docs/order-system-spec.md`.
-- Write module specifications in dependency order, starting with
-  `platform-operations` and `menu-checkout`.
-- Define the canonical product-data format, product identifiers, menu version,
-  and visible pricing rules before building `/menu/`.
+## Product Direction
 
-**Done when:** the capability map is approved and the next module has a focused,
-testable specification with no unresolved blocking owner decision.
+- Keep the public experience minimal and straightforward so customers can
+  understand the business, browse the menu, and submit an order request without
+  confusion.
+- Define the detailed visual direction with Amira while each demo is built;
+  avoid a large design system or speculative UI before owner feedback.
+- Use baseline technical SEO only: accurate titles and descriptions, canonical
+  URLs, sitemap control, semantic HTML, descriptive image alternatives, and
+  accurate structured data. Do not add a separate discoverability program.
+- An order request never promises availability, final pricing, delivery, or
+  acceptance until Amira reviews it.
 
-### 2. Demo The Future Landing Page At `/home/`
+## Stage 1: Public Demos And WhatsApp Customer Flow
 
-- Build the owner-demo landing page at `/home/` while `/` keeps the current live
-  work-in-progress page.
-- Keep `/home/` out of the sitemap and marked `noindex` during the demo period.
-- Use approved copy, real bake photography, and the public-site SEO and
-  accessibility rules.
-- When the owner approves the demo, move its content to `/` and redirect
-  `/home/` to `/`.
+Build `/home/` first to establish the general feel, design, and structure. Carry
+that direction into `/menu/`, then present both demos together for Amira's first
+formal review. The landing page does not need separate approval before work on
+the menu begins.
 
-**Done when:** the owner approves the landing-page content and the responsive,
-accessible demo is ready to promote.
+### 1A. Landing-Page Demo At `/home/`
 
-### 3. Build The `/menu/` WhatsApp Order Flow
-
-- Build the customer-facing menu from one approved product-data source.
-- Add minimal browser-side TypeScript for adding, removing, and modifying item
-  quantities and approved options.
-- Collect customer name, email address, telephone number, requested delivery
-  date, time window, and address. Collect a separate receiver telephone only
-  when required by the approved rules.
-- Make the UI clear that availability, delivery fee, final price, and acceptance
-  require owner confirmation.
-- Generate one encoded WhatsApp message with the selected items and delivery
-  details. WhatsApp handles customisation questions and exceptions in this
-  stage.
-- Keep this phase browser-only: no server-side storage, payment, or customer
-  account.
-
-**Done when:** the owner approves products, cart behavior, delivery fields,
-validation, WhatsApp message, privacy wording, and customer-facing wording.
-
-### 4. Establish The On-Prem Platform
-
-- Specify and create the Go, `html/template`, HTMX, and PostgreSQL service.
-- Route `api.perlettecakes.com` and `admin.perlettecakes.com` through Cloudflare
-  Tunnel without exposing application or PostgreSQL ports publicly.
-- Protect the admin hostname with Cloudflare Access and validate Access JWTs in
-  Go. Keep public intake and provider callbacks outside Access.
-- Enforce exact host-aware routing in Go so admin handlers cannot be served on
-  the API hostname and public handlers cannot be served on the admin hostname.
-- Use a dedicated Perlette Cakes PostgreSQL database and role within the shared
-  instance. Set bounded connection pools for both hosted applications.
-- Allocate dedicated Docker storage, harden the firewall, verify SSD health,
-  confirm NTP, and establish local backup/restore checks.
-- Add Prometheus and Grafana with bounded retention and no PII in logs or metric
-  labels. Keep monitoring endpoints private and Grafana authenticated.
-- Separate sandbox and production secrets and document credential rotation,
-  revocation, compromised-key recovery, and host patching.
-
-**Done when:** the service can be deployed and restored, admin requests fail
-closed without valid Access identity, public/provider surfaces remain isolated,
-and resource use is observable.
-
-### 5. Add API-Backed Intake And The Owner Dashboard
-
-- Define the public request and response contract from the approved `/menu/`
+- Build a minimal owner-demo landing page at `/home/` while `/` keeps the
+  current work-in-progress page and inquiry modal.
+- Keep `/home/` marked `noindex` and explicitly exclude it from the sitemap.
+- Use approved copy and real Perlette Cakes photography.
+- Keep the page responsive, keyboard accessible, and clear on mobile and
+  desktop.
+- Link customers to the menu or current WhatsApp contact without adding backend
   behavior.
-- Submit Stage 2 requests from `/menu/` to `api.perlettecakes.com`.
-- Reserve `POST /v1/order-requests` for browser intake, apply Malaysia-only
-  country filtering to that route, then independently validate that the
-  delivery address is in an approved Klang zone.
-- Validate and rate-protect every request. The browser cannot set final prices,
-  payment status, delivery fee, or order acceptance.
-- Make retries safe with a stable intent id, atomic uniqueness constraint, and
-  a customer-visible request receipt.
-- Build the Access-protected owner dashboard for review, immutable quote
-  creation, rejection, expiry, and audit history.
-- Establish privacy, retention, and local backup rules before storing customer
-  contact or delivery data.
+- After the combined Stage 1 review is approved, move the landing-page content
+  to `/` and redirect `/home/` to `/`.
 
-**Done when:** one customer intent creates one reviewable request despite
-retries, and only the approved owner can review or change it.
+**Ready for combined review when:** the content and general visual direction are
+represented clearly, and the demo works on mobile and desktop without exposing
+unfinished routes to search engines.
 
-### 6. Add Billplz And Resend
+### 1B. Menu And WhatsApp Request Demo At `/menu/`
 
-- Prove Billplz in its sandbox before selecting production payment methods.
-- Let the owner approve feasibility, capacity, line items, fixed-zone delivery
-  fee entered during review, total, expiry, and terms before creating a Billplz
-  bill. Automatic zone-price lookup is not required in this phase.
-- Treat the immutable quote amount as authoritative and confirm the order only
-  after a verified full-payment callback or reconciliation.
-- Verify X Signature callbacks, store each provider identifier or deterministic
-  event key before processing, tolerate duplicate or reordered callback/redirect
-  delivery, and reconcile unresolved bills after outages.
-- Record every outbound payment operation before calling Billplz. Treat a
-  timeout as `unknown` and reconcile it instead of blindly creating another
-  bill.
-- Send approved transactional messages through Resend after database commits.
-  Use stable idempotency keys and process signed delivery/bounce webhooks.
-- Provide owner-safe retry, reconcile, refund, and resend actions.
+- Build a straightforward menu from one small hand-authored product-data source
+  transcribed from the menu published on Amira's Instagram account.
+- Include every item currently published there as a menu item, with its listed
+  price and explicit options, so Amira can verify the catalogue during review.
+  Treat the transcription as draft data until she approves it.
+- Let customers select products, quantities, and those explicit published
+  options. Do not build a general customisation system for requests not covered
+  by the published menu.
+- Collect the details needed to review and deliver the request: customer name,
+  email address, telephone number, requested delivery date, time window, and
+  address. Add separate receiver details only when Amira requires them.
+- Show a clear request summary and explain that price, availability, delivery
+  fee, and acceptance require owner confirmation.
+- Generate one correctly encoded WhatsApp message containing the selected items
+  and customer-provided details.
+- Do not add an API, database, payment, customer account, or storage of personal
+  details in browser storage.
+- Keep the current `/` inquiry modal for the work-in-progress page. The `/menu/`
+  customer flow will use its own UI rather than extending that legacy modal.
 
-**Done when:** a sandbox payment cannot be forged or applied twice, full payment
-confirms exactly one order, and transactional email failure is visible and
-retryable without duplicate mail.
+**Stage 1 is done when:** Amira reviews `/home/` and `/menu/` as one customer
+journey, can complete the request flow, reviews the generated WhatsApp message,
+and approves the visual direction, catalogue, fields, wording, and interaction.
 
-### 7. Add Owner-Triggered Lalamove Fulfilment
+## Stage 2: Order Intake And Amira Dashboard
 
-- Develop against `rest.sandbox.lalamove.com/v3` with sandbox credentials from
-  a Partner Portal account.
-- Use the approved fixed-zone fee for the customer quote; do not present a
-  five-minute Lalamove quotation as a guaranteed future fee.
-- Let the owner request a current quotation and explicitly place delivery from
-  the dashboard.
-- Store Lalamove identifiers as strings, synchronize delivery status, and expose
-  owner-safe retry/change-driver/cancel actions only where the provider allows.
-- Record the booking operation before calling Lalamove. An uncertain result must
-  be reconciled or reviewed by the owner, never blindly retried.
-- Keep production credentials in the owner-controlled Lalamove account and
-  document wallet-funding requirements.
+- Add the on-prem Go service, PostgreSQL persistence, and the minimum deployment
+  configuration needed for this stage.
+- Submit `/menu/` order requests to `api.perlettecakes.com` instead of using
+  WhatsApp as the system of record.
+- Allow cross-origin browser requests only from the production public-site
+  origin. CORS is not authentication and does not replace request validation.
+- Validate every request on the server. Browser-supplied price, availability,
+  acceptance, delivery fee, and payment state are never authoritative.
+- Make retries safe so one customer intent creates one request.
+- Build a simple server-rendered dashboard at `admin.perlettecakes.com` for
+  order overview, request details, feasibility review, preliminary pricing
+  notes, approval for manual follow-up, and rejection. Final quote approval and
+  payment automation remain Stage 4 work.
+- Protect the dashboard with Cloudflare Access for Amira Saifuddin and Eric
+  Cheong. The Go service must validate the Access assertion and authorize only
+  those approved identities.
+- Record owner/developer actions that change customer-visible or financial
+  state.
+- After successful submission, optionally offer a WhatsApp prompt so the
+  customer can start a conversation or provide follow-up context. This is a
+  convenience, not the order record.
+- Approve privacy, retention, backup, and restore rules before storing real
+  customer information.
 
-**Done when:** sandbox quotation, booking, status, and failure scenarios are
-proven, and no delivery can be booked twice from a retry.
+**Done when:** one submitted request creates one reviewable record, Amira can
+review and update it through the protected dashboard, and Eric can support the
+system without direct database editing.
+
+## Stage 3: Transactional Email And Lalamove
+
+### 3A. Lalamove Quotation
+
+- Integrate the Lalamove sandbox quotation API first.
+- Let Amira request a current quotation from an order's delivery address while
+  preparing the final customer quote.
+- Show quotation amount, expiry, and relevant provider response details in the
+  dashboard.
+- Treat the short-lived Lalamove quotation as pricing input, not a guaranteed
+  future delivery charge or driver reservation.
+- Store provider identifiers as strings and never expose credentials to Astro
+  or browser code.
+
+### 3B. Transactional Email
+
+- Use Resend for approved transactional messages only.
+- Initial candidates are request receipt, approved quote/payment request,
+  verified payment confirmation, rejection, and delivery updates.
+- Send messages only after the related database transaction commits.
+- Track delivery and failure state so Amira and Eric can see whether a message
+  was sent and retry it without creating duplicates.
+- Do not add transactional addresses to a marketing list without separate
+  consent.
+
+### 3C. Optional Lalamove Booking
+
+- Treat booking as a separate follow-up after quotation behavior and Amira's
+  real operating workflow are understood.
+- If approved, let Amira explicitly place, track, change, or cancel a delivery
+  only where the provider supports that action.
+- Record an outbound booking operation before the network call. Reconcile an
+  uncertain result instead of blindly retrying and risking a duplicate booking
+  or wallet charge.
+
+**Done when:** Amira can use a current Lalamove quotation while pricing an order,
+transactional email status is visible and retryable, and any approved booking
+flow has been proven in the sandbox.
+
+## Stage 4: Approved Quote And Payment
+
+- Amira reviews products, customisation, availability, and the delivery pricing
+  informed by Stage 3 before approving the final quote.
+- Store each approved quote as an immutable snapshot containing line items,
+  approved customisations, product subtotal, delivery fee, total MYR amount in
+  integer sen, expiry, and terms. Later edits create a new quote rather than
+  changing one already sent for payment.
+- After approval, create a Billplz payment link on the server and send it through
+  the approved customer communication flow.
+- Record each outbound payment or refund operation durably before calling
+  Billplz so a timeout can be reconciled without creating a duplicate operation.
+- Verify Billplz signatures and confirm the quoted amount before changing
+  payment state. A browser redirect never proves payment.
+- Deduplicate callbacks and reconcile delayed, reordered, or uncertain provider
+  results. Never create another bill solely because a network request timed out.
+- Keep request, payment, and fulfilment status separate so one provider problem
+  does not overwrite unrelated business state.
+- Keep an append-only history of status changes and provider operations so Amira
+  can understand the current state and Eric can retrace failures.
+
+Initial status groups:
+
+| Concern | Initial statuses |
+| --- | --- |
+| Request | `submitted`, `under_review`, `quoted`, `confirmed`, `declined`, `expired`, `cancelled` |
+| Payment | `not_requested`, `pending`, `paid`, `failed`, `expired`, `refunded`, `disputed` |
+| Fulfilment | `not_started`, `preparing`, `ready`, `delivery_booked`, `out_for_delivery`, `delivered`, `failed`, `cancelled` |
+
+Verified full payment confirms one owner-approved order. Payment creation,
+callback processing, reconciliation, refund, and resend actions must be visible
+and safe to retry from the dashboard.
+
+**Done when:** an approved quote produces one payment request, only a verified
+full payment confirms it, duplicate events cannot duplicate effects, and Amira
+and Eric can reconstruct every state transition from the dashboard history.
 
 ## Deferred
 
-- Customer accounts, self-service order changes, automated delivery booking,
-  marketing email, off-site backups, and new public content routes are outside
-  the current implementation plan.
-- Off-site backup deferral leaves a known risk that loss of the Mini PC and its
-  local storage can destroy local order records. Owner acknowledgement remains
-  open in `docs/owner-decisions.md`.
+- Discoverability work beyond the baseline technical requirements above
+- Customer accounts and self-service order changes
+- Automatic payment before owner approval
+- Automatic Lalamove booking
+- Marketing email
+- CMS, dynamic product routes, and additional public content routes
+- Infrastructure components without a measured need, including Redis, a message
+  broker, and microservices
+
+## Verification
+
+For public-site stages:
+
+```bash
+npm run astro check
+npm run build
+```
+
+Define Go service commands and focused tests when Stage 2 selects the service
+directory and toolchain. Do not create backend scaffolding before then.
