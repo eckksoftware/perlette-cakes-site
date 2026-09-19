@@ -9,6 +9,10 @@ this repository.
 
 **Active stage:** Stage 1
 
+The current Stage 1 build tasks and UI decisions are tracked in
+`docs/stage-1-ui-plan.md`. That plan supports this scope; it does not authorize
+later-stage work.
+
 ## Product Direction
 
 - Keep the public experience minimal and straightforward so customers can

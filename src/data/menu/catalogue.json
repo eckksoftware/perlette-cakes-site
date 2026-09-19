@@ -1,0 +1,673 @@
+{
+  "reviewStatus": "draft",
+  "source": "Transcribed from the eight Instagram Menu images supplied for Stage 1 review.",
+  "reviewNotes": [
+    "Confirm every item, price, option, and description with Amira before publishing.",
+    "The supplied Custom Works image is cropped at the bottom. Confirm that its visible flavour list is complete.",
+    "The supplied Square Cakes image gives two prices for Fudgy Brownies and Caramel Crunch Brownies without stating the corresponding variants. Do not infer them."
+  ],
+  "addOnGroups": [
+    {
+      "id": "bundt-cake-add-ons",
+      "name": "Optional add-ons",
+      "options": [
+        {
+          "id": "lemon-curd-jar",
+          "name": "Jar of lemon curd",
+          "priceLabel": "RM35"
+        },
+        {
+          "id": "raspberry-curd-jar",
+          "name": "Jar of raspberry curd",
+          "priceLabel": "RM35"
+        },
+        {
+          "id": "fresh-berries",
+          "name": "Fresh strawberries and blueberries",
+          "priceLabel": "RM40"
+        },
+        {
+          "id": "clear-gifting-box",
+          "name": "Clear gifting box with ribbon",
+          "priceLabel": "RM10"
+        }
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "id": "cupcakes",
+      "name": "Cupcakes",
+      "summary": "Box of 12. One flavour only per dozen.",
+      "items": [
+        {
+          "id": "cupcakes-box-of-12",
+          "name": "Cupcakes",
+          "selectionUnit": "Box of 12",
+          "notes": [
+            "One flavour only per dozen."
+          ],
+          "options": [
+            {
+              "id": "flavour",
+              "name": "Cupcake flavour",
+              "required": true,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "red-velvet",
+                  "name": "Red Velvet",
+                  "priceLabel": "RM95"
+                },
+                {
+                  "id": "vanilla-confetti",
+                  "name": "Vanilla Confetti",
+                  "priceLabel": "RM120"
+                },
+                {
+                  "id": "carrot-walnut-crumble",
+                  "name": "Carrot & Walnut Crumble",
+                  "priceLabel": "RM120"
+                },
+                {
+                  "id": "chocolate-fudge",
+                  "name": "Chocolate Fudge",
+                  "priceLabel": "RM140"
+                },
+                {
+                  "id": "lemon-curd",
+                  "name": "Lemon Curd",
+                  "priceLabel": "RM140"
+                },
+                {
+                  "id": "smores",
+                  "name": "Smores",
+                  "priceLabel": "RM140"
+                },
+                {
+                  "id": "floral-buttercream",
+                  "name": "Floral Buttercream",
+                  "priceLabel": "RM140"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "treats",
+      "name": "Treats",
+      "items": [
+        {
+          "id": "toffee-chocolate-chip-cookies",
+          "name": "Toffee Chocolate Chip Cookies",
+          "priceLabel": "RM120"
+        },
+        {
+          "id": "pumpkin-cream-cheese-muffins",
+          "name": "Pumpkin Cream Cheese Muffins",
+          "priceLabel": "RM130"
+        },
+        {
+          "id": "croissant-bb-pudding",
+          "name": "Croissant BB Pudding",
+          "priceLabel": "RM150"
+        },
+        {
+          "id": "tiramisu",
+          "name": "Tiramisu",
+          "options": [
+            {
+              "id": "size",
+              "name": "Size",
+              "required": true,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "box",
+                  "name": "Box",
+                  "priceLabel": "RM38"
+                },
+                {
+                  "id": "seven-inch-party-size",
+                  "name": "7 inch party size",
+                  "priceLabel": "RM110"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "soft-fluffy-cinnamon-rolls",
+          "name": "Soft & Fluffy Cinnamon Rolls",
+          "priceLabel": "RM150",
+          "options": [
+            {
+              "id": "size",
+              "name": "Size",
+              "required": true,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "original-12-pieces",
+                  "name": "Original (12 pcs)"
+                },
+                {
+                  "id": "mini-24-pieces",
+                  "name": "Mini (24 pcs)"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "quiche",
+          "name": "Quiche",
+          "priceLabel": "RM300",
+          "options": [
+            {
+              "id": "flavour",
+              "name": "Flavour",
+              "required": true,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "spinach-mushroom",
+                  "name": "Spinach & Mushroom"
+                },
+                {
+                  "id": "smoked-salmon-leek",
+                  "name": "Smoked Salmon & Leek"
+                },
+                {
+                  "id": "beef-bacon-cheddar",
+                  "name": "(Beef) Bacon & Cheddar"
+                },
+                {
+                  "id": "spiced-lamb-sausage",
+                  "name": "Spiced Lamb Sausage"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "whole-cakes",
+      "name": "Whole Cakes",
+      "items": [
+        {
+          "id": "orange-butter-cake",
+          "name": "Orange Butter Cake",
+          "priceLabel": "RM160",
+          "options": [
+            {
+              "id": "finish",
+              "name": "Finish",
+              "required": true,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "berry-glaze",
+                  "name": "Berry glaze"
+                },
+                {
+                  "id": "cream-cheese-frosting",
+                  "name": "Cream cheese frosting"
+                }
+              ]
+            }
+          ],
+          "notes": [
+            "8 inch"
+          ]
+        },
+        {
+          "id": "opera-cake",
+          "name": "Opera Cake",
+          "priceLabel": "RM250",
+          "notes": [
+            "9 inch"
+          ]
+        },
+        {
+          "id": "le-trianon",
+          "name": "Le Trianon",
+          "options": [
+            {
+              "id": "size",
+              "name": "Size",
+              "required": true,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "five-inch",
+                  "name": "5 inch",
+                  "priceLabel": "RM140"
+                },
+                {
+                  "id": "ten-inch",
+                  "name": "10 inch",
+                  "priceLabel": "RM480"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "moist-banana-loaf",
+          "name": "Moist Banana Loaf",
+          "description": "Chocolate chip banana loaf",
+          "priceLabel": "RM85",
+          "options": [
+            {
+              "id": "add-ons",
+              "name": "Optional add-ons",
+              "required": false,
+              "selection": "multiple",
+              "values": [
+                {
+                  "id": "walnuts",
+                  "name": "Walnuts",
+                  "priceLabel": "RM8"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "victoria-sponge-cake",
+          "name": "Victoria Sponge Cake",
+          "options": [
+            {
+              "id": "size",
+              "name": "Size",
+              "required": true,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "six-inch",
+                  "name": "6 inch",
+                  "priceLabel": "RM130"
+                },
+                {
+                  "id": "nine-inch",
+                  "name": "9 inch",
+                  "priceLabel": "RM220"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "fudgy-brownies",
+          "name": "Fudgy Brownies",
+          "options": [
+            {
+              "id": "size",
+              "name": "Size",
+              "required": true,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "eight-inch",
+                  "name": "8 inch",
+                  "priceLabel": "RM100"
+                },
+                {
+                  "id": "ten-inch",
+                  "name": "10 inch",
+                  "priceLabel": "RM160"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "carrot-cake",
+          "name": "Carrot Cake",
+          "options": [
+            {
+              "id": "size",
+              "name": "Size",
+              "required": true,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "six-inch",
+                  "name": "6 inch",
+                  "priceLabel": "RM130"
+                },
+                {
+                  "id": "nine-inch",
+                  "name": "9 inch",
+                  "priceLabel": "RM200"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "chocolate-fudge-cake",
+          "name": "Chocolate Fudge Cake",
+          "priceLabel": "RM260",
+          "notes": [
+            "9 inch"
+          ]
+        },
+        {
+          "id": "lemon-olive-oil-loaf",
+          "name": "Lemon Olive Oil Loaf",
+          "priceLabel": "RM110"
+        },
+        {
+          "id": "lemon-raspberry-cake",
+          "name": "Lemon Raspberry Cake",
+          "options": [
+            {
+              "id": "size",
+              "name": "Size",
+              "required": true,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "six-inch",
+                  "name": "6 inch",
+                  "priceLabel": "RM140"
+                },
+                {
+                  "id": "nine-inch",
+                  "name": "9 inch",
+                  "priceLabel": "RM250"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "torta-caprese",
+          "name": "Torta Caprese",
+          "priceLabel": "RM95",
+          "notes": [
+            "9 inch"
+          ]
+        },
+        {
+          "id": "lemon-curd-cake",
+          "name": "Lemon Curd Cake",
+          "priceLabel": "RM160",
+          "notes": [
+            "9 inch"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bundt-cakes",
+      "name": "Bundt Cakes",
+      "summary": "Let us know if you do not want any glaze on your cake.",
+      "items": [
+        {
+          "id": "wijsman-butter-cake",
+          "name": "Wijsman Butter Cake with Perlette's Glaze",
+          "priceLabel": "RM200",
+          "addOnGroupIds": [
+            "bundt-cake-add-ons"
+          ],
+          "requestOnlyOptions": [
+            {
+              "id": "no-glaze",
+              "name": "No glaze"
+            }
+          ]
+        },
+        {
+          "id": "orange-butter-cake-bundt",
+          "name": "Orange Butter Cake with Berry Glaze",
+          "priceLabel": "RM240",
+          "addOnGroupIds": [
+            "bundt-cake-add-ons"
+          ],
+          "requestOnlyOptions": [
+            {
+              "id": "no-glaze",
+              "name": "No glaze"
+            }
+          ]
+        },
+        {
+          "id": "lemon-olive-oil-cake-bundt",
+          "name": "Lemon Olive Oil Cake with Lemon Glaze",
+          "priceLabel": "RM240",
+          "addOnGroupIds": [
+            "bundt-cake-add-ons"
+          ],
+          "requestOnlyOptions": [
+            {
+              "id": "no-glaze",
+              "name": "No glaze"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mini-loaves",
+      "name": "Mini Loaves",
+      "summary": "Prices are for a set of 12. Strictly one flavour per dozen. Great for events, door gifts, and party favours.",
+      "items": [
+        {
+          "id": "mini-loaves-set-of-12",
+          "name": "Mini Loaves",
+          "selectionUnit": "Set of 12",
+          "notes": [
+            "One flavour only per dozen.",
+            "Inquire for special prices for orders above 100 pcs."
+          ],
+          "requestOnlyOptions": [
+            {
+              "id": "individual-packaging",
+              "name": "Individual packaging with ribbons and custom handmade/custom sticker",
+              "note": "Price is not published; discuss on WhatsApp."
+            }
+          ],
+          "options": [
+            {
+              "id": "flavour",
+              "name": "Mini loaf flavour",
+              "required": true,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "orange-butter-berry-glaze",
+                  "name": "Orange Butter with Berry Glaze",
+                  "priceLabel": "RM175"
+                },
+                {
+                  "id": "chocolate-chip-banana",
+                  "name": "Chocolate Chip Banana",
+                  "priceLabel": "RM100"
+                },
+                {
+                  "id": "lemon-drizzle",
+                  "name": "Lemon Drizzle",
+                  "priceLabel": "RM110"
+                },
+                {
+                  "id": "carrot-walnut",
+                  "name": "Carrot & Walnut",
+                  "priceLabel": "RM145"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "square-cakes",
+      "name": "Square Cakes",
+      "summary": "Pre-sliced cakes; perfect for a fuss-free gathering.",
+      "items": [
+        {
+          "id": "kek-batik-karlinah",
+          "name": "Kek Batik Karlinah",
+          "priceLabel": "RM60"
+        },
+        {
+          "id": "steamed-fruit-cake",
+          "name": "Steamed Fruit Cake",
+          "priceLabel": "RM120"
+        },
+        {
+          "id": "lemon-curd-square-cake",
+          "name": "Lemon Curd Cake",
+          "priceLabel": "RM160"
+        },
+        {
+          "id": "carrot-walnut-square-cake",
+          "name": "Carrot Walnut Cake",
+          "priceLabel": "RM200"
+        },
+        {
+          "id": "red-velvet-square-cake",
+          "name": "Red Velvet Cake",
+          "priceLabel": "RM200"
+        },
+        {
+          "id": "victoria-sponge-square-cake",
+          "name": "Victoria Sponge Cake",
+          "priceLabel": "RM230"
+        },
+        {
+          "id": "opera-square-cake",
+          "name": "Opera",
+          "priceLabel": "RM250"
+        },
+        {
+          "id": "chocolate-fudge-square-cake",
+          "name": "Chocolate Fudge Cake",
+          "priceLabel": "RM260"
+        },
+        {
+          "id": "le-trianon-square-cake",
+          "name": "Le Trianon",
+          "priceLabel": "RM480"
+        },
+        {
+          "id": "fudgy-brownies-square-cake",
+          "name": "Fudgy Brownies",
+          "priceLabel": "RM100 / RM160",
+          "reviewNote": "The menu does not identify the variants associated with each price."
+        },
+        {
+          "id": "salted-caramel-brownies",
+          "name": "Salted Caramel Brownies",
+          "priceLabel": "RM190"
+        },
+        {
+          "id": "caramel-crunch-brownies",
+          "name": "Caramel Crunch Brownies",
+          "priceLabel": "RM130 / RM230",
+          "reviewNote": "The menu does not identify the variants associated with each price."
+        }
+      ]
+    },
+    {
+      "id": "custom-works",
+      "name": "Custom Works",
+      "summary": "For custom cake inquiries. Price starts from RM250.",
+      "items": [
+        {
+          "id": "custom-cake",
+          "name": "Custom Cake",
+          "priceLabel": "From RM250",
+          "options": [
+            {
+              "id": "size",
+              "name": "Cake size",
+              "required": false,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "six-inch",
+                  "name": "6 inch"
+                },
+                {
+                  "id": "nine-inch",
+                  "name": "9 inch"
+                }
+              ]
+            },
+            {
+              "id": "style",
+              "name": "Cake style",
+              "required": false,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "short-cake",
+                  "name": "Short cake (2 layers)"
+                },
+                {
+                  "id": "tall-cake",
+                  "name": "Tall cake (3 to 4 layers)"
+                },
+                {
+                  "id": "tiered-cake",
+                  "name": "Tiered cake"
+                }
+              ]
+            },
+            {
+              "id": "flavour",
+              "name": "Flavour",
+              "required": false,
+              "selection": "single",
+              "values": [
+                {
+                  "id": "lemon-curd",
+                  "name": "Lemon Curd"
+                },
+                {
+                  "id": "lemon-raspberry",
+                  "name": "Lemon Raspberry"
+                },
+                {
+                  "id": "chocolate-fudge",
+                  "name": "Chocolate Fudge"
+                },
+                {
+                  "id": "crunchy-chocolate-fudge",
+                  "name": "Crunchy Chocolate Fudge"
+                },
+                {
+                  "id": "red-velvet",
+                  "name": "Red Velvet"
+                },
+                {
+                  "id": "carrot-walnut",
+                  "name": "Carrot & Walnut"
+                },
+                {
+                  "id": "vanilla",
+                  "name": "Vanilla"
+                },
+                {
+                  "id": "birthday-cake",
+                  "name": "Birthday Cake"
+                }
+              ]
+            }
+          ],
+          "requestNotes": [
+            "Share inspiration pictures, the design, or the colour scheme you have in mind.",
+            "If you are flexible with the design, we can take creative direction."
+          ]
+        }
+      ]
+    }
+  ]
+}
